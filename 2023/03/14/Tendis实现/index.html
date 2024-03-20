@@ -171,7 +171,20 @@
 <li>后台异步回刷，将数据持久化到后端 Tendisplus。</li>
 <li>监听写入速度，和redis落地和redis差距很大，则阻塞写</li>
 </ol>
-<h2 id="潜在常见问题"><a href="#潜在常见问题" class="headerlink" title="潜在常见问题"></a>潜在常见问题</h2><h3 id="1-缓存与数据库数据一致性"><a href="#1-缓存与数据库数据一致性" class="headerlink" title="1. 缓存与数据库数据一致性"></a>1. 缓存与数据库数据一致性</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">title: 写策略二：先删缓存再更新数据库</span><br><span class="line">participant 请求A</span><br><span class="line">participant 请求B</span><br><span class="line">participant 缓存</span><br><span class="line">participant 数据库</span><br><span class="line">请求A -&gt;&gt; 缓存: [A]读缓存 </span><br><span class="line">请求A -&gt;&gt; 缓存: [A]缓存未命中 </span><br><span class="line">请求B -&gt;&gt; 缓存: [B]写缓存21 </span><br><span class="line">缓存 -&gt;&gt; 缓存: [B]更新缓存为21</span><br><span class="line">缓存 -&gt;&gt; 数据库: [A]异步组件拉取数据库中的20 </span><br><span class="line">缓存 -&gt;&gt; 缓存: [A]更新缓存为旧值20 </span><br><span class="line">缓存 -&gt;&gt; 数据库: [B]异步组件将21更新到数据库</span><br><span class="line">缓存 --&gt; 数据库: 缓存旧值20和数据库新值21不一致</span><br></pre></td></tr></table></figure>
+<h2 id="潜在常见问题"><a href="#潜在常见问题" class="headerlink" title="潜在常见问题"></a>潜在常见问题</h2><h3 id="1-缓存与数据库数据一致性"><a href="#1-缓存与数据库数据一致性" class="headerlink" title="1. 缓存与数据库数据一致性"></a>1. 缓存与数据库数据一致性</h3><pre class="mermaid">sequenceDiagram
+title: 写策略二：先删缓存再更新数据库
+participant 请求A
+participant 请求B
+participant 缓存
+participant 数据库
+请求A ->> 缓存: [A]读缓存 
+请求A ->> 缓存: [A]缓存未命中 
+请求B ->> 缓存: [B]写缓存21 
+缓存 ->> 缓存: [B]更新缓存为21
+缓存 ->> 数据库: [A]异步组件拉取数据库中的20 
+缓存 ->> 缓存: [A]更新缓存为旧值20 
+缓存 ->> 数据库: [B]异步组件将21更新到数据库
+缓存 --> 数据库: 缓存旧值20和数据库新值21不一致</pre>
 <p><strong>解决办法：</strong><br>如果需要从 Tendisplus 中恢复数据，则请求 A 和 B 都阻塞。当数据恢复后，再唤醒阻塞的请求 A 和 B， 缓存和后端 Tendisplus 最终是一致的。<br>如果不需要从 Tendisplus 中恢复数据，则请求 A 和 B 肯定是顺序执行的，不会出现不一致的行为。</p>
 <h3 id="2-缓存穿透"><a href="#2-缓存穿透" class="headerlink" title="2. 缓存穿透"></a>2. 缓存穿透</h3><p>key redis不存在，不存在的key全部请求到db。由于redis保存全量key，不存在则返回不存在了，不会请求到redis</p>
 <h3 id="3-缓存击穿"><a href="#3-缓存击穿" class="headerlink" title="3. 缓存击穿"></a>3. 缓存击穿</h3><p>热key过期，大量请求落到db<br>如一致性的解决，当某个key缓存不存在，则会阻塞所有这个key的请求，等从tendisplus中恢复才会继续处理这些请求。</p>
