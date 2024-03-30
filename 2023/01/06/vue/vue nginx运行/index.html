@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>vue nginx运行 | 爱开源GoGo</title><meta name="author" content="JimmyDing"><meta name="copyright" content="JimmyDing"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="注：这里开始认为各位都会使用nginx  打包vue项目 1npm run build 测试打包的项目是否可以运行 1serve dist 可以正常运行 编译报错请移步到：​​&#114;&#101;&#110;&#114;&#101;&#110;&#45;&#102;&#x61;&#115;&#116;&#x2d;&#118;&#117;&#101;&#64;&#49;&#x2e;&#50;&amp;#">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>vue nginx运行 | 爱开源GoGo</title><meta name="author" content="JimmyDing"><meta name="copyright" content="JimmyDing"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="注：这里开始认为各位都会使用nginx  打包vue项目 1npm run build 测试打包的项目是否可以运行 1serve dist 可以正常运行 编译报错请移步到：​​&#x72;&#x65;&#110;&#x72;&#x65;&#110;&#45;&#102;&#x61;&#115;&#116;&#x2d;&#118;&#117;&#x65;&#64;&#49;&#46;&#x32;&amp;#">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vue nginx运行">
 <meta property="og:url" content="https://mylofty.github.io/2023/01/06/vue/vue%20nginx%E8%BF%90%E8%A1%8C/index.html">
 <meta property="og:site_name" content="爱开源GoGo">
-<meta property="og:description" content="注：这里开始认为各位都会使用nginx  打包vue项目 1npm run build 测试打包的项目是否可以运行 1serve dist 可以正常运行 编译报错请移步到：​​&#114;&#101;&#110;&#114;&#101;&#110;&#45;&#102;&#x61;&#115;&#116;&#x2d;&#118;&#117;&#101;&#64;&#49;&#x2e;&#50;&amp;#">
+<meta property="og:description" content="注：这里开始认为各位都会使用nginx  打包vue项目 1npm run build 测试打包的项目是否可以运行 1serve dist 可以正常运行 编译报错请移步到：​​&#x72;&#x65;&#110;&#x72;&#x65;&#110;&#45;&#102;&#x61;&#115;&#116;&#x2d;&#118;&#117;&#x65;&#64;&#49;&#46;&#x32;&amp;#">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
 <meta property="article:published_time" content="2023-01-05T16:00:00.000Z">
@@ -17,7 +17,7 @@
   localSearch: undefined,
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":100},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":10},
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -159,7 +159,7 @@
 <p>测试打包的项目是否可以运行</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">serve dist</span><br></pre></td></tr></table></figure>
 <p>可以正常运行</p>
-<p>编译报错请移步到：​​<a href="mailto:&#114;&#101;&#110;&#114;&#101;&#110;&#45;&#102;&#x61;&#115;&#116;&#x2d;&#118;&#117;&#101;&#64;&#49;&#x2e;&#50;&#46;&#50;">&#114;&#101;&#110;&#114;&#101;&#110;&#45;&#102;&#x61;&#115;&#116;&#x2d;&#118;&#117;&#101;&#64;&#49;&#x2e;&#50;&#46;&#50;</a> 项目编译报错: build <code>gulp</code>​​</p>
+<p>编译报错请移步到：​​<a href="mailto:&#x72;&#x65;&#110;&#x72;&#x65;&#110;&#45;&#102;&#x61;&#115;&#116;&#x2d;&#118;&#117;&#x65;&#64;&#49;&#46;&#x32;&#x2e;&#x32;">&#x72;&#x65;&#110;&#x72;&#x65;&#110;&#45;&#102;&#x61;&#115;&#116;&#x2d;&#118;&#117;&#x65;&#64;&#49;&#46;&#x32;&#x2e;&#x32;</a> 项目编译报错: build <code>gulp</code>​​</p>
 <p>部署vue项目到nginx<br>接下来将renren-fast-vue 项目生成的dist 目录修改为：renren-fast-vue 并压缩为：renren-fast-vue.zip</p>
 <p>复制renren-fast-vue.zip 到服务器</p>
 <p>解压到：<code>/usr/local/nginx/</code></p>
