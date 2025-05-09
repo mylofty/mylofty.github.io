@@ -1,0 +1,230 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>rocksdb原理 | 爱开源GoGo</title><meta name="author" content="JimmyDing"><meta name="copyright" content="JimmyDing"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="引擎整体架构  MemTable 与 WAL RocksDB 使用 LSM （Log-structed Merge-tree）作为主要的存储数据结构，每当数据写入到 RocksDB 之中，就会被添加到 MemTable 内存的写缓冲区，以及一个磁盘上的超前写入日志（WAL）。数据会被写入到 WAL 和 MemTable，WAL 是 MemTable 的易失性保护机制。 RocksDB 中 Memt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rocksdb原理">
+<meta property="og:url" content="https://mylofty.github.io/2024/03/20/3ef8848ef8bd/index.html">
+<meta property="og:site_name" content="爱开源GoGo">
+<meta property="og:description" content="引擎整体架构  MemTable 与 WAL RocksDB 使用 LSM （Log-structed Merge-tree）作为主要的存储数据结构，每当数据写入到 RocksDB 之中，就会被添加到 MemTable 内存的写缓冲区，以及一个磁盘上的超前写入日志（WAL）。数据会被写入到 WAL 和 MemTable，WAL 是 MemTable 的易失性保护机制。 RocksDB 中 Memt">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2024-03-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-05-09T07:04:26.774Z">
+<meta property="article:author" content="JimmyDing">
+<meta property="article:tag" content="缓存">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/images/notebook.png"><link rel="canonical" href="https://mylofty.github.io/2024/03/20/3ef8848ef8bd/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'rocksdb原理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-05-09 15:04:26'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/notebook.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="爱开源GoGo"><span class="site-name">爱开源GoGo</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">rocksdb原理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-19T16:00:00.000Z" title="发表于 2024-03-20 00:00:00">2024-03-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.774Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%98%E5%82%A8/">存储</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="rocksdb原理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="引擎整体架构">引擎整体架构</h2>
+<p><img src="/images/rocksdb_all.webp" alt="img"></p>
+<h3 id="MemTable-与-WAL">MemTable 与 WAL</h3>
+<p>RocksDB 使用 LSM （Log-structed Merge-tree）作为主要的存储数据结构，每当数据写入到 RocksDB 之中，就会被添加到 MemTable 内存的写缓冲区，以及一个磁盘上的超前写入日志（WAL）。数据会被写入到 WAL 和 MemTable，WAL 是 MemTable 的易失性保护机制。</p>
+<p>RocksDB 中 Memtable 的数据结构有三种，分别是 skiplist、hash-skiplist、hash-linklist，跳表的好处在于插入的时候可以保证数据的有序，并且支持二分查找、范围查询。插入和搜索的代价都是 O(log n)。</p>
+<p>在达到指定大小之后现有 MemTable 和 WAL 锁定变为不可变，新数据写入新的 MemTable 和 WAL。</p>
+<h3 id="SSTable">SSTable</h3>
+<p>SSTable 是一种数据结构，当 MemTable 到达一定的上限之后，会 flush 到硬盘上 Sorted String Table (SSTable)，并放置在第 0 层(L0)，对应的 WAL 空间回收；L0 大小达到上限时，L0 的 SSTable 经过 compaction 落到 L1；Ln：以此类推完成上述操作。</p>
+<p>在每一级中，都会使用<strong>二分搜索</strong>；而<strong>布隆过滤器</strong>会消除 SSTable 文件中不必要的检索。</p>
+<h3 id="Compaction">Compaction</h3>
+<p>Campact 可以翻译成压缩，也可以被称为压实，其作用主要有：清除无效数据；对数据的排序进行优化。而无效数据的产生于 update：标记覆盖与 delete：标记删除。使用 Compact 的好处有：整个文件的批量读写，比较高效；可以并行化操作。</p>
+<p>比较几种常见的 Compaction 策略：</p>
+<ul>
+<li>Leveled：leveldb 的方式，SSTable 数量逐层以指数增长，读写放大都比较严重，但是空间放大较低；leveled 算法的特点是以读放大和写放大为代价最小化空间放大。</li>
+<li>Tired/Universal：Cassandra 与 HBase 的方式，空间放大和读放大严重，但是写放大最小；Tiered合并通过增加读放大和空间放大，来最小化写放大 。</li>
+<li>FIFO：删除旧的过期文件，执行轻量级压缩，适用于那些 in-memory 缓存应用。</li>
+</ul>
+<p>大家也可以发现，并不存在写放大、读放大和空间放大都很完美的方案；和计算机世界的其他领域一样，数据库也没有银弹。</p>
+<p>Level 0的压缩策略采用的是Size-Tiered Compaction策略，即将多个大小相等的sst文件合并成一个更大的sst文件，减少磁盘空间的占用。L0的sst文件时无序的，仅将MemTable中全部数据创建一个新的sst插入level0。对于L0 的文件，RocksDB 采用遍历的方法查找</p>
+<p>Level 1以后的每个level大小是前一个level的倍数，Level n的压缩策略采用的是Leveled Compaction策略，即将多个sst文件按照level进行合并，保证每个level的sst文件数量不超过一个阈值，同时保证每个level的sst文件大小不超过一个阈值.对于 L1 层以及 L1 层以上层级的文件，每个 SSTable 没有交叠，可以使用二分查找快速找到 key 所在的 Level 以及 SSTfile。</p>
+<p>各层限制大小：leve1:300M, level2:3G, level3:30G, level4:300G</p>
+<p>RocksDB会先从Level 0中的sst文件开始查找，如果找不到，则会从Level 1开始查找，直到找到为止。由于每个level内部的sst文件都是有序的，因此可以利用这个特性来进行快速查。</p>
+<h3 id="详细">详细</h3>
+<p>合并流程</p>
+<ol>
+<li>数据追加写入MemTable，MemTable满了构建一个SST放到L0层。导致L0层的sst文件是无序的，需要遍历查找</li>
+<li>L0层的文件数达到level0_file_num_compaction_trigger，compaction会被触发。</li>
+<li>L0层会挑选一个SST文件，如果SST文件key空间太大，会进行拆分，选取出一部分key在某个范围内的。将这部分合并到L1层和这些key所在key空间一致的。</li>
+<li>假设L0层挑选出来的SST需要和L1层的SST_x, SST_y, SST_y合并。则会生成一个新的SST，并将其进行分隔，写入到L1层，然后删除旧的SST文件</li>
+<li>L1层达到空间上限了，又会挑选一个SST文件，按类似的方式合并到下一层。</li>
+</ol>
+<h3 id="rocksdb事务">rocksdb事务</h3>
+<h3 id="ACID事务实现">ACID事务实现</h3>
+<p>参考文献：<br>
+深入RocksDB原理 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/616209332">https://zhuanlan.zhihu.com/p/616209332</a><br>
+RocksDB学习记录 <a target="_blank" rel="noopener" href="https://km.woa.com/articles/show/506592">https://km.woa.com/articles/show/506592</a><br>
+RocksDB上锁机制 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/cchust/p/7107392.html">https://www.cnblogs.com/cchust/p/7107392.html</a><br>
+图解RocksDB合并过程 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40586164/article/details/117914647">https://blog.csdn.net/qq_40586164/article/details/117914647</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://mylofty.github.io">JimmyDing</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://mylofty.github.io/2024/03/20/3ef8848ef8bd/">https://mylofty.github.io/2024/03/20/3ef8848ef8bd/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://mylofty.github.io" target="_blank">爱开源GoGo</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BC%93%E5%AD%98/">缓存</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/03/20/be4f0cd331bf/" title="GPU优化"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">GPU优化</div></div></a></div><div class="next-post pull-right"><a href="/2024/03/19/f198e398518a/" title="缓存一致性"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">缓存一致性</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/03/14/a283b9ee2d80/" title="Tendis实现"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-14</div><div class="title">Tendis实现</div></div></a></div><div><a href="/2024/04/26/111ea67534ab/" title="redis基础知识"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-26</div><div class="title">redis基础知识</div></div></a></div><div><a href="/2024/03/19/f198e398518a/" title="缓存一致性"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-19</div><div class="title">缓存一致性</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/notebook.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">JimmyDing</div><div class="author-info__description">种一棵树，最好的时间是十年前，其次是现在</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/mylofty"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎前来爱开源GoGo</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E6%93%8E%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="toc-text">引擎整体架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MemTable-%E4%B8%8E-WAL"><span class="toc-text">MemTable 与 WAL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSTable"><span class="toc-text">SSTable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Compaction"><span class="toc-text">Compaction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E7%BB%86"><span class="toc-text">详细</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rocksdb%E4%BA%8B%E5%8A%A1"><span class="toc-text">rocksdb事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ACID%E4%BA%8B%E5%8A%A1%E5%AE%9E%E7%8E%B0"><span class="toc-text">ACID事务实现</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vllm使用教程-基于qwen模型"/></a><div class="content"><a class="title" href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型">vllm使用教程-基于qwen模型</a><time datetime="2025-05-09T06:51:21.000Z" title="发表于 2025-05-09 14:51:21">2025-05-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="解锁AI潜能：万字详解大语言模型提示工程的终极指南"/></a><div class="content"><a class="title" href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南">解锁AI潜能：万字详解大语言模型提示工程的终极指南</a><time datetime="2024-08-14T06:51:21.000Z" title="发表于 2024-08-14 14:51:21">2024-08-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/11/fa22652bbbc5/" title="RAG应用"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG应用"/></a><div class="content"><a class="title" href="/2024/06/11/fa22652bbbc5/" title="RAG应用">RAG应用</a><time datetime="2024-06-11T06:51:21.000Z" title="发表于 2024-06-11 14:51:21">2024-06-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/07/225dc84728ab/" title="大模型意图选择"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="大模型意图选择"/></a><div class="content"><a class="title" href="/2024/06/07/225dc84728ab/" title="大模型意图选择">大模型意图选择</a><time datetime="2024-06-07T06:51:21.000Z" title="发表于 2024-06-07 14:51:21">2024-06-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pytorch导学：使用bert实现分类任务"/></a><div class="content"><a class="title" href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务">pytorch导学：使用bert实现分类任务</a><time datetime="2024-05-11T06:51:21.000Z" title="发表于 2024-05-11 14:51:21">2024-05-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pytorch基础：FashionMNIST时装分类"/></a><div class="content"><a class="title" href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类">pytorch基础：FashionMNIST时装分类</a><time datetime="2024-05-10T06:51:21.000Z" title="发表于 2024-05-10 14:51:21">2024-05-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/26/111ea67534ab/" title="redis基础知识"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="redis基础知识"/></a><div class="content"><a class="title" href="/2024/04/26/111ea67534ab/" title="redis基础知识">redis基础知识</a><time datetime="2024-04-25T16:00:00.000Z" title="发表于 2024-04-26 00:00:00">2024-04-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/23/a07a83071c8a/" title="腹肌锻炼"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="腹肌锻炼"/></a><div class="content"><a class="title" href="/2024/04/23/a07a83071c8a/" title="腹肌锻炼">腹肌锻炼</a><time datetime="2024-04-23T06:51:21.000Z" title="发表于 2024-04-23 14:51:21">2024-04-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By JimmyDing</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

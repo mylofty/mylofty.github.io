@@ -1,0 +1,322 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>faiss使用 | 爱开源GoGo</title><meta name="author" content="JimmyDing"><meta name="copyright" content="JimmyDing"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="faiss总览 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;595249861 Faiss的全称是Facebook AI Similarity Search。这是一个开源库，针对高维空间中的海量数据，提供了高效且可靠的检索方法 Faiss中的稠密向量各种索引都是基于 Index实现的，主要的索引方法包括： IndexFlatL2、IndexFlatIP、IndexHNSWFlat、I">
+<meta property="og:type" content="article">
+<meta property="og:title" content="faiss使用">
+<meta property="og:url" content="https://mylofty.github.io/2024/03/21/c7fafc3c07a1/index.html">
+<meta property="og:site_name" content="爱开源GoGo">
+<meta property="og:description" content="faiss总览 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;595249861 Faiss的全称是Facebook AI Similarity Search。这是一个开源库，针对高维空间中的海量数据，提供了高效且可靠的检索方法 Faiss中的稠密向量各种索引都是基于 Index实现的，主要的索引方法包括： IndexFlatL2、IndexFlatIP、IndexHNSWFlat、I">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2024-03-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-05-09T07:04:26.773Z">
+<meta property="article:author" content="JimmyDing">
+<meta property="article:tag" content="faiss">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/images/notebook.png"><link rel="canonical" href="https://mylofty.github.io/2024/03/21/c7fafc3c07a1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'faiss使用',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-05-09 15:04:26'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/notebook.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="爱开源GoGo"><span class="site-name">爱开源GoGo</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">faiss使用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-20T16:00:00.000Z" title="发表于 2024-03-21 00:00:00">2024-03-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.773Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="faiss使用"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>faiss总览</h1>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/595249861">https://zhuanlan.zhihu.com/p/595249861</a></p>
+<p>Faiss的全称是Facebook AI Similarity Search。这是一个开源库，针对高维空间中的海量数据，提供了高效且可靠的检索方法</p>
+<p>Faiss中的稠密向量各种索引都是基于 Index实现的，主要的索引方法包括： IndexFlatL2、IndexFlatIP、IndexHNSWFlat、IndexIVFFlat、IndexLSH、IndexScalarQuantizer、IndexPQ、IndexIVFScalarQuantizer、IndexIVFPQ、IndexIVFPQR等。</p>
+<p>精确K近邻算法有KD-tree，更多地是近似最近邻ANN（Approximate Nearest Neighbor）算法，如各种KD-tree的变种、Hierarchical K-means Tree及其变种、局部敏感哈希LSH（Local Sensitive Hash）的各种具现（如Google提出的海量文本去重算法SimHash）。</p>
+<h1>faiss索引方法介绍</h1>
+<h2 id="1-精确查找：IndexFlatL2-IndexFlatIP">1.精确查找：IndexFlatL2 / IndexFlatIP</h2>
+<p>IndexFlatL2是基于L2（欧式距离）的暴力搜索，IndexFlatIP则是基于cosin距离（余弦相似度）的暴力搜索。该方案无需训练，插入即可精确搜索</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">IndexFlatTest</span>():</span><br><span class="line">   <span class="comment"># 索引的维度</span></span><br><span class="line">   d = <span class="number">4</span> </span><br><span class="line">   <span class="comment"># 定义索引</span></span><br><span class="line">   <span class="comment"># index: faiss.IndexFlatIP = faiss.IndexFlatIP(d)</span></span><br><span class="line">   index: faiss.IndexFlatL2 = faiss.IndexFlatL2(d)</span><br><span class="line">   <span class="comment"># 生成一些示例向量</span></span><br><span class="line">   num_samples = <span class="number">10</span></span><br><span class="line">   samples = faiss.rand_smooth_vectors(num_samples,d, <span class="number">1234</span>)</span><br><span class="line">   <span class="built_in">print</span>(samples)</span><br><span class="line">   <span class="built_in">print</span>(samples.shape)</span><br><span class="line">   index.add(samples) <span class="comment"># 注意插入的索引id从0开始，所以需要自己记录索引id和插入的顺序关系</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&#x27;numbers:&#x27;</span>,index.ntotal)</span><br><span class="line">   <span class="comment"># [[ 0.35488576 -0.73574394 -0.6536156   0.3178926 ]</span></span><br><span class="line">   <span class="comment"># [ 0.67962044  0.7863989  -0.7671616   0.04172076]</span></span><br><span class="line">   <span class="comment"># [ 0.96039176 -0.9938114  -0.95961237  0.8995318 ]</span></span><br><span class="line">   <span class="comment"># [-0.8903031  -0.61766034 -0.50728905 -0.96132135]</span></span><br><span class="line">   <span class="comment"># [-0.56933314 -0.25087294 -0.94959843 -0.9519859 ]</span></span><br><span class="line">   <span class="comment"># [-0.96773404  0.32363138  0.63591665 -0.960967  ]</span></span><br><span class="line">   <span class="comment"># [-0.2918578   0.5850899   0.9336975  -0.38424835]</span></span><br><span class="line">   <span class="comment"># [ 0.01005006  0.84884423  0.66606414  0.6791965 ]</span></span><br><span class="line">   <span class="comment"># [ 0.87879     0.01356855 -0.6405845  -0.7492134 ]</span></span><br><span class="line">   <span class="comment"># [ 0.80805725 -0.30866548 -0.52221924  0.62365204]]</span></span><br><span class="line">   searchVec = np.array([[<span class="number">0.35488576</span>, -<span class="number">0.73574394</span>, -<span class="number">0.6536156</span>, <span class="number">0.3178926</span>]], dtype=np.float32)</span><br><span class="line">   <span class="comment"># 寻找相似向量， indices表示相似用户ID矩阵， distances表示距离矩阵</span></span><br><span class="line">   top_k = <span class="number">5</span></span><br><span class="line">   distances, indices  = index.search(searchVec, top_k) </span><br><span class="line">   <span class="built_in">print</span>(<span class="string">f&quot;distance:<span class="subst">&#123;distances&#125;</span>, indices:<span class="subst">&#123;indices&#125;</span>&quot;</span>)</span><br><span class="line">   <span class="comment"># distance:[[0. 0.49851424 0.86517453 1.9748298  2.511535  ]], indices:[[0 9 2 8 1]]</span></span><br><span class="line">   similar_vector_index:<span class="built_in">int</span> = indices[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line">   similar_vector = index.reconstruct(<span class="built_in">int</span>(similar_vector_index))</span><br><span class="line">   <span class="built_in">print</span>(similar_vector)</span><br><span class="line">   <span class="comment"># [ 0.35488576 -0.73574394 -0.6536156   0.3178926 ]</span></span><br></pre></td></tr></table></figure>
+<p>IndexFlatIP/IndexFlatL2的实现上，都是采用全量数据并行计算内积和L2范数（欧式距离）。IndexFlatIP对应faiss的METRIC_INNER_PRODUCT类型，计算内积如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">BlockResultHandler</span>, <span class="type">bool</span> use_sel = <span class="literal">false</span>&gt;</span><br><span class="line"><span class="type">void</span> <span class="built_in">exhaustive_inner_product_seq</span>(</span><br><span class="line">        <span class="type">const</span> <span class="type">float</span>* x,</span><br><span class="line">        <span class="type">const</span> <span class="type">float</span>* y,</span><br><span class="line">        <span class="type">size_t</span> d,</span><br><span class="line">        <span class="type">size_t</span> nx,</span><br><span class="line">        <span class="type">size_t</span> ny,</span><br><span class="line">        BlockResultHandler&amp; res,</span><br><span class="line">        <span class="type">const</span> IDSelector* sel = <span class="literal">nullptr</span>) &#123;</span><br><span class="line">    <span class="keyword">using</span> SingleResultHandler =</span><br><span class="line">            <span class="keyword">typename</span> BlockResultHandler::SingleResultHandler;</span><br><span class="line">    <span class="type">int</span> nt = std::<span class="built_in">min</span>(<span class="built_in">int</span>(nx), <span class="built_in">omp_get_max_threads</span>());</span><br><span class="line"></span><br><span class="line">    <span class="built_in">FAISS_ASSERT</span>(use_sel == (sel != <span class="literal">nullptr</span>));</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> omp parallel num_threads(nt)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">SingleResultHandler <span class="title">resi</span><span class="params">(res)</span></span>;</span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> omp for</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int64_t</span> i = <span class="number">0</span>; i &lt; nx; i++) &#123;</span><br><span class="line">            <span class="type">const</span> <span class="type">float</span>* x_i = x + i * d;</span><br><span class="line">            <span class="type">const</span> <span class="type">float</span>* y_j = y;</span><br><span class="line"></span><br><span class="line">            resi.<span class="built_in">begin</span>(i);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">size_t</span> j = <span class="number">0</span>; j &lt; ny; j++, y_j += d) &#123;</span><br><span class="line">                <span class="keyword">if</span> (use_sel &amp;&amp; !sel-&gt;<span class="built_in">is_member</span>(j)) &#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="type">float</span> ip = <span class="built_in">fvec_inner_product</span>(x_i, y_j, d);</span><br><span class="line">                resi.<span class="built_in">add_result</span>(ip, j);</span><br><span class="line">            &#125;</span><br><span class="line">            resi.<span class="built_in">end</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">FAISS_PRAGMA_IMPRECISE_FUNCTION_BEGIN</span></span><br><span class="line"><span class="function"><span class="type">float</span> <span class="title">fvec_inner_product</span><span class="params">(<span class="type">const</span> <span class="type">float</span>* x, <span class="type">const</span> <span class="type">float</span>* y, <span class="type">size_t</span> d)</span> </span>&#123;</span><br><span class="line">    <span class="type">float</span> res = <span class="number">0.F</span>;</span><br><span class="line">    <span class="function">FAISS_PRAGMA_IMPRECISE_LOOP</span></span><br><span class="line"><span class="function">    <span class="title">for</span> <span class="params">(<span class="type">size_t</span> i = <span class="number">0</span>; i != d; ++i)</span> </span>&#123;</span><br><span class="line">        res += x[i] * y[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line">FAISS_PRAGMA_IMPRECISE_FUNCTION_END</span><br></pre></td></tr></table></figure>
+<p>如上可见，该方案仅计算了内积，如果希望最终得到的距离归一化，输入的向量需要提前做归一化，可使用normalize_L2函数</p>
+<p>IndexFlatL2对应faiss的METRIC_L2类型，计算L2范数如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">BlockResultHandler</span>, <span class="type">bool</span> use_sel = <span class="literal">false</span>&gt;</span><br><span class="line"><span class="type">void</span> <span class="built_in">exhaustive_L2sqr_seq</span>(</span><br><span class="line">        <span class="type">const</span> <span class="type">float</span>* x,</span><br><span class="line">        <span class="type">const</span> <span class="type">float</span>* y,</span><br><span class="line">        <span class="type">size_t</span> d,</span><br><span class="line">        <span class="type">size_t</span> nx,</span><br><span class="line">        <span class="type">size_t</span> ny,</span><br><span class="line">        BlockResultHandler&amp; res,</span><br><span class="line">        <span class="type">const</span> IDSelector* sel = <span class="literal">nullptr</span>) &#123;</span><br><span class="line">    <span class="keyword">using</span> SingleResultHandler =</span><br><span class="line">            <span class="keyword">typename</span> BlockResultHandler::SingleResultHandler;</span><br><span class="line">    <span class="type">int</span> nt = std::<span class="built_in">min</span>(<span class="built_in">int</span>(nx), <span class="built_in">omp_get_max_threads</span>());</span><br><span class="line"></span><br><span class="line">    <span class="built_in">FAISS_ASSERT</span>(use_sel == (sel != <span class="literal">nullptr</span>));</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> omp parallel num_threads(nt)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">SingleResultHandler <span class="title">resi</span><span class="params">(res)</span></span>;</span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> omp for</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int64_t</span> i = <span class="number">0</span>; i &lt; nx; i++) &#123;</span><br><span class="line">            <span class="type">const</span> <span class="type">float</span>* x_i = x + i * d;</span><br><span class="line">            <span class="type">const</span> <span class="type">float</span>* y_j = y;</span><br><span class="line">            resi.<span class="built_in">begin</span>(i);</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">size_t</span> j = <span class="number">0</span>; j &lt; ny; j++, y_j += d) &#123;</span><br><span class="line">                <span class="keyword">if</span> (use_sel &amp;&amp; !sel-&gt;<span class="built_in">is_member</span>(j)) &#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="type">float</span> disij = <span class="built_in">fvec_L2sqr</span>(x_i, y_j, d);</span><br><span class="line">                resi.<span class="built_in">add_result</span>(disij, j);</span><br><span class="line">            &#125;</span><br><span class="line">            resi.<span class="built_in">end</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">FAISS_PRAGMA_IMPRECISE_FUNCTION_BEGIN</span></span><br><span class="line"><span class="function"><span class="type">float</span> <span class="title">fvec_L2sqr</span><span class="params">(<span class="type">const</span> <span class="type">float</span>* x, <span class="type">const</span> <span class="type">float</span>* y, <span class="type">size_t</span> d)</span> </span>&#123;</span><br><span class="line">    <span class="type">size_t</span> i;</span><br><span class="line">    <span class="type">float</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="function">FAISS_PRAGMA_IMPRECISE_LOOP</span></span><br><span class="line"><span class="function">    <span class="title">for</span> <span class="params">(i = <span class="number">0</span>; i &lt; d; i++)</span> </span>&#123;</span><br><span class="line">        <span class="type">const</span> <span class="type">float</span> tmp = x[i] - y[i];</span><br><span class="line">        res += tmp * tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line">FAISS_PRAGMA_IMPRECISE_FUNCTION_END</span><br></pre></td></tr></table></figure>
+<h2 id="2-更快的搜索，先聚类再倒排搜索：-IVF-IndexIVFFlat">2.更快的搜索，先聚类再倒排搜索： IVF (IndexIVFFlat)</h2>
+<p>该方案就是先把数据库中的向量划分成多个不同的格子（Voronoi cells），而每个格子都有一个中心点（centroid）。要查找某个向量的最近邻时，先从这些中心点里面找到一个最近的，然后再在相应的格子里面找到最近的向量。</p>
+<p>该方法中最重要的两个参数是</p>
+<ol>
+<li>nprobe：搜索的时候在最近的多少格子中查找，默认是1，通常推荐1-1024；（仅搜索最近的格子，可能会导致边缘节点陷入非真正最近的中心点，导致搜索不到最近邻）</li>
+<li>nlist：构建索引的时候创建多少个格子，即聚类的数目，通常推荐2048以上；</li>
+</ol>
+<p>使用方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">IndexIVFFlatTest</span>():</span><br><span class="line">   <span class="comment"># 索引的维度</span></span><br><span class="line">   d = <span class="number">4</span> </span><br><span class="line">   nlist = <span class="number">100</span> <span class="comment">#聚类的数目</span></span><br><span class="line">   <span class="comment"># 定义索引</span></span><br><span class="line">   quantizer = faiss.IndexFlatL2(d) </span><br><span class="line">   index = faiss.IndexIVFFlat(quantizer, d, nlist)</span><br><span class="line">   <span class="comment"># 生成一些示例向量</span></span><br><span class="line">   num_samples = <span class="number">200</span></span><br><span class="line">   samples = faiss.rand_smooth_vectors(num_samples,d, <span class="number">1234</span>)</span><br><span class="line">   <span class="built_in">print</span>(samples.shape)</span><br><span class="line">   index.train(samples)</span><br><span class="line">   <span class="keyword">assert</span> index.is_trained</span><br><span class="line">   index.add(samples) <span class="comment"># 注意插入的索引id从0开始，所以需要自己记录索引id和插入的顺序关系</span></span><br><span class="line">   index.make_direct_map()</span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&#x27;numbers:&#x27;</span>,index.ntotal)</span><br><span class="line">   searchVec = np.array([[<span class="number">0.35488576</span>, -<span class="number">0.73574394</span>, -<span class="number">0.6536156</span>, <span class="number">0.3178926</span>]], dtype=np.float32)</span><br><span class="line">   <span class="comment"># 寻找相似向量， indices表示相似用户ID矩阵， distances表示距离矩阵</span></span><br><span class="line">   top_k = <span class="number">5</span></span><br><span class="line">   index.nprobe = <span class="number">5</span> <span class="comment"># 指定寻找5个格子，默认1个</span></span><br><span class="line">   distances, indices  = index.search(searchVec, top_k) </span><br><span class="line">   <span class="built_in">print</span>(<span class="string">f&quot;distance:<span class="subst">&#123;distances&#125;</span>, indices:<span class="subst">&#123;indices&#125;</span>&quot;</span>)</span><br><span class="line">   similar_vector_index:<span class="built_in">int</span> = indices[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&quot;similar_vector_index&quot;</span>,similar_vector_index)</span><br><span class="line">   similar_vector = index.reconstruct(<span class="built_in">int</span>(similar_vector_index))</span><br><span class="line">   <span class="built_in">print</span>(similar_vector)</span><br></pre></td></tr></table></figure>
+<p>IVFx Flat ：倒排暴力检索.可以拿出每个聚类中心下的向量ID，每个中心ID后面挂上一堆非中心向量，每次查询向量的时候找到最近的几个中心ID，分别搜索这几个中心下的非中心向量。通过减小搜索范围，提升搜索效率。占用字节：4*d  + 8</p>
+<h2 id="3-内存占用优化：PQ-（IndexPQ，IndexIVFPQ）">3.内存占用优化：PQ （IndexPQ，IndexIVFPQ）</h2>
+<p>基于乘积量化（product quantizers）对存储向量进行压缩，节省存储空间。<br>
+有时候我们还关注 index 的内存占用，可能把所有的向量存起来都太大了，那么我们可以使用 PQ 方法来减小向量存储的内容。</p>
+<ol>
+<li>首先，会把 d 维的向量划分为 m(如：8) 个子向量；</li>
+<li>然后，对于每一个子向量，会在所有样本上对其进行聚类，聚成 2^8 = 256</li>
+<li>最后，相应的向量只需要存储子向量中心点的 ID 即可。</li>
+</ol>
+<p>该方法两个重要的参数是：</p>
+<ol>
+<li>m = 8  # 原来的向量维度平均分成多少份，d必须为m的整数倍</li>
+<li>bits = 8 # 每个子向量用多少个bits表示（8表示有256个质心，11有2048个质心，越大则召回越精确）</li>
+</ol>
+<p>IVF是可以和PQ组合使用的，相当于压缩了样本，同时还减少了搜索范围，不仅减少了内存时候，还提升了检索速度，这就是我们经常使用的IndexIVFPQ索引</p>
+<p>PQ实现的方式并不会压缩向量的维度d，而是压缩向量每个值，如float32压缩到float16，int8，int4，这样存储占用就少了2，4，8倍。若再考虑将向量分成多少个子向量的话，如128维向量分成8个子向量，每个子向量仅保存质心的位置，那么又能压缩：128/8 = 16倍。单个向量占用多少个字节：ceil(M * nbits / 8)</p>
+<p>PQ的实现会导致召回准确率不高，高准确率的情况应使用其他索引方式。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>FlatL2</th>
+<th>PQ</th>
+<th>IVFPQ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Recall (%)</td>
+<td>100</td>
+<td>50</td>
+<td>52</td>
+</tr>
+<tr>
+<td>Speed (ms)</td>
+<td>8.26</td>
+<td>1.49</td>
+<td>0.09</td>
+</tr>
+<tr>
+<td>Memory (MB)</td>
+<td>256</td>
+<td>6.5</td>
+<td>9.2</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-高精度、省时间方法：HNSW-（IndexHNSWFlat）">4.高精度、省时间方法：HNSW （IndexHNSWFlat）</h2>
+<p>HNSW 就是把数据库向量分成若干层，通过每一层的查找，都可以减少一个到达最近邻点的中间点。</p>
+<p>如果您有大量 RAM 或数据集很小，HNSWM 是最佳选择，它是一个非常快速且准确的索引。4 &lt;= M &lt;= 64 是每个向量的链接数，越高越准确，但使用更多 RAM</p>
+<p>每个向量占用字节：4*d + x * M * 2 * 4</p>
+<p>其中最重要的事如下三个参数：</p>
+<ol>
+<li>M：构建 HNSW 的时候，每个向量和多少个最近邻相连接。（64）</li>
+<li>efSearch：在搜索的时候，每层查询多少个点。默认16（32）</li>
+<li>efConstruction：在构建图的时候，每层查找多少个点。（64）</li>
+</ol>
+<h2 id="faiss复合索引，融合多个">faiss复合索引，融合多个</h2>
+<p>向量维度 d=128，数据集大小=1M，查找 k=10 近邻。</p>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Memory (MB)</th>
+<th>Query Time (ms)</th>
+<th>Recall</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flat</td>
+<td>~500</td>
+<td>18</td>
+<td>1.0</td>
+<td>适用于查询时间要求不高的小数据集</td>
+</tr>
+<tr>
+<td>IVF</td>
+<td>~520</td>
+<td>1 - 9</td>
+<td>0.7 - 0.95</td>
+<td>一个扩展性比较高的方案</td>
+</tr>
+<tr>
+<td>LSH</td>
+<td>20 - 600</td>
+<td>1.7 - 30</td>
+<td>0.4 - 0.85</td>
+<td>对于低维向量最好的方案</td>
+</tr>
+<tr>
+<td>HNSW</td>
+<td>600 - 1600</td>
+<td>0.6 - 2.1</td>
+<td>0.5 - 0.95</td>
+<td>适用于对于精度和速度要求高的场景，但是费内存</td>
+</tr>
+</tbody>
+</table>
+<h3 id="IVFADC-IVF256-PQ32x8">IVFADC (IVF256,PQ32x8)</h3>
+<ol start="2">
+<li>IVF1024,PQ 即有1024个格子，聚类到1024个格子中</li>
+<li>IVF100,Flat, elsaticFaiss默认的配置，100个聚类中心，nprobe为15，搜索最近15个</li>
+<li>IVF4096_HNSW,Flat，k-means聚类中心为4096</li>
+<li>IVF4096_HNSW,PQ32</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://mylofty.github.io">JimmyDing</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://mylofty.github.io/2024/03/21/c7fafc3c07a1/">https://mylofty.github.io/2024/03/21/c7fafc3c07a1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://mylofty.github.io" target="_blank">爱开源GoGo</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/faiss/">faiss</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/03/25/0438860b27ef/" title="sd webui instantid使用"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">sd webui instantid使用</div></div></a></div><div class="next-post pull-right"><a href="/2024/03/21/c00a05780484/" title="hnswlib向量索引"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">hnswlib向量索引</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/03/21/c00a05780484/" title="hnswlib向量索引"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-21</div><div class="title">hnswlib向量索引</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/notebook.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">JimmyDing</div><div class="author-info__description">种一棵树，最好的时间是十年前，其次是现在</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/mylofty"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎前来爱开源GoGo</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">faiss总览</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">faiss索引方法介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%B2%BE%E7%A1%AE%E6%9F%A5%E6%89%BE%EF%BC%9AIndexFlatL2-IndexFlatIP"><span class="toc-text">1.精确查找：IndexFlatL2 &#x2F; IndexFlatIP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%9B%B4%E5%BF%AB%E7%9A%84%E6%90%9C%E7%B4%A2%EF%BC%8C%E5%85%88%E8%81%9A%E7%B1%BB%E5%86%8D%E5%80%92%E6%8E%92%E6%90%9C%E7%B4%A2%EF%BC%9A-IVF-IndexIVFFlat"><span class="toc-text">2.更快的搜索，先聚类再倒排搜索： IVF (IndexIVFFlat)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E4%BC%98%E5%8C%96%EF%BC%9APQ-%EF%BC%88IndexPQ%EF%BC%8CIndexIVFPQ%EF%BC%89"><span class="toc-text">3.内存占用优化：PQ （IndexPQ，IndexIVFPQ）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%AB%98%E7%B2%BE%E5%BA%A6%E3%80%81%E7%9C%81%E6%97%B6%E9%97%B4%E6%96%B9%E6%B3%95%EF%BC%9AHNSW-%EF%BC%88IndexHNSWFlat%EF%BC%89"><span class="toc-text">4.高精度、省时间方法：HNSW （IndexHNSWFlat）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#faiss%E5%A4%8D%E5%90%88%E7%B4%A2%E5%BC%95%EF%BC%8C%E8%9E%8D%E5%90%88%E5%A4%9A%E4%B8%AA"><span class="toc-text">faiss复合索引，融合多个</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IVFADC-IVF256-PQ32x8"><span class="toc-text">IVFADC (IVF256,PQ32x8)</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vllm使用教程-基于qwen模型"/></a><div class="content"><a class="title" href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型">vllm使用教程-基于qwen模型</a><time datetime="2025-05-09T06:51:21.000Z" title="发表于 2025-05-09 14:51:21">2025-05-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="解锁AI潜能：万字详解大语言模型提示工程的终极指南"/></a><div class="content"><a class="title" href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南">解锁AI潜能：万字详解大语言模型提示工程的终极指南</a><time datetime="2024-08-14T06:51:21.000Z" title="发表于 2024-08-14 14:51:21">2024-08-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/11/fa22652bbbc5/" title="RAG应用"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG应用"/></a><div class="content"><a class="title" href="/2024/06/11/fa22652bbbc5/" title="RAG应用">RAG应用</a><time datetime="2024-06-11T06:51:21.000Z" title="发表于 2024-06-11 14:51:21">2024-06-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/07/225dc84728ab/" title="大模型意图选择"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="大模型意图选择"/></a><div class="content"><a class="title" href="/2024/06/07/225dc84728ab/" title="大模型意图选择">大模型意图选择</a><time datetime="2024-06-07T06:51:21.000Z" title="发表于 2024-06-07 14:51:21">2024-06-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pytorch导学：使用bert实现分类任务"/></a><div class="content"><a class="title" href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务">pytorch导学：使用bert实现分类任务</a><time datetime="2024-05-11T06:51:21.000Z" title="发表于 2024-05-11 14:51:21">2024-05-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pytorch基础：FashionMNIST时装分类"/></a><div class="content"><a class="title" href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类">pytorch基础：FashionMNIST时装分类</a><time datetime="2024-05-10T06:51:21.000Z" title="发表于 2024-05-10 14:51:21">2024-05-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/26/111ea67534ab/" title="redis基础知识"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="redis基础知识"/></a><div class="content"><a class="title" href="/2024/04/26/111ea67534ab/" title="redis基础知识">redis基础知识</a><time datetime="2024-04-25T16:00:00.000Z" title="发表于 2024-04-26 00:00:00">2024-04-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/23/a07a83071c8a/" title="腹肌锻炼"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="腹肌锻炼"/></a><div class="content"><a class="title" href="/2024/04/23/a07a83071c8a/" title="腹肌锻炼">腹肌锻炼</a><time datetime="2024-04-23T06:51:21.000Z" title="发表于 2024-04-23 14:51:21">2024-04-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By JimmyDing</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

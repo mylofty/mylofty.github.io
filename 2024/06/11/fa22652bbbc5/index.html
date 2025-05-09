@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>RAG应用 | 爱开源GoGo</title><meta name="author" content="JimmyDing"><meta name="copyright" content="JimmyDing"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="RAG应用 一、RAG简介 目前实现 RAG 的主流框架就是 LangChain 和 LlamaIndex，LangChain 更适合需要复杂对话流程、上下文管理、以及多步骤任务的应用场景，如聊天机器人、任务自动化等。LlamaIndex 当应用场景主要涉及大量数据的快速检索和查询时，LlamaIndex更加适用，如企业知识问答系统、文档搜索引擎等。 二、llamaIndex构建RAG服务 Lla">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RAG应用">
+<meta property="og:url" content="https://mylofty.github.io/2024/06/11/fa22652bbbc5/index.html">
+<meta property="og:site_name" content="爱开源GoGo">
+<meta property="og:description" content="RAG应用 一、RAG简介 目前实现 RAG 的主流框架就是 LangChain 和 LlamaIndex，LangChain 更适合需要复杂对话流程、上下文管理、以及多步骤任务的应用场景，如聊天机器人、任务自动化等。LlamaIndex 当应用场景主要涉及大量数据的快速检索和查询时，LlamaIndex更加适用，如企业知识问答系统、文档搜索引擎等。 二、llamaIndex构建RAG服务 Lla">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2024-06-11T06:51:21.000Z">
+<meta property="article:modified_time" content="2025-05-09T07:04:26.764Z">
+<meta property="article:author" content="JimmyDing">
+<meta property="article:tag" content="ai">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/images/notebook.png"><link rel="canonical" href="https://mylofty.github.io/2024/06/11/fa22652bbbc5/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'RAG应用',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-05-09 15:04:26'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/notebook.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="爱开源GoGo"><span class="site-name">爱开源GoGo</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">RAG应用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-06-11T06:51:21.000Z" title="发表于 2024-06-11 14:51:21">2024-06-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.764Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/ai/">ai</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="RAG应用"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>RAG应用</h1>
+<h2 id="一、RAG简介">一、RAG简介</h2>
+<p>目前实现 RAG 的主流框架就是 LangChain 和 LlamaIndex，LangChain 更适合需要复杂对话流程、上下文管理、以及多步骤任务的应用场景，如聊天机器人、任务自动化等。LlamaIndex 当应用场景主要涉及大量数据的快速检索和查询时，LlamaIndex更加适用，如企业知识问答系统、文档搜索引擎等。</p>
+<h2 id="二、llamaIndex构建RAG服务">二、llamaIndex构建RAG服务</h2>
+<p>LlamaIndex最初被称为GPT Index, 后来大语言模型的快速发展，改名为LlamaIndex。它就像一个多功能的工具，可以在处理数据和大型语言模型的各个阶段提供帮助</p>
+<p>首先，它有助于“摄取”数据，这意味着将数据从原始来源获取到系统中。其次，它有助于“结构化”数据，这意味着以语言模型易于理解的方式组织数据。第三，它有助于“检索”，这意味着在需要时查找和获取正确的数据。最后，它简化了“集成”，使您更容易将数据与各种应用程序框架融合在一起。</p>
+<p><img src="/images/ai/llamaIndex_all.png" alt="img"><br>
+<img src="../../images/ai/llamaIndex_all.png" alt="img"></p>
+<p>首先安装llamaIndex</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install llama-index llama_index.llms.ollama llama_index.embeddings.huggingface -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
+<p>可以通过环境变量<code>LLAMA_INDEX_CACHE_DIR</code>控制llamaIndex的cache存储位置，包括huggingface，nltk等包的位置</p>
+<h3 id="llamaIndex快速构建RAG">llamaIndex快速构建RAG</h3>
+<p>llamaIndex可以快速构建起一个文档索引问答的demo，全部采用默认配置，只需要5行代码</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> llama_index.core <span class="keyword">import</span> VectorStoreIndex, SimpleDirectoryReader</span><br><span class="line">documents = SimpleDirectoryReader(<span class="string">&quot;data&quot;</span>).load_data()</span><br><span class="line">index = VectorStoreIndex.from_documents(documents)</span><br><span class="line">query_engine = index.as_query_engine()</span><br><span class="line">response = query_engine.query(<span class="string">&quot;Summarize the documents.&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>一般使用时，我们还需要修改llm，embed模型，以及修改prompt来生成中文输出</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> llama_index.core <span class="keyword">import</span> Settings</span><br><span class="line"><span class="keyword">from</span> llama_index.core <span class="keyword">import</span>  SimpleDirectoryReader, VectorStoreIndex, PromptTemplate</span><br><span class="line"><span class="comment"># from llama_index.llms.ollama import Ollama</span></span><br><span class="line"><span class="comment"># from llama_index.llms.openai import OpenAI</span></span><br><span class="line"><span class="keyword">from</span> llama_index.embeddings.huggingface <span class="keyword">import</span> HuggingFaceEmbedding</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从指定目录下面去加载文档</span></span><br><span class="line">documents = SimpleDirectoryReader(<span class="string">&quot;../docs&quot;</span>).load_data()</span><br><span class="line"><span class="comment"># 不设置llm则默认使用的是openai的gpt-3.5-turbo，可以指定ollama模型，也可以继承CustomLLM自定义模型</span></span><br><span class="line"><span class="comment"># llm=Ollama(model=&quot;llama3&quot;, request_timeout=120.0)</span></span><br><span class="line"><span class="comment"># llm = OpenAI(temperature=0.1, model=&quot;gpt-4o&quot;)</span></span><br><span class="line"><span class="comment"># Settings.llm = llm</span></span><br><span class="line"><span class="comment"># 不设置embed模型则默认openai的text-embedding-ada-002</span></span><br><span class="line">embed_model = HuggingFaceEmbedding( model_name=<span class="string">&quot;BAAI/bge-large-en-v1.5&quot;</span>, trust_remote_code=<span class="literal">False</span>)</span><br><span class="line">Settings.embed_model = embed_model</span><br><span class="line"><span class="comment"># 将文档保存到（内存）索引中，这里可以指定文本被分割的大小（transformations），使用的embed模型（embed_model）等</span></span><br><span class="line">index = VectorStoreIndex.from_documents(documents, show_progress=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 对上述索引创建一个查询引擎，可以查询上面的文档，可以配置查询引擎的多个参数</span></span><br><span class="line">query_engine = index.as_query_engine(similarity_top_k=<span class="number">3</span>,streaming=<span class="literal">True</span>)</span><br><span class="line">qa_prompt_tmpl_str = (</span><br><span class="line">    <span class="string">&quot;请结合给出的参考知识，回答用户的问题。&quot;</span></span><br><span class="line">    <span class="string">&quot;参考知识如下：\n&quot;</span></span><br><span class="line">    <span class="string">&quot;---------------------\n&quot;</span></span><br><span class="line">    <span class="string">&quot;&#123;context_str&#125;\n&quot;</span></span><br><span class="line">    <span class="string">&quot;---------------------\n&quot;</span></span><br><span class="line">    <span class="string">&quot;用户的问题如下：\n&quot;</span></span><br><span class="line">    <span class="string">&quot;human: &#123;query_str&#125;\n&quot;</span></span><br><span class="line">    <span class="string">&quot;Assistant: &quot;</span></span><br><span class="line">)</span><br><span class="line">qa_prompt_tmpl = PromptTemplate(qa_prompt_tmpl_str)</span><br><span class="line">query_engine.update_prompts(</span><br><span class="line">    &#123;<span class="string">&quot;response_synthesizer:text_qa_template&quot;</span>: qa_prompt_tmpl&#125;</span><br><span class="line">)</span><br><span class="line"><span class="comment"># 发起查询</span></span><br><span class="line">response = query_engine.query(<span class="string">&quot;浏览器主页被篡改怎么办?&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(response)</span><br><span class="line"><span class="comment"># 初始化对话引擎，使用对话的方式来问答</span></span><br><span class="line">chat_engine = index.as_chat_engine(</span><br><span class="line">    similarity_top_k=<span class="number">5</span>, <span class="comment"># 设置匹配相似度前 5 的知识库片段</span></span><br><span class="line">    chat_mode=<span class="string">&quot;condense_plus_context&quot;</span> <span class="comment"># 设置聊天模型</span></span><br><span class="line">)</span><br><span class="line"><span class="comment"># res = chat_engine.chat(&#x27;介绍一下小米 14 ultra&#x27;)</span></span><br><span class="line">res = chat_engine.stream_chat(<span class="string">&#x27;小米 14 ultra 电池容量有多大?&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> text <span class="keyword">in</span> res.response_gen:</span><br><span class="line">    <span class="built_in">print</span>(text, end=<span class="string">&#x27;&#x27;</span>, flush=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="文本分析">文本分析</h3>
+<p>文档分析即是chunking过程。 LLamaIndex将输入文档分解为节点的较小块。这个分块是由NodeParser完成的。默认情况下，使用SimpleNodeParser，它将文档分块成句子。<br>
+分块过程如下：</p>
+<ol>
+<li>用户pdf，md等文档首先被分割为Document结构，(默认按最大字数或者页码来决定分多少个Document)</li>
+<li>NodeParser接收一个Document对象列表；</li>
+<li>使用spaCy的句子分割将每个文档的文本分割成句子；</li>
+<li>每个句子都包装在一个TextNode对象中，该对象表示一个节点；</li>
+<li>TextNode包含句子文本，以及元数据，如文档ID、文档中的位置等；</li>
+<li>返回TextNode对象的列表。</li>
+</ol>
+<p>在LlamaIndex框架中，Document和Node是核心的数据抽象概念，它们帮助处理和组织各种类型的数据以便于索引、查询和分析。这两个概念提供了一种灵活和高效的方式来处理来自不同数据源的信息。一旦数据被摄取并表示为文档，就可以选择将这些文档进一步处理为节点。节点是更细粒度的数据实体，表示源文档的“块”，可以是文本块、图像或其他类型的数据。它们还携带元数据和与其他节点的关系信息，这有助于构建更加结构化和关系型的索引。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> llama_index.core.node_parser <span class="keyword">import</span> SentenceSplitter</span><br><span class="line"><span class="keyword">from</span> llama_index.core <span class="keyword">import</span> DocumentSummaryIndex</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">load_document_test</span>():</span><br><span class="line">    llm = OpenAI(temperature=<span class="number">0.1</span>, model=<span class="string">&quot;gpt-4o&quot;</span>)</span><br><span class="line">    Settings.llm = llm</span><br><span class="line">    <span class="comment"># 从指定目录下面去加载文档，默认按页码分割，多少页就分多少个documents</span></span><br><span class="line">    documents = SimpleDirectoryReader(input_files=[<span class="string">&quot;../docs/简易测试劳动合同.pdf&quot;</span>]).load_data()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;len=&#x27;</span>,<span class="built_in">len</span>(documents))</span><br><span class="line">    <span class="keyword">for</span> document <span class="keyword">in</span> documents:</span><br><span class="line">        <span class="built_in">print</span>(document.text)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n\n===================================\n\n&quot;</span>)</span><br><span class="line">    <span class="comment"># 将documents进行进一步分割成chunk，使用TextNode结构进行封装。</span></span><br><span class="line">    parser = SentenceSplitter(chunk_size=<span class="number">100</span>,chunk_overlap=<span class="number">20</span>)</span><br><span class="line">    nodes = parser.get_nodes_from_documents(documents)</span><br><span class="line">    <span class="comment"># print(nodes)</span></span><br><span class="line">    <span class="keyword">for</span> node <span class="keyword">in</span> nodes:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n\n======================\n==============================\n\n&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(node.text)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>在core.node_parser中，有诸多文本分割工具如：SentenceSplitter，MarkdownNodeParser，TextSplitter，NodeParser等。</p>
+<h3 id="索引构建">索引构建</h3>
+<p>索引可以有多种索引，如DocumentSummaryIndex，VectorStoreIndex。效果上DocumentSummaryIndex更优一些</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 直接通过nodes来构建索引</span></span><br><span class="line">doc_summary_index = DocumentSummaryIndex(nodes=nodes)</span><br><span class="line"><span class="comment"># 构建查询引擎，默认使用summary的embedding引擎，也可以通过配置retriever_mode=&quot;llm&quot;来使用llm检索</span></span><br><span class="line">query_engine = doc_summary_index.as_query_engine(</span><br><span class="line">    response_mode=<span class="string">&quot;tree_summarize&quot;</span>, use_async=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line">response = query_engine.query(<span class="string">&quot;乙方的名字是什么，工资有多少？试用期多长？&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(response)</span><br><span class="line"><span class="comment"># 构建查询引擎，使用向量查询引擎</span></span><br><span class="line">index = VectorStoreIndex(nodes=nodes)</span><br><span class="line">index_engine = index.as_query_engine(similarity_top_k=<span class="number">3</span>)</span><br><span class="line">response = index_engine.query(<span class="string">&quot;乙方的名字是什么，工资有多少？试用期多长？&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(response)</span><br></pre></td></tr></table></figure>
+<h4 id="文章摘要索引：DocumentSummaryIndex">文章摘要索引：DocumentSummaryIndex</h4>
+<p>通常，大多数用户以以下方式开发基于LLM的QA系统:</p>
+<ul>
+<li>获取源文档并将其分成文本块。</li>
+<li>然后将文本块存储在矢量数据库中。</li>
+<li>在查询期间，通过使用相似度和/或关键字过滤器进行Embedding来检索文本块。</li>
+<li>执行整合后的响应。</li>
+</ul>
+<p>然而，这种方法存在一些影响检索性能的局限性：</p>
+<ul>
+<li>文本块没有完整的全局上下文，这通常限制了问答过程的有效性。</li>
+<li>需要仔细调优top-k /相似性分数阈值，因为过小的值可能会导致错过相关上下文，而过大的值可能会增加不相关上下文的成本和延迟。</li>
+<li>Embeddings可能并不总是为一个问题选择最合适的上下文，因为这个过程本质上是分别决定文本和上下文的。</li>
+<li>为了增强检索结果，一些开发人员添加了关键字过滤器。然而，这种方法有其自身的挑战，例如通过手工或使用NLP关键字提取/主题标记模型为每个文档确定适当的关键字，以及从查询中推断正确的关键字。</li>
+</ul>
+<p><img src="/images/ai/summaryIndex.png" alt="img"><br>
+<img src="../../images/ai/summaryIndex.png" alt="img"></p>
+<p>这就是 LlamaIndex 引入文档摘要索引的原因，它可以为每份文档提取非结构化文本摘要并编制索引，从而提高检索性能，超越现有方法。该索引比单一文本块包含更多信息，比关键字标签具有更多语义。它还允许灵活的检索，包括基于 LLM 和嵌入的方法。在构建期间，该索引接收文档并使用 LLM 从每个文档中提取摘要。在查询时，它会根据摘要使用以下方法检索相关文档：</p>
+<ul>
+<li>基于 LLM 的检索：获取文档摘要集合并请求 LLM 识别相关文档+相关性得分</li>
+<li>基于嵌入的检索：利用摘要嵌入相似性来检索相关文档，并对检索结果的数量施加顶k限制。<br>
+文档摘要索引的检索类为任何选定的文档检索所有节点，而不是在节点级返回相关块。</li>
+</ul>
+<h3 id="向量检索">向量检索</h3>
+<p>构建索引可以用高级方法如</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">doc_summary_index = DocumentSummaryIndex(nodes=nodes)</span><br><span class="line"><span class="comment"># 构建查询引擎，默认使用summary的embedding引擎，也可以通过配置retriever_mode=&quot;llm&quot;来使用llm检索</span></span><br><span class="line">query_engine = doc_summary_index.as_query_engine(</span><br><span class="line">    response_mode=<span class="string">&quot;tree_summarize&quot;</span>, use_async=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line">nodes_with_scores = query_engine.retrieve(QueryBundle(<span class="string">&quot;这篇文章主要讲了什么&quot;</span>))</span><br><span class="line"><span class="keyword">for</span> node_score <span class="keyword">in</span> nodes_with_scores:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;node_score:&quot;</span>,node_score)</span><br><span class="line">response = query_engine.query(<span class="string">&quot;乙方的名字是什么，工资有多少？试用期多长？&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>也可以使用底层api，使用LLM进行索引</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> llama_index.core.indices.document_summary <span class="keyword">import</span> DocumentSummaryIndexLLMRetriever</span><br><span class="line"></span><br><span class="line">retriever = DocumentSummaryIndexLLMRetriever(</span><br><span class="line">    doc_summary_index,</span><br><span class="line">    <span class="comment"># choice_select_prompt=None,</span></span><br><span class="line">    <span class="comment"># choice_batch_size=10,</span></span><br><span class="line">    <span class="comment"># choice_top_k=1,</span></span><br><span class="line">    <span class="comment"># format_node_batch_fn=None,</span></span><br><span class="line">    <span class="comment"># parse_choice_select_answer_fn=None,</span></span><br><span class="line">)</span><br><span class="line">retrieved_nodes = retriever.retrieve(<span class="string">&quot;What are the sports teams in Toronto?&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(retrieved_nodes))</span><br><span class="line"><span class="number">20</span></span><br><span class="line"><span class="built_in">print</span>(retrieved_nodes[<span class="number">0</span>].score)</span><br><span class="line"><span class="built_in">print</span>(retrieved_nodes[<span class="number">0</span>].node.get_text())</span><br><span class="line"><span class="comment"># 生成查询引擎</span></span><br><span class="line">query_engine = RetrieverQueryEngine.from_args(retriever) <span class="comment">#,node_postprocessors=[reranker]</span></span><br></pre></td></tr></table></figure>
+<p>使用嵌入向量进行索引</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> llama_index.core.indices.document_summary <span class="keyword">import</span> (</span><br><span class="line">    DocumentSummaryIndexEmbeddingRetriever,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">retriever = DocumentSummaryIndexEmbeddingRetriever(</span><br><span class="line">    doc_summary_index,</span><br><span class="line">    <span class="comment"># similarity_top_k=1,</span></span><br><span class="line">)</span><br><span class="line">retrieved_nodes = retriever.retrieve(<span class="string">&quot;What are the sports teams</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> in Toronto?&quot;</span>)</span><br><span class="line"><span class="built_in">len</span>(retrieved_nodes)</span><br><span class="line"><span class="number">20</span></span><br><span class="line"><span class="built_in">print</span>(retrieved_nodes[<span class="number">0</span>].node.get_text())</span><br></pre></td></tr></table></figure>
+<h4 id="混合检索之融合检索（Fusion-Retrieval）">混合检索之融合检索（Fusion Retrieval）</h4>
+<p>一文说清大模型RAG应用中的两种高级检索模式：你还只知道向量检索吗？： <a target="_blank" rel="noopener" href="https://www.53ai.com/news/qianyanjishu/2024060723184.html">https://www.53ai.com/news/qianyanjishu/2024060723184.html</a></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> os.path.exists(temp_dir):</span><br><span class="line">        loader = SimpleDirectoryReader(</span><br><span class="line">            input_dir = temp_dir,</span><br><span class="line">            required_exts=[<span class="string">&quot;.pdf&quot;</span>],</span><br><span class="line">            recursive=<span class="literal">True</span></span><br><span class="line">        )</span><br><span class="line"><span class="keyword">else</span>:    </span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="comment"># 设置LLM</span></span><br><span class="line">llm = OpenAI(temperature=<span class="number">0.1</span>, model=<span class="string">&quot;gpt-4o&quot;</span>)</span><br><span class="line">Settings.llm = llm</span><br><span class="line"><span class="comment"># 设置embed模型，默认openai的text-embedding-ada-002，可以指定本地模型</span></span><br><span class="line">embed_model = HuggingFaceEmbedding(model_name=<span class="string">&quot;BAAI/bge-large-en-v1.5&quot;</span>, trust_remote_code=<span class="literal">True</span>)</span><br><span class="line">Settings.embed_model = embed_model</span><br><span class="line"><span class="comment"># 加载成document结构</span></span><br><span class="line">docs = loader.load_data()</span><br><span class="line"><span class="comment"># 将documents进行进一步分割成chunk，使用TextNode结构进行封装。</span></span><br><span class="line">parser = SentenceSplitter(chunk_size=<span class="number">100</span>,chunk_overlap=<span class="number">20</span>)</span><br><span class="line">nodes = parser.get_nodes_from_documents(docs)</span><br><span class="line"><span class="comment"># 可以构造多个索引index</span></span><br><span class="line">vector_index = VectorStoreIndex(nodes=nodes)</span><br><span class="line"><span class="comment"># 定义融合检索器</span></span><br><span class="line">retriever = QueryFusionRetriever(</span><br><span class="line">    [vector_index.as_retriever()],</span><br><span class="line">    similarity_top_k=<span class="number">10</span>,</span><br><span class="line">    num_queries=<span class="number">4</span>,  <span class="comment"># 重写生成多个问题， set this to 1 to disable query generation</span></span><br><span class="line">    use_async=<span class="literal">True</span>,</span><br><span class="line">    verbose=<span class="literal">True</span>,</span><br><span class="line">    <span class="comment"># query_gen_prompt=&quot;...&quot;,  # we could override the query generation prompt here</span></span><br><span class="line">)</span><br><span class="line"><span class="comment"># 构造rerank模型</span></span><br><span class="line">reranker = SentenceTransformerRerank(model=<span class="string">&#x27;BAAI/bge-reranker-large&#x27;</span>, top_n=<span class="number">2</span>)</span><br><span class="line"><span class="comment"># 生成查询引擎</span></span><br><span class="line">query_engine = RetrieverQueryEngine.from_args(retriever,node_postprocessors=[reranker])</span><br><span class="line"><span class="comment"># 执行检索查询</span></span><br><span class="line">query_str = <span class="string">&quot;月工资有多少&quot;</span></span><br><span class="line">nodes_with_scores = query_engine.retrieve(QueryBundle(query_str))</span><br><span class="line"><span class="comment"># print(nodes_with_scores)</span></span><br><span class="line"><span class="keyword">for</span> node_score <span class="keyword">in</span> nodes_with_scores:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;node_score:&quot;</span>,node_score)</span><br><span class="line">response = query_engine.query(query_str)</span><br><span class="line"><span class="built_in">print</span>(response)</span><br></pre></td></tr></table></figure>
+<h4 id="混合检索之递归检索（Recursive-Retrieval）">混合检索之递归检索（Recursive Retrieval）</h4>
+<p><a target="_blank" rel="noopener" href="https://www.53ai.com/news/qianyanjishu/2024060489721.html">https://www.53ai.com/news/qianyanjishu/2024060489721.html</a></p>
+<p>使用Llama index构建多代理 RAG <a target="_blank" rel="noopener" href="https://blog.csdn.net/tMb8Z9Vdm66wH68VX1/article/details/134213080">https://blog.csdn.net/tMb8Z9Vdm66wH68VX1/article/details/134213080</a></p>
+<p>Llama index概述了使用多代理RAG的具体示例:</p>
+<ul>
+<li>文档代理——在单个文档中执行QA和摘要。</li>
+<li>向量索引——为每个文档代理启用语义搜索。</li>
+<li>摘要索引——允许对每个文档代理进行摘要。</li>
+<li>高阶（TOP-LEVEL）代理——编排文档代理以使用工具检索回答跨文档的问题。<br>
+对于多文档QA，比单代理RAG基线显示出真正的优势。由顶级代理协调的专门文档代理提供基于特定文档的更集中、更相关的响应。</li>
+</ul>
+<h3 id="rerank使用">rerank使用</h3>
+<p>由于考虑召回速度，在执行向量搜索的时候存在一定随机性就会牺牲一点准确性，RAG中第一次召回的结果排序往往不太准确，具体可以参考 Rerank——RAG中百尺竿头更进一步的神器，从原理到解决方案。所以这时候就需要 rerank 一下，来对召回的结果重新排序。这里 LlamaIndex 的给了两个方案，一个是基于大模型的 LLMRerank 类，一个是第三方的 rerank 模型。</p>
+<ol>
+<li>使用llm的rerank</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> llama_index.core.postprocessor <span class="keyword">import</span> LLMRerank</span><br><span class="line"></span><br><span class="line">reranker = LLMRerank(</span><br><span class="line">     top_n=<span class="number">2</span>, llm=llm,</span><br><span class="line">     parse_choice_select_answer_fn=self.custom_parse_choice_select_answer_fn</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">chat_engine = index.as_chat_engine(</span><br><span class="line">     similarity_top_k=<span class="number">5</span>, chat_mode=<span class="string">&quot;condense_plus_context&quot;</span>,</span><br><span class="line">     node_postprocessors=[postprocessor, reranker]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>使用自定义模型</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> llama_index.core.postprocessor <span class="keyword">import</span> SentenceTransformerRerank</span><br><span class="line">reranker = SentenceTransformerRerank(model=<span class="string">&#x27;BAAI/bge-reranker-large&#x27;</span>, top_n=<span class="number">2</span>)</span><br><span class="line">query_engine = RetrieverQueryEngine.from_args(retriever,node_postprocessors=[reranker])</span><br></pre></td></tr></table></figure>
+<p>效果，咨询问题为：月工资多少。不加rerank召回为</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">node<span class="emphasis">_score: Node ID: 08ce241b-8f30-4f5d-b075-3352c09aacdd</span></span><br><span class="line"><span class="emphasis">Text: 第十一条   本合同自甲乙双方签字或者盖章之日起生效。 本 合同一式二份，甲乙双方各执一份。        甲方（公章）</span></span><br><span class="line"><span class="emphasis">Score:  0.644</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">node_</span>score: Node ID: 651bc570-8d6a-4be0-9708-435bc622a032</span><br><span class="line">Text: 第四条  甲方于每月   5  日前以现金或 银行代发 形式及时 足额支付乙方工资，工资标准为 ：  1.月工资 10086</span><br><span class="line">元。  2.计件工资。</span><br><span class="line">Score:  0.643</span><br><span class="line"></span><br><span class="line">node<span class="emphasis">_score: Node ID: 92b10150-f03b-433d-8035-d8cb75daf2b3</span></span><br><span class="line"><span class="emphasis">Text: 符合《劳动合同法》有关规定情形的， 甲方应当依法支付乙方经济补偿。       第八条  双方约定的其它事项：</span></span><br><span class="line"><span class="emphasis">Score:  0.622</span></span><br></pre></td></tr></table></figure>
+<p>加了rerank，召回为：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">node<span class="emphasis">_score: Node ID: 20a75e46-052b-47d0-9051-f434c251835c</span></span><br><span class="line"><span class="emphasis">Text: 第四条  甲方于每月   5  日前以现金或 银行代发 形式及时 足额支付乙方工资，工资标准为 ：  1.月工资 10086</span></span><br><span class="line"><span class="emphasis">元。  2.计件工资。</span></span><br><span class="line"><span class="emphasis">Score:  0.284</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">node_</span>score: Node ID: 6b927ec0-fb80-4f98-bb25-41baaf1bdbb2</span><br><span class="line">Text: 符合《劳动合同法》有关规定情形的， 甲方应当依法支付乙方经济补偿。       第八条  双方约定的其它事项：</span><br><span class="line">Score:  0.015</span><br></pre></td></tr></table></figure>
+<p>LLMRerank 这个类的原理是，将向量数据库查询的 top 片段，拼装成提示词给大模型，等待大模型按一定的格式返回，然后再将排序之后的片段作为用户提问的上下文，再次拼装成提示词给大模型回答。这里就会有两次请求大模型，就会造成响应明显变慢。所以一般都是采用第三方的 rerank 模型，替换大模型排序这个操作。</p>
+<h3 id="召回测评">召回测评</h3>
+<p><a target="_blank" rel="noopener" href="https://ihey.cc/rag/%E8%9E%8D%E5%90%88%E6%A3%80%E7%B4%A2-rerank-%E5%9C%A8-rag-%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E6%95%88%E6%9E%9C%E8%AF%84%E6%B5%8B/">https://ihey.cc/rag/融合检索-rerank-在-rag-应用中的效果评测/</a></p>
+<p>结论：</p>
+<ul>
+<li>对最终召回成功率提升最大的是提高 Recall@N 的数量。但这对 LLM 的 Context Length 和 In-Context learning 要求在提高</li>
+<li>Rerank 对检索结果的提升是直接的、确定的（10%～15%），但还是不够理想。对具体某个 query 案例，rerank 小概率会降低召回成功率</li>
+<li>融合检索比单纯的 Sparse 或 Dense 检索都好，但优势不显著。可能需要针对不同 query 采用不同的融合排序的权重</li>
+<li>RAG 方案最终拼的还是检索能力。对 LLM 来说是 garbage in garbage out。是否是 garbage，取决于检索</li>
+</ul>
+<h2 id="langchain构建RAG应用">langchain构建RAG应用</h2>
+<h2 id="ragflow构建RAG应用">ragflow构建RAG应用</h2>
+<h2 id="高级RAG多智能体">高级RAG多智能体</h2>
+<p>智能体（Langchain[35] 和 LlamaIndex[36] 都支持）自从第一个 LLM API 发布以来就已存在。其核心理念是为具备推理能力的 LLM 提供一套工具和一个待完成的任务。这些工具可能包括确定性函数（如代码功能或外部 API）或其他智能体。正是这种 LLM 链接的思想促成了 LangChain 的命名。</p>
+<p>智能体本身是一个非常广泛的领域，在 RAG 概述中无法深入探讨，因此我将直接继续讨论基于智能体的多文档检索案例，并简要介绍 OpenAI 助手。OpenAI 助手是在最近的 OpenAI 开发者大会上作为 GPTs 提出的相对较新的概念[37]，并在下面描述的 RAG 系统中发挥作用。</p>
+<p>OpenAI Assistants[38]集成了许多围绕LLM必需的工具，这些工具我们以前在开源项目中已经见过 —— 包括聊天记录管理、知识库存储、文档上传界面，以及最关键的，功能调用 API[39]。这个 API 的重要功能是能够将自然语言请求转换为外部工具或数据库查询的 API 调用。</p>
+<p>在 LlamaIndex 中，OpenAIAgent[40] 类融合了这些高级功能，并与 ChatEngine 和 QueryEngine 类结合，提供了基于知识的、具有上下文感知能力的聊天体验。此外，它还能在一次对话交互中调用多个 OpenAI 功能，从而真正实现智能代理行为。</p>
+<p>接下来让我们来了解一下多文档代理方案[41] —— 这是一个相当复杂的设计，涉及到在每个文档上初始化一个代理（OpenAIAgent），这个代理不仅能进行文档摘要处理，还能执行经典的问答流程。还有一个顶级代理，负责将查询任务分配给各个文档代理，并合成最终答案。</p>
+<p>每个文档代理配备了两种工具 —— 向量存储索引和摘要索引，它会根据接收到的查询决定使用哪个工具。对于顶级代理来说，所有文档代理都是其工具，可供其调度使用。</p>
+<p>这个方案展示了一个高级的 RAG 架构，涉及每个代理做出的复杂路由决策。这种架构的优势在于它可以比较不同文档中描述的不同解决方案或实体，以及它们的摘要，同时也支持经典的单文档摘要处理和问答流程 —— 这实际上覆盖了大多数与文档集合交互的常见用例。</p>
+<p><img src="/images/ai/rag_multi_agent.jpeg" alt="img"><br>
+<img src="../../images/ai/rag_multi_agent.jpeg" alt="img"></p>
+<p>这个复杂方案的一个缺点可以通过图像来理解 —— 由于需要在代理内部与大语言模型（LLM）进行多轮迭代，因此处理速度较慢。需要注意的是，在 RAG 架构中，调用 LLM 总是最耗时的步骤，而搜索则是出于设计考虑而优化了速度。因此，对于涉及大量文档的存储系统，我建议对这一方案进行简化，以提高其扩展性。</p>
+<p>该方案可参考：<a target="_blank" rel="noopener" href="https://discuss.nebula-graph.com.cn/t/topic/14848">https://discuss.nebula-graph.com.cn/t/topic/14848</a></p>
+<h2 id="参考">参考</h2>
+<ol>
+<li>使用 LlamaIndex 框架搭建 RAG 应用基础实践 <a target="_blank" rel="noopener" href="https://juejin.cn/post/7341210909068574760">https://juejin.cn/post/7341210909068574760</a></li>
+<li>Rerank——RAG中百尺竿头更进一步的神器，从原理到解决方案 <a target="_blank" rel="noopener" href="https://luxiangdong.com/2023/11/06/rerank/">https://luxiangdong.com/2023/11/06/rerank/</a></li>
+<li>大模型应用开发，必看的高级 RAG 技术 <a target="_blank" rel="noopener" href="https://juejin.cn/post/7352146423276568616">https://juejin.cn/post/7352146423276568616</a></li>
+<li>【RAG实践】Rerank，让RAG更近一步 魔搭+llamaIndex+Qwen+DAG+Rerank <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/691661819">https://zhuanlan.zhihu.com/p/691661819</a></li>
+<li>LlamaIndex官方文档 <a target="_blank" rel="noopener" href="https://docs.llamaindex.ai/en/stable/">https://docs.llamaindex.ai/en/stable/</a></li>
+<li>langchain中文网 <a target="_blank" rel="noopener" href="https://www.langchain.com.cn/">https://www.langchain.com.cn/</a></li>
+<li>最全的RAG概览 <a target="_blank" rel="noopener" href="https://discuss.nebula-graph.com.cn/t/topic/14848">https://discuss.nebula-graph.com.cn/t/topic/14848</a></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://mylofty.github.io">JimmyDing</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://mylofty.github.io/2024/06/11/fa22652bbbc5/">https://mylofty.github.io/2024/06/11/fa22652bbbc5/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://mylofty.github.io" target="_blank">爱开源GoGo</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ai/">ai</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">解锁AI潜能：万字详解大语言模型提示工程的终极指南</div></div></a></div><div class="next-post pull-right"><a href="/2024/06/07/225dc84728ab/" title="大模型意图选择"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">大模型意图选择</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/03/31/df8ae9e77565/" title="comfyui使用"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-31</div><div class="title">comfyui使用</div></div></a></div><div><a href="/2024/04/20/2f43d59ec67f/" title="huggingface镜像站使用"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-20</div><div class="title">huggingface镜像站使用</div></div></a></div><div><a href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-10</div><div class="title">pytorch基础：FashionMNIST时装分类</div></div></a></div><div><a href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-11</div><div class="title">pytorch导学：使用bert实现分类任务</div></div></a></div><div><a href="/2024/03/31/e135a5da70e3/" title="transformer详解"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-31</div><div class="title">transformer详解</div></div></a></div><div><a href="/2024/06/07/225dc84728ab/" title="大模型意图选择"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-07</div><div class="title">大模型意图选择</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/notebook.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">JimmyDing</div><div class="author-info__description">种一棵树，最好的时间是十年前，其次是现在</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/mylofty"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎前来爱开源GoGo</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">RAG应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81RAG%E7%AE%80%E4%BB%8B"><span class="toc-text">一、RAG简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81llamaIndex%E6%9E%84%E5%BB%BARAG%E6%9C%8D%E5%8A%A1"><span class="toc-text">二、llamaIndex构建RAG服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#llamaIndex%E5%BF%AB%E9%80%9F%E6%9E%84%E5%BB%BARAG"><span class="toc-text">llamaIndex快速构建RAG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E5%88%86%E6%9E%90"><span class="toc-text">文本分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E6%9E%84%E5%BB%BA"><span class="toc-text">索引构建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E6%91%98%E8%A6%81%E7%B4%A2%E5%BC%95%EF%BC%9ADocumentSummaryIndex"><span class="toc-text">文章摘要索引：DocumentSummaryIndex</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2"><span class="toc-text">向量检索</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B9%8B%E8%9E%8D%E5%90%88%E6%A3%80%E7%B4%A2%EF%BC%88Fusion-Retrieval%EF%BC%89"><span class="toc-text">混合检索之融合检索（Fusion Retrieval）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B9%8B%E9%80%92%E5%BD%92%E6%A3%80%E7%B4%A2%EF%BC%88Recursive-Retrieval%EF%BC%89"><span class="toc-text">混合检索之递归检索（Recursive Retrieval）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rerank%E4%BD%BF%E7%94%A8"><span class="toc-text">rerank使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AC%E5%9B%9E%E6%B5%8B%E8%AF%84"><span class="toc-text">召回测评</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#langchain%E6%9E%84%E5%BB%BARAG%E5%BA%94%E7%94%A8"><span class="toc-text">langchain构建RAG应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ragflow%E6%9E%84%E5%BB%BARAG%E5%BA%94%E7%94%A8"><span class="toc-text">ragflow构建RAG应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7RAG%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93"><span class="toc-text">高级RAG多智能体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vllm使用教程-基于qwen模型"/></a><div class="content"><a class="title" href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型">vllm使用教程-基于qwen模型</a><time datetime="2025-05-09T06:51:21.000Z" title="发表于 2025-05-09 14:51:21">2025-05-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="解锁AI潜能：万字详解大语言模型提示工程的终极指南"/></a><div class="content"><a class="title" href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南">解锁AI潜能：万字详解大语言模型提示工程的终极指南</a><time datetime="2024-08-14T06:51:21.000Z" title="发表于 2024-08-14 14:51:21">2024-08-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/11/fa22652bbbc5/" title="RAG应用"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG应用"/></a><div class="content"><a class="title" href="/2024/06/11/fa22652bbbc5/" title="RAG应用">RAG应用</a><time datetime="2024-06-11T06:51:21.000Z" title="发表于 2024-06-11 14:51:21">2024-06-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/07/225dc84728ab/" title="大模型意图选择"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="大模型意图选择"/></a><div class="content"><a class="title" href="/2024/06/07/225dc84728ab/" title="大模型意图选择">大模型意图选择</a><time datetime="2024-06-07T06:51:21.000Z" title="发表于 2024-06-07 14:51:21">2024-06-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pytorch导学：使用bert实现分类任务"/></a><div class="content"><a class="title" href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务">pytorch导学：使用bert实现分类任务</a><time datetime="2024-05-11T06:51:21.000Z" title="发表于 2024-05-11 14:51:21">2024-05-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pytorch基础：FashionMNIST时装分类"/></a><div class="content"><a class="title" href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类">pytorch基础：FashionMNIST时装分类</a><time datetime="2024-05-10T06:51:21.000Z" title="发表于 2024-05-10 14:51:21">2024-05-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/26/111ea67534ab/" title="redis基础知识"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="redis基础知识"/></a><div class="content"><a class="title" href="/2024/04/26/111ea67534ab/" title="redis基础知识">redis基础知识</a><time datetime="2024-04-25T16:00:00.000Z" title="发表于 2024-04-26 00:00:00">2024-04-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/23/a07a83071c8a/" title="腹肌锻炼"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="腹肌锻炼"/></a><div class="content"><a class="title" href="/2024/04/23/a07a83071c8a/" title="腹肌锻炼">腹肌锻炼</a><time datetime="2024-04-23T06:51:21.000Z" title="发表于 2024-04-23 14:51:21">2024-04-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By JimmyDing</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

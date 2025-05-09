@@ -1,0 +1,320 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>爱开源GoGo</title><meta name="author" content="JimmyDing"><meta name="copyright" content="JimmyDing"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="种一棵树，最好的时间是十年前，其次是现在">
+<meta property="og:type" content="website">
+<meta property="og:title" content="爱开源GoGo">
+<meta property="og:url" content="https://mylofty.github.io/page/3/index.html">
+<meta property="og:site_name" content="爱开源GoGo">
+<meta property="og:description" content="种一棵树，最好的时间是十年前，其次是现在">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mylofty.github.io/images/notebook.png">
+<meta property="article:author" content="JimmyDing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mylofty.github.io/images/notebook.png"><link rel="shortcut icon" href="/images/notebook.png"><link rel="canonical" href="https://mylofty.github.io/page/3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '爱开源GoGo',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2025-05-09 15:15:25'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/notebook.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/images/double_width.png')"><nav id="nav"><span id="blog-info"><a href="/" title="爱开源GoGo"><span class="site-name">爱开源GoGo</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">爱开源GoGo</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/03/20/be4f0cd331bf/" title="GPU优化">GPU优化</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-19T16:00:00.000Z" title="发表于 2024-03-20 00:00:00">2024-03-20</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.764Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ai/">ai</a></span></div><div class="content">MNN优化
+NC4HW4
+现在有一条指令处理4组数据的能力, 比如x86结构的sse指令,arm的neon指令.以及GPGPU的OpenGL和OpenCL,单次处理RGBA四组数据. 如果继续使用nchw内存排布的话, 是这样的.
+根据按行处理特点, 对于Feature和kernel的宽不是4倍数进行处理, 会出现错误. 图中的kernel很明显以已经到了第二行的值.
+那么有没有方法在按行处理的思想上, 一次处理4个数,而不受影响.答案是有的, 即NC4HW4.即把前4个通道合并在一个通道上, 依次类推, 在通道数不够4的情况下进行补0.
+进行NC4HW4重排后，可以充分利用cpu指令集的特性，实现对卷积等操作进行加速。同时可以较少cache miss.
+单指令处理4组数据（SIMD）
+NC4HW4数据排布： https://no5-aaron-wu.github.io/2021/11/14/AI-Algorithm-2-NC4HW4/
+量化
+将模型参数通过一个函数映射到0-255或者-127-128
+使用int（2-8）再采用100条数据拟合一下
+pytorch量化工作流程详解
+   ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/03/20/3ef8848ef8bd/" title="rocksdb原理">rocksdb原理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-19T16:00:00.000Z" title="发表于 2024-03-20 00:00:00">2024-03-20</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.774Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%98%E5%82%A8/">存储</a></span></div><div class="content">引擎整体架构
+
+MemTable 与 WAL
+RocksDB 使用 LSM （Log-structed Merge-tree）作为主要的存储数据结构，每当数据写入到 RocksDB 之中，就会被添加到 MemTable 内存的写缓冲区，以及一个磁盘上的超前写入日志（WAL）。数据会被写入到 WAL 和 MemTable，WAL 是 MemTable 的易失性保护机制。
+RocksDB 中 Memtable 的数据结构有三种，分别是 skiplist、hash-skiplist、hash-linklist，跳表的好处在于插入的时候可以保证数据的有序，并且支持二分查找、范围查询。插入和搜索的代价都是 O(log n)。
+在达到指定大小之后现有 MemTable 和 WAL 锁定变为不可变，新数据写入新的 MemTable 和 WAL。
+SSTable
+SSTable 是一种数据结构，当 MemTable 到达一定的上限之后，会 flush 到硬盘上 Sorted String Table (SSTable)，并放置在第 0 层(L0)，对应的 WAL 空间回收；L0 大小达到上限时，L0  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/03/19/f198e398518a/" title="缓存一致性">缓存一致性</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-18T16:00:00.000Z" title="发表于 2024-03-19 00:00:00">2024-03-19</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.774Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%98%E5%82%A8/">存储</a></span></div><div class="content">缓存一致性
+一、缓存常见问题
+
+缓存与数据库数据一致性
+缓存雪崩
+缓存击穿
+缓存穿透
+
+二、缓存一致性问题
+缓存一致性问题的产生主要是因为请求需要事务地处理缓存和数据库。但实际操作中，难以保证事务性。
+
+操作隔离性：并发请求时，无法保证多个请求在处理缓存和处理数据库两个步骤上的时序。
+操作原子性：即使单个请求，也无法保证处理缓存和处理数据库的原子性，可能存在某个操作失败的情况
+
+2.1 缓存更新策略
+根据缓存更新策略，可以分为以下三类
+
+旁路缓存(cache aside)
+写穿(write/read through)
+异步写回(write behind / write back)
+接下来根据不同的更新策略来分析产生一致性问题的原因和解决办法
+
+2.2 旁路缓存(cache aside)
+旁路缓存是开发中最常用的缓存使用策略，这个策略是以数据库中的数据为主，缓存只是按需从数据库中加载。该策略缓存中的数据只读，不作修改操作（当数据有修改，也仅仅删除缓存中的数据），因此也称只读模式
+读写策略如下：
+读策略：
+
+读缓存，
+缓存中存在数据，直接返回
+缓存中不存在该数据，从数据库中查询
+将查询到的 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/01/06/9ba4498d462a/" title="nodejs简单使用">nodejs简单使用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-05T16:00:00.000Z" title="发表于 2024-01-06 00:00:00">2024-01-06</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.774Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/vue/">vue</a></span></div><div class="content">hello world
+
+创建test.js文件，内容如下
+
+12var hello = &#x27;Hello world!&#x27;;console.log(hello);
+
+使用node进行运行
+
+1node test.js
+使用第三方包
+以xlsx为例，介绍使用第三方包
+
+在当前目录下安装xlsx，执行如下命令之后会在当前目录创建出node_modules文件夹，以及package.json和package-lock.json文件
+
+1npm install xlsx
+
+创建test.js文件
+
+1234var xlsx = require(&#x27;xlsx&#x27;);let data = [&#123;name: &quot;John&quot;, city: &quot;Seattle&quot;&#125;, &#123;name: &quot;Mike&quot;, city: &quot;Los Angeles&quot;&#125;];let worksheet = xlsx.utils.json_to_sheet(data);console.log(&q ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/05/fa56b9696089/" title="GMP原理">GMP原理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-04T16:00:00.000Z" title="发表于 2023-03-05 00:00:00">2023-03-05</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.773Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Go/">Go</a></span></div><div class="content">[TOC]
+2.4 GMP源码剖析
+2.4.1 协程G结构体
+1234567891011121314151617181920212223242526// src/runtime/runtime2.gotype g struct &#123;    stack       stack   // 保存当前协程栈的上界和下界    // stackguard0 是对比 Go 栈增长的 prologue 的栈指针    // 如果 sp 寄存器比 stackguard0 小（由于栈往低地址方向增长），会触发栈拷贝和调度    // 通常情况下：stackguard0 = stack.lo + StackGuard，但被抢占时会变为 StackPreempt    stackguard0 uintptr // offset known to liblink    // stackguard1 是对比 C 栈增长的 prologue 的栈指针    // 当位于 g0 和 gsignal 栈上时，值为 stack.lo + StackGuard    // 在其他栈上值为 ~0 用于触发 more ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/05/16afd7bb2116/" title="golang垃圾回收">golang垃圾回收</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-04T16:00:00.000Z" title="发表于 2023-03-05 00:00:00">2023-03-05</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.773Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Go/">Go</a></span></div><div class="content">golang三关
+https://learnku.com/blog/Aceld/tags/three-passes-of-golang_67253
+垃圾回收：
+https://learnku.com/articles/68141
+</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/05/288be19ac2c4/" title="go协程调度">go协程调度</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-04T16:00:00.000Z" title="发表于 2023-03-05 00:00:00">2023-03-05</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.773Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Go/">Go</a></span></div><div class="content">二、协程调度
+2.1 线程和协程
+2.1.1 线程调度开销
+在操作系统中，线程是cpu调度的基本单位，然而，线程是由操作系统负责调度。线程切换时：
+
+线程需要从用户态陷入内核态，栈指针指向内核态栈地址，同时保存上下文，如各种用户空间寄存器的数据（通用寄存器，段寄存器，标识寄存器等等）
+操作系统调度算法找到需要调度的线程之后，又要从内核态切换回用户态，恢复上下文，栈指针指向新线程的用户态栈地址。
+整个切换过程中，为了安全，需要引入更强的内核检查。
+
+这些操作导致线程切换存在不小的开销
+2.1.2 协程调度
+既然线程切换要从用户态切换到内核态才能让操作系统进行调度，那么我们可以将其抽象的看作“用户态”线程和“内核态”线程，用户态线程1：1绑定在内核态线程上面完成CPU调度，为了降低陷入内核态的开销，我们可以创建多个用户态线程绑定到一个内核态线程上面，我们自己调度用户态线程，这样，用户态线程切换的时候就无需陷入内核了
+于是，协程便应运而生，协程即是用户级线程，协程的切换无需操作系统参与，无需陷入内核态，只需用户在用户态实现协程的切换即可（切换栈指针，程序计数器，保存少数几个寄存器），切换开销 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/05/820734fbd49f/" title="go程序启动过程">go程序启动过程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-04T16:00:00.000Z" title="发表于 2023-03-05 00:00:00">2023-03-05</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.773Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Go/">Go</a></span></div><div class="content">[[toc]]
+一、go启动流程
+1.1 第一个go程序
+
+首先，我们来看一个简单的go程序启动流程
+
+123456789// main.goimport &quot;fmt&quot;func main() &#123;    str := make([]string, 0)    str = append(str, &quot;zhiminding&quot;)    fmt.Printf(&quot;hello,%v&quot;, str)&#125;
+
+对上面的go程序进行编译，生成main
+
+1go build -gcflags=&quot;-l -N&quot; # -l 禁止内联, -N 禁止优化
+
+查看编译出来的二进制和汇编代码
+
+1go tool objdump -s &quot;main.main&quot; -S ./main # 用户实现的main函数，在源码中是main.main
+该方法在控制台输出汇编代码，阅读和调试起来不方便，我们可以用lensm工具查看汇编代码
+1.2 生产力工具lensm
+为了方便看汇编和源代码，在go源码之间方便跳转，我们可以安装一个 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/05/d7edae0820f1/" title="go语言数据结构">go语言数据结构</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-04T16:00:00.000Z" title="发表于 2023-03-05 00:00:00">2023-03-05</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.774Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Go/">Go</a></span></div><div class="content">slice
+123list := make([]int,0)list = append(list,1)list = append(list,1)
+编译期：
+1234567891011121314// cmd/compile/internal/types.NewSlicefunc NewSlice(elem *Type) *Type &#123;	if t := elem.Cache.slice; t != nil &#123;		if t.Elem() != elem &#123;			Fatalf(&quot;elem mismatch&quot;)		&#125;		return t	&#125;	t := New(TSLICE)	t.Extra = Slice&#123;Elem: elem&#125;	elem.Cache.slice = t	return t&#125;
+底层数据结构
+123456789101112// reflect.SliceHeadertype SliceHeader struct &#123;	Data uintptr	Len  int	Cap  in ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/06/059c08d15321/" title="对象存储使用">对象存储使用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-05T16:00:00.000Z" title="发表于 2023-01-06 00:00:00">2023-01-06</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.774Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%98%E5%82%A8/">存储</a></span></div><div class="content">上传流程
+文件上传分为客户端上传（主要是指网页端和移动端等面向终端用户的场景）和服务端上传两种场景，具体可以参考文档业务流程。
+服务端SDK在上传方面主要提供两种功能，一种是生成客户端上传所需要的上传凭证，另外一种是直接上传文件到云端。
+客户端上传凭证
+客户端（移动端或者Web端）上传文件的时候，需要从客户自己的业务服务器获取上传凭证，而这些上传凭证是通过服务端的SDK来生成的，然后通过客户自己的业务API分发给客户端使用。根据上传的业务需求不同，七牛云 Go SDK支持丰富的上传凭证生成方式。
+拷贝
+// 存储相关功能的引入包只有这两个，后面不再赘述
+import (
+“github.com/qiniu/go-sdk/v7/auth/qbox”
+“github.com/qiniu/go-sdk/v7/storage”
+)
+accessKey := “your access key”
+secretKey := “your secret key”
+mac := qbox.NewMac(accessKey, secretKey)
+简单上传的凭证
+最简单的上传凭证只需要AccessKey，S ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/2/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#content-inner">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#content-inner">4</a><a class="extend next" rel="next" href="/page/4/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/notebook.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">JimmyDing</div><div class="author-info__description">种一棵树，最好的时间是十年前，其次是现在</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/mylofty"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎前来爱开源GoGo</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vllm使用教程-基于qwen模型"/></a><div class="content"><a class="title" href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型">vllm使用教程-基于qwen模型</a><time datetime="2025-05-09T06:51:21.000Z" title="发表于 2025-05-09 14:51:21">2025-05-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="解锁AI潜能：万字详解大语言模型提示工程的终极指南"/></a><div class="content"><a class="title" href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南">解锁AI潜能：万字详解大语言模型提示工程的终极指南</a><time datetime="2024-08-14T06:51:21.000Z" title="发表于 2024-08-14 14:51:21">2024-08-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/11/fa22652bbbc5/" title="RAG应用"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG应用"/></a><div class="content"><a class="title" href="/2024/06/11/fa22652bbbc5/" title="RAG应用">RAG应用</a><time datetime="2024-06-11T06:51:21.000Z" title="发表于 2024-06-11 14:51:21">2024-06-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/07/225dc84728ab/" title="大模型意图选择"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="大模型意图选择"/></a><div class="content"><a class="title" href="/2024/06/07/225dc84728ab/" title="大模型意图选择">大模型意图选择</a><time datetime="2024-06-07T06:51:21.000Z" title="发表于 2024-06-07 14:51:21">2024-06-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pytorch导学：使用bert实现分类任务"/></a><div class="content"><a class="title" href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务">pytorch导学：使用bert实现分类任务</a><time datetime="2024-05-11T06:51:21.000Z" title="发表于 2024-05-11 14:51:21">2024-05-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pytorch基础：FashionMNIST时装分类"/></a><div class="content"><a class="title" href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类">pytorch基础：FashionMNIST时装分类</a><time datetime="2024-05-10T06:51:21.000Z" title="发表于 2024-05-10 14:51:21">2024-05-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/26/111ea67534ab/" title="redis基础知识"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="redis基础知识"/></a><div class="content"><a class="title" href="/2024/04/26/111ea67534ab/" title="redis基础知识">redis基础知识</a><time datetime="2024-04-25T16:00:00.000Z" title="发表于 2024-04-26 00:00:00">2024-04-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/23/a07a83071c8a/" title="腹肌锻炼"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="腹肌锻炼"/></a><div class="content"><a class="title" href="/2024/04/23/a07a83071c8a/" title="腹肌锻炼">腹肌锻炼</a><time datetime="2024-04-23T06:51:21.000Z" title="发表于 2024-04-23 14:51:21">2024-04-23</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Go/"><span class="card-category-list-name">Go</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/ai/"><span class="card-category-list-name">ai</span><span class="card-category-list-count">10</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/vue/"><span class="card-category-list-name">vue</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%98%E5%82%A8/"><span class="card-category-list-name">存储</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/"><span class="card-category-list-name">工具</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%90%9C%E7%B4%A2/"><span class="card-category-list-name">搜索</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%90%9E%E7%AC%91/"><span class="card-category-list-name">搞笑</span><span class="card-category-list-count">1</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/GPU/" style="font-size: 1.1em; color: #999">GPU</a> <a href="/tags/ai/" style="font-size: 1.5em; color: #99a9bf">ai</a> <a href="/tags/mysql/" style="font-size: 1.1em; color: #999">mysql</a> <a href="/tags/vue/" style="font-size: 1.18em; color: #999ca1">vue</a> <a href="/tags/Go/" style="font-size: 1.42em; color: #99a6b7">Go</a> <a href="/tags/faiss/" style="font-size: 1.18em; color: #999ca1">faiss</a> <a href="/tags/%E6%90%9E%E7%AC%91/" style="font-size: 1.1em; color: #999">搞笑</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 1.26em; color: #999fa8">工具</a> <a href="/tags/%E7%BC%93%E5%AD%98/" style="font-size: 1.34em; color: #99a3b0">缓存</a> <a href="/tags/cos/" style="font-size: 1.1em; color: #999">cos</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">五月 2025</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date">八月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/06/"><span class="card-archive-list-date">六月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">五月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">11</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/03/"><span class="card-archive-list-date">三月 2023</span><span class="card-archive-list-count">5</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">32</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-05-09T07:15:25.392Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By JimmyDing</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

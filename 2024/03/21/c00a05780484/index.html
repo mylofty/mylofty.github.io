@@ -1,0 +1,322 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>hnswlib向量索引 | 爱开源GoGo</title><meta name="author" content="JimmyDing"><meta name="copyright" content="JimmyDing"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="hnswlib向量索引 nsw简介 六度分离理论，Stanley Milgram计算信函平均到达的节点为5个，也就是我们和一个陌生人建立连接只需要6步。 Stanley Milgram基于他的实验提出了著名的六度分离理论，这个理论指出:  现实世界中的短路径是普遍存在的。 人们可以有效地找到并且利用这些短路径。  在小世界网络中，可以把点与点之间的关系可以分为两种：  同质性:同质性也就是相似的点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hnswlib向量索引">
+<meta property="og:url" content="https://mylofty.github.io/2024/03/21/c00a05780484/index.html">
+<meta property="og:site_name" content="爱开源GoGo">
+<meta property="og:description" content="hnswlib向量索引 nsw简介 六度分离理论，Stanley Milgram计算信函平均到达的节点为5个，也就是我们和一个陌生人建立连接只需要6步。 Stanley Milgram基于他的实验提出了著名的六度分离理论，这个理论指出:  现实世界中的短路径是普遍存在的。 人们可以有效地找到并且利用这些短路径。  在小世界网络中，可以把点与点之间的关系可以分为两种：  同质性:同质性也就是相似的点">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2024-03-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-05-09T07:04:26.773Z">
+<meta property="article:author" content="JimmyDing">
+<meta property="article:tag" content="faiss">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/images/notebook.png"><link rel="canonical" href="https://mylofty.github.io/2024/03/21/c00a05780484/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'hnswlib向量索引',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-05-09 15:04:26'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/notebook.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="爱开源GoGo"><span class="site-name">爱开源GoGo</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">hnswlib向量索引</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-20T16:00:00.000Z" title="发表于 2024-03-21 00:00:00">2024-03-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.773Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="hnswlib向量索引"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>hnswlib向量索引</h1>
+<h2 id="nsw简介">nsw简介</h2>
+<p>六度分离理论，Stanley Milgram计算信函平均到达的节点为5个，也就是我们和一个陌生人建立连接只需要6步。</p>
+<p>Stanley Milgram基于他的实验提出了著名的六度分离理论，这个理论指出:</p>
+<ul>
+<li>现实世界中的短路径是普遍存在的。</li>
+<li>人们可以有效地找到并且利用这些短路径。</li>
+</ul>
+<p>在小世界网络中，可以把点与点之间的关系可以分为两种：</p>
+<ul>
+<li>同质性:同质性也就是相似的点会聚集到一起，相互连接具有邻接边。</li>
+<li>弱连接:弱连接是指从每一个节点上，会有一些随机的边随机连接到网络中的节点上，这些节点是随机均匀的。</li>
+</ul>
+<p><img src="../images/nsw_global.webp" alt="img"></p>
+<!-- ![img](/images/nsw_global.webp) -->
+<p>在NSW算法中通过构建一个小世界网络，希望通过黑色相似的近邻边来检索最近邻节点， 通过红色长边(高速公路)来实现不同类节点之间的快速检索。</p>
+<h3 id="nsw图构建">nsw图构建</h3>
+<p>基于NSW的原理，我们希望NSW的局部节点之间的在距离上具有同质性(也就是近邻节点能够相互连接)。从而使得当我们检索 到一个近邻节点时，其大部分近邻节点都是近邻节点。同时也希望保留一些随机边，能够在不同区域之间快速跳转</p>
+<p>NSW节点的插入</p>
+<p>构建图的时候，理论上来说我们对所有的点做Delaunay三角剖分，然后添加一些随机的长边构建快速检索通道， 就构建了一个可导航的小世界网络。<br>
+由于构建Delaunay三角剖分的复杂度太高。实际的代码实现过程中是通过节点随机插入来引入随机性，利用已有节点构建Delaunay边来引入同质性。</p>
+<p>NSW的网络构建过程如下:</p>
+<ol>
+<li>在候选节点vi里面随机挑选一个节点</li>
+<li>将节点vi插入到已经构建好的图中，并构建边。</li>
+<li>边构建的规则：找到节点vi最近邻的f个邻居，建立vi和这些邻居的边连接。</li>
+</ol>
+<h3 id="nsw图检索">nsw图检索</h3>
+<p>K 近邻查找</p>
+<p>在NSW中K近邻检索的过程如下:</p>
+<ol>
+<li>随机选择1个元素，放入到candidates当中</li>
+<li>从candidates中选取最近邻节点c，将这些元素的邻居节点放置到q当中</li>
+<li>从candidates中移除最近邻节点c</li>
+<li>如果c的距离远大于result中的第k个节点，跳出循环</li>
+<li>否则，对于c的每个邻居节点，遍历其邻居，如果没有在visited set里面。</li>
+<li>将e加入到visited set， candidates， tempRes</li>
+<li>遍历完成candidate中所有的节点后，把tempRes的结果传入到result</li>
+<li>重复执行上述步骤m遍, 返回result中最优的k个近邻结果。</li>
+</ol>
+<p>NSW中，是如何为一个点找到离它最近的M个点的。其实也很简单，我们从图中任意一个点出发，作为起始点，从这个起始点开始，贪心地去接近要查找的点，就好了。搜索过程就是一个greedy search的过程，如图所示。</p>
+<p><img src="../images/nsw_search.webp" alt="img"></p>
+<h2 id="hnsw简介">hnsw简介</h2>
+<p>HNSW（Hierarchical Navigable Small Word）算法算是目前推荐领域里面常用的ANN（Approximate Nearest Neighbor）算法了。Hierarchical NSW，分层的nsw方法</p>
+<p><img src="../images/hnsw_global.webp" alt="img"></p>
+<!-- ![img](/images/hnsw_global.webp) -->
+<p>根据上图可以直接看出HNSW在NSW基础上所作的优化。</p>
+<p>在HNSW中，引入Layers的概念，总体思想如下:</p>
+<ul>
+<li>在Layer = 0 层中，包含了连通图中所有的点。</li>
+<li>随着层数的增加，每一层的点数逐渐减少并且遵循指数衰减定律</li>
+<li>图节点的最大层数，由随机指数概率衰减函数决定。</li>
+<li>从某个点所在的最高层往下的所有层中均存在该节点。</li>
+<li>在对HNSW进行查询的时候，从最高层开始检索。</li>
+</ul>
+<h3 id="hnsw节点插入">hnsw节点插入</h3>
+<p>节点插入过程</p>
+<p><img src="../images/hnsw_insert.webp" alt="img"></p>
+<!-- ![img](/images/hnsw_insert.webp) -->
+<p>在整个HNSW的insert的过程中包含以下几个部分。</p>
+<ul>
+<li>
+<p>初始化当前最近邻集合W，初始化固定节点ep，获取顶层编号L，获取新插入节点的层l</p>
+</li>
+<li>
+<p>对于属于L-&gt;l+1的每一层查找出q的最近邻节点。</p>
+</li>
+<li>
+<p>对于lc &lt;- min(L,l)…0的每一层执行以下步骤:</p>
+<ul>
+<li>每一层查找出最近的efConstruction个节点得到集合M。</li>
+<li>在每个节点中查找到最近的M个neighbors。(采用算法3,或者算法4)</li>
+<li>将在层lc中的所有neighbors和节点q建立连接。</li>
+<li>对于neighbors中的每个节点e重新判断一下节点个数，然后减少e节点的邻居节点重新建立连接。</li>
+</ul>
+</li>
+<li>
+<p>如果 l &gt; L，将q设置为hnsw的enter point</p>
+</li>
+</ul>
+<p>一个新的节点，在哪一层开始插入，是随机的。随机是带权的，随机到下层的概率较高。刚才提到，要控制住每个节点的度，论文中的伪代码是给了个度的阈值Max。在每一层进行插入的时候，一旦发现与新插入点Q建立连接的几个邻居节点中，有邻居节点N的连接数超过了Max，则要对N重新进行近邻搜索，并重新与新的几个邻居建立连接</p>
+<p>HNSW通过一个随机函数，将所有的点划分到不同层次，越往上节点数越少，边越少。这种情况下节点和节点之间寻找最近邻居的 距离也就越远。因此在从上到小检索的过程中，先通过Long Link找到全局可能的最近节点，然后往下层以该节点为入口 进一步做局部检索。</p>
+<h3 id="hnsw节点查询">hnsw节点查询</h3>
+<p>在HNSW的查询阶段，包括以下几个算法。</p>
+<ul>
+<li>SEACHER-LAYER: 在指定层查询K个最近邻节点。</li>
+<li>SELECT-NEIGHBORS-SIMPLE: 简单的查找某一层最近的邻居节点。</li>
+<li>SELECT-NEIGHBORS-HEURISTIC: 探索式查找某一层最近的邻居节点。</li>
+<li>K-NN-SEARCH: 从所有候选结果中找出K个最近邻结果。</li>
+</ul>
+<ol>
+<li>K-NN-SEACHER:</li>
+</ol>
+<p>KNN查询的逻辑很简单，从固定的enter节点进入，在顶层开始检索。 在每一层检索到唯一一个最近邻然后作为下一层入口节点。最后在底层检索top K个最相似节点。</p>
+<p><img src="../images/hnsw_search.png" alt="img"><br>
+检索流程:<br>
+其中红色的节点表示搜索节点q(可以是非图中的节点)，绿色节点表示图中已建立的节点，黄色的节点表示搜索结果。</p>
+<ol>
+<li>输入索引路径和图片；</li>
+<li>根据索引路径加载索引，并对图片提取特征；</li>
+<li>获取需要搜索的近邻数K，并将图片特征作为节点输入搜索算法；</li>
+<li>在L层找到距离q最近的一个节点ep，并作为下一层的输入；</li>
+<li>在l=2层中，从ep开始，在ep的邻居中找到距离q最近的一个邻居，作为新的ep，并作为下一层的输入；</li>
+<li>在l=1层中，从ep开始，在ep的邻居中找到距离q最近的一个邻居，作为新的ep，并作为下一层的输入；</li>
+<li>在最底层中，从ep开始，搜索距离q最近的K个节点；（h）输出节点q和K个近邻。</li>
+</ol>
+<h3 id="总结">总结</h3>
+<ol>
+<li>
+<p>hnsw源码在第0层的邻居的确定，依然通过启发式即&quot;排除近亲&quot;的方式选择，而第0层个人认为已经不需要这样去做，这方面将做一些实验去验证；</p>
+</li>
+<li>
+<p>hnsw索引绝对可以保证高的召回率，相对faiss-ivf系索引，在同等近乎100%召回率结果下，hnsw的耗时几乎是ivf-flat的10倍(平均、p99)，作为ivf-flat的优化，ivfpq及其变种虽然可以减少耗时，但召回率有下降(因为引入了更多的量化)。所以基本上可以说，基于图的比较优秀的算法如hnsw(及一些演进品)，应作为后续我们索引的选择，feed的索引应尽快调整过来。</p>
+</li>
+<li>
+<p>hnsw的索引已经存储了原始向量，且可以获取(经充分调研faiss源码，faiss-ivf系索引，也可以获取原始向量)，当前的相似度debug工具，应尽快去掉&quot;id_emb_mapping&quot;文件的构建上传和加载。</p>
+</li>
+<li>
+<p>索引分片不应该是hnsw要考虑的问题.根据hnsw的特点，hnsw确实不易于索引分片，而且鉴于其性能也不应该考虑去做分片，那样只能反而更糟。根据大量文章调研，部分大厂针对数十亿量级的数据，可以做到用类似hnsw的算法，8核+64G内存的单机，就能实现很高的查询性能，结合我们当前的数据量，数据量很长一段时间内，不会是我们的瓶颈。</p>
+</li>
+<li>
+<p>hnsw我们可以考虑研发增量热更新.hnsw的增量更新，不论是新增向量还是更新向量，涉及更新许多向量且是多层邻居表，而查询时完全没有加锁行为(所以它是默认无热更新)，这是实现热更新的阻碍。<br>
+考虑传统正倒排索引的业界优秀解决方案：如大规模广告系统的索引，在高负载情况下的更新方式其实是：增量构建小索引一同提供查询 + 小索引定容/定时merge合入大索引，这是在大促高流量场景下已验证的成熟方案，hnsw的增量更新面对的问题实际上是一样的，完全可以解决。</p>
+</li>
+</ol>
+<h3 id="hnsw参数配置">hnsw参数配置</h3>
+<p><img src="../images/hnsw_params.png" alt="img"></p>
+<h2 id="参考">参考</h2>
+<p>HNSW的基本原理及使用 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/264832755">https://zhuanlan.zhihu.com/p/264832755</a><br>
+hnswlib数据结构和源码解读 <a target="_blank" rel="noopener" href="https://blog.csdn.net/u010246947/article/details/123298675">https://blog.csdn.net/u010246947/article/details/123298675</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://mylofty.github.io">JimmyDing</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://mylofty.github.io/2024/03/21/c00a05780484/">https://mylofty.github.io/2024/03/21/c00a05780484/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://mylofty.github.io" target="_blank">爱开源GoGo</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/faiss/">faiss</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/03/21/c7fafc3c07a1/" title="faiss使用"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">faiss使用</div></div></a></div><div class="next-post pull-right"><a href="/2024/03/20/dd1c4a8fc002/" title="互联网官话"><img class="cover" src="https://cos.ddlofty.com/double_width.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">互联网官话</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/03/21/c7fafc3c07a1/" title="faiss使用"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-21</div><div class="title">faiss使用</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/notebook.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">JimmyDing</div><div class="author-info__description">种一棵树，最好的时间是十年前，其次是现在</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/mylofty"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎前来爱开源GoGo</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">hnswlib向量索引</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#nsw%E7%AE%80%E4%BB%8B"><span class="toc-text">nsw简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#nsw%E5%9B%BE%E6%9E%84%E5%BB%BA"><span class="toc-text">nsw图构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nsw%E5%9B%BE%E6%A3%80%E7%B4%A2"><span class="toc-text">nsw图检索</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hnsw%E7%AE%80%E4%BB%8B"><span class="toc-text">hnsw简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hnsw%E8%8A%82%E7%82%B9%E6%8F%92%E5%85%A5"><span class="toc-text">hnsw节点插入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hnsw%E8%8A%82%E7%82%B9%E6%9F%A5%E8%AF%A2"><span class="toc-text">hnsw节点查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hnsw%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE"><span class="toc-text">hnsw参数配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vllm使用教程-基于qwen模型"/></a><div class="content"><a class="title" href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型">vllm使用教程-基于qwen模型</a><time datetime="2025-05-09T06:51:21.000Z" title="发表于 2025-05-09 14:51:21">2025-05-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="解锁AI潜能：万字详解大语言模型提示工程的终极指南"/></a><div class="content"><a class="title" href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南">解锁AI潜能：万字详解大语言模型提示工程的终极指南</a><time datetime="2024-08-14T06:51:21.000Z" title="发表于 2024-08-14 14:51:21">2024-08-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/11/fa22652bbbc5/" title="RAG应用"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG应用"/></a><div class="content"><a class="title" href="/2024/06/11/fa22652bbbc5/" title="RAG应用">RAG应用</a><time datetime="2024-06-11T06:51:21.000Z" title="发表于 2024-06-11 14:51:21">2024-06-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/07/225dc84728ab/" title="大模型意图选择"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="大模型意图选择"/></a><div class="content"><a class="title" href="/2024/06/07/225dc84728ab/" title="大模型意图选择">大模型意图选择</a><time datetime="2024-06-07T06:51:21.000Z" title="发表于 2024-06-07 14:51:21">2024-06-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pytorch导学：使用bert实现分类任务"/></a><div class="content"><a class="title" href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务">pytorch导学：使用bert实现分类任务</a><time datetime="2024-05-11T06:51:21.000Z" title="发表于 2024-05-11 14:51:21">2024-05-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pytorch基础：FashionMNIST时装分类"/></a><div class="content"><a class="title" href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类">pytorch基础：FashionMNIST时装分类</a><time datetime="2024-05-10T06:51:21.000Z" title="发表于 2024-05-10 14:51:21">2024-05-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/26/111ea67534ab/" title="redis基础知识"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="redis基础知识"/></a><div class="content"><a class="title" href="/2024/04/26/111ea67534ab/" title="redis基础知识">redis基础知识</a><time datetime="2024-04-25T16:00:00.000Z" title="发表于 2024-04-26 00:00:00">2024-04-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/23/a07a83071c8a/" title="腹肌锻炼"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="腹肌锻炼"/></a><div class="content"><a class="title" href="/2024/04/23/a07a83071c8a/" title="腹肌锻炼">腹肌锻炼</a><time datetime="2024-04-23T06:51:21.000Z" title="发表于 2024-04-23 14:51:21">2024-04-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By JimmyDing</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

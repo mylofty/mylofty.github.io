@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>爱开源GoGo</title><meta name="author" content="JimmyDing"><meta name="copyright" content="JimmyDing"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="种一棵树，最好的时间是十年前，其次是现在">
+<meta property="og:type" content="website">
+<meta property="og:title" content="爱开源GoGo">
+<meta property="og:url" content="https://mylofty.github.io/index.html">
+<meta property="og:site_name" content="爱开源GoGo">
+<meta property="og:description" content="种一棵树，最好的时间是十年前，其次是现在">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mylofty.github.io/images/notebook.png">
+<meta property="article:author" content="JimmyDing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mylofty.github.io/images/notebook.png"><link rel="shortcut icon" href="/images/notebook.png"><link rel="canonical" href="https://mylofty.github.io/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '爱开源GoGo',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2025-05-09 15:15:25'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/notebook.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/images/double_width.png')"><nav id="nav"><span id="blog-info"><a href="/" title="爱开源GoGo"><span class="site-name">爱开源GoGo</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">爱开源GoGo</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/03/14/a283b9ee2d80/" title="Tendis实现"><i class="fas fa-thumbtack sticky"></i>Tendis实现</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-13T16:00:00.000Z" title="发表于 2024-03-14 00:00:00">2024-03-14</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.774Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%98%E5%82%A8/">存储</a></span></div><div class="content">Tendis冷热混合存储方案
+技术实现原理
+
+
+采用异步写回方案同步redis中的数据到后端tendisPlus（基于rocksdb）组件。通过订阅redis的aof日志将数据通过kafka异步写到后端tendisPlus
+缓存中保存全量key，数据淘汰到tendisPlus仅仅驱逐value，key还在reidis中。当某个key过期时，redis中触发淘汰，会在aof日志中有一条del记录，通过这条记录删除tendisPlus中的值。设置value-eviction-time值为7，表示7天未访问，会被驱逐到tendisPlus中。
+
+读数据
+
+
+从 Redis 读取数据 。
+如果命中，那么就将数据返回给应用程序。
+如果redis中key不存在，则返回数据不存在
+如果未命中(key存在但数据已落地)，阻塞当前客户端， Redis 负责将 Key 从 Tendisplus 中恢复，然后返回给用户。
+
+写数据
+
+
+写入 Redis 缓存，成功后返回。
+后台异步回刷，将数据持久化到后端 Tendisplus。
+监听写入速度，和redis落地和redis差距很大，则阻塞写
+
+潜在常见问题
+ ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型">vllm使用教程-基于qwen模型</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-09T06:51:21.000Z" title="发表于 2025-05-09 14:51:21">2025-05-09</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:07:51.785Z" title="更新于 2025-05-09 15:07:51">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ai/">ai</a></span></div><div class="content">环境搭建
+创建vllm，最好单独搭建一个vllm的环境
+1234conda create -n vllm python=3.12 -yconda activate vllmpip install vllmpip show vllm # 0.8.5.post1
+命令行启动vllm
+qwen3开源包括两款MoE模型：Qwen3-235B-A22B（2350多亿总参数、 220多亿激活参数），以及Qwen3-30B-A3B（300亿总参数、30亿激活参数）；
+以及六个Dense模型：Qwen3-32B、Qwen3-14B、Qwen3-8B、Qwen3-4B、Qwen3-1.7B和Qwen3-0.6B。
+首先尝试在T4显卡（15G显存，80G内存）启动dense稠密向量的qwen3-4b模型，由于T4不支持bf16，所以需要修改为float16格式（--dtype=half）
+1vllm serve Qwen/Qwen3-4B --dtype=half
+发现跑不起来，显存太少，修改了--gpu-memory-utilization=0.95 --max-model-len=16384依然无法跑 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南">解锁AI潜能：万字详解大语言模型提示工程的终极指南</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-14T06:51:21.000Z" title="发表于 2024-08-14 14:51:21">2024-08-14</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.770Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ai/">ai</a></span></div><div class="content">解锁AI潜能：万字详解大语言模型提示工程的终极指南
+简介
+提示工程主要应用于为大模型开发和优化提示词（Prompt），通过提示词优化提升大语言模型处理复杂任务场景的能力。本文主要介绍当前提示工程（Prompt Engineering）领域的一些基础知识，当前有哪些主流的提示工程技术，以及设计提示词的一些通用技巧。最后，本文会分享一个实际工作中短信拦截的prompt调优工作。 你离prompt工程师只差这份指南 （本文标题就是大模型取的）
+提示工程是什么
+大模型提示工程（Prompt Engineering）是指为大规模预训练语言模型（如GPT-4）设计和优化输入提示（prompts）以获得所需输出的过程。这个过程涉及理解模型的行为和能力，编写有效的提示，调整和优化提示以提高模型的响应质量和准确性。
+它通过特定任务的指令，即提示，提升模型效能，无需更改模型核心参数。这些提示能够通过给定的指令直接引导预训练模型完成下游任务，从而实现模型行为的精确调控
+提示词要素
+明确意图：始终清楚地传达最重要的内容或信息。
+构建提示词：首先定义其角色，提供上下文 / 输入数据，然后给出具体指令。
+参照例子 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/06/11/fa22652bbbc5/" title="RAG应用">RAG应用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-06-11T06:51:21.000Z" title="发表于 2024-06-11 14:51:21">2024-06-11</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.764Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ai/">ai</a></span></div><div class="content">RAG应用
+一、RAG简介
+目前实现 RAG 的主流框架就是 LangChain 和 LlamaIndex，LangChain 更适合需要复杂对话流程、上下文管理、以及多步骤任务的应用场景，如聊天机器人、任务自动化等。LlamaIndex 当应用场景主要涉及大量数据的快速检索和查询时，LlamaIndex更加适用，如企业知识问答系统、文档搜索引擎等。
+二、llamaIndex构建RAG服务
+LlamaIndex最初被称为GPT Index, 后来大语言模型的快速发展，改名为LlamaIndex。它就像一个多功能的工具，可以在处理数据和大型语言模型的各个阶段提供帮助
+首先，它有助于“摄取”数据，这意味着将数据从原始来源获取到系统中。其次，它有助于“结构化”数据，这意味着以语言模型易于理解的方式组织数据。第三，它有助于“检索”，这意味着在需要时查找和获取正确的数据。最后，它简化了“集成”，使您更容易将数据与各种应用程序框架融合在一起。
+
+
+首先安装llamaIndex
+1pip install llama-index llama_index.llms.ollama llama_index. ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/06/07/225dc84728ab/" title="大模型意图选择">大模型意图选择</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-06-07T06:51:21.000Z" title="发表于 2024-06-07 14:51:21">2024-06-07</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.769Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ai/">ai</a></span></div><div class="content">大模型意图识别
+一、意图识别传统方法
+过去为了识别用户意图，可以使用训练的方式，或者使用prompt
+1.1 微调大模型识别指令
+1.2 通过prompt指导大模型识别指令
+可以使用如下prompt：
+1234567891011121314151617### 背景有两个API接口：1. 下单API：支持传入商家名称、商品名称。2. 搜索API：支持传入地点与距离进行搜索，API会返回外卖商家和商品列表。### 要求根据输入的文本，需要决定是否调用API，调用哪个API并生成对应的查询结构体。回答的时候给出： 1.下一步动作(action) 2.是否调用和调用哪个API 3.回复语句 4.查询结构体。### 示例问题：我在新街口，想吃20元左右的黄焖鸡。答案：&#123; action: &#x27;call&#x27;, api: 2, params: [&#x27;新街口’， 20, &#x27;黄焖鸡&#x27;]&#125;问题： 好的，我想吃杨铭宇黄焖鸡答案：&#123;action: &#x27;call&#x27;, api: 1, params:[&#x27;&#x27; ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务">pytorch导学：使用bert实现分类任务</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-11T06:51:21.000Z" title="发表于 2024-05-11 14:51:21">2024-05-11</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.765Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ai/">ai</a></span></div><div class="content">bert模型使用
+huggingface中的模型
+huggingface中的模型定义的基本结构如下：
+123456789101112131415161718192021222324def _forward_unimplemented(self, *input: Any) -&gt; None:    raise NotImplementedError(f&quot;Module [&#123;type(self).__name__&#125;] is missing the required \&quot;forward\&quot; function&quot;)class Module:    def __init__(self) -&gt; None:        self.basename = &quot;BaseModel&quot;    def __call__(self, *args: Any, **kwds: Any) -&gt; Any:        print(f&quot;now you call __call__,params=&#123;args&#12 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类">pytorch基础：FashionMNIST时装分类</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-10T06:51:21.000Z" title="发表于 2024-05-10 14:51:21">2024-05-10</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.765Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ai/">ai</a></span></div><div class="content">pytorch基础：FashionMNIST时装分类
+环境搭建
+安装指定pytorch版本：old pytorch version
+12condatorch==2.0.1+cu117, torchvision==0.15.2
+数据集
+ 
+我们这里的任务是对10个类别的“时装”图像进行分类，使用FashionMNIST数据集。 上图给出了FashionMNIST中数据的若干样例图，其中每个小图对应一个样本。
+FashionMNIST数据集中包含已经预先划分好的训练集和测试集，其中训练集共60,000张图像，测试集共10,000张图像。每张图像均为单通道黑白图像，大小为28*28pixel，分属10个类别。
+加载数据
+加载数据主要通过构造Dataset结构，该结构体继承自torch.utils.data.Dataset，其中提供了一个函数__getitem__，用于根据index获取数据集中的元素。另外还需实现__len__用来返回数据集元素个数
+对于这个时装分类，可以用pytorch封装好的Dataset，该对象会自动去下载数据集。
+1234567891011121314import t ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/04/26/111ea67534ab/" title="redis基础知识">redis基础知识</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-25T16:00:00.000Z" title="发表于 2024-04-26 00:00:00">2024-04-26</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.774Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%98%E5%82%A8/">存储</a></span></div><div class="content">redis基础知识
+redis数据结构
+五种常用数据结构：string, hash, list, set, zset
+十种底层数据结构: ziplist(压缩链表)
+hash结构
+Redis在存储hash结构的数据，为了达到内存和性能的平衡，也针对少量存储和大量存储分别设计了两种结构，分别为：
+
+ziplist：压缩列表，当hash达到一定的阈值时，会自动转换为hashtable结构
+listpack：紧凑列表，在Redis7.0之后，listpack正式取代ziplist。同样的，当hash达到一定的阈值时，会自动转换为hashtable结构
+hashtable：哈希表，类似map
+
+从ziplist/listpack编码转换为hashTable编码是通过判断元素数量或单个元素Key或Value的长度决定的：
+
+hash-max-ziplist-entries：表示当hash中的元素数量小于或等于该值时，使用ziplist编码，否则使用hashtable编码。ziplist是一种压缩列表，它可以节省内存空间，但是访问速度较慢。hashtable是一种哈希表，它可以提高访问速度，但是占 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/04/23/a07a83071c8a/" title="腹肌锻炼">腹肌锻炼</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-23T06:51:21.000Z" title="发表于 2024-04-23 14:51:21">2024-04-23</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.774Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span></div><div class="content">腹肌锻炼
+一、减脂期
+减脂遵循的原则是“七分吃、三分练”
+再好的运动，都没有控制饮食摄入对减脂来的有效，控制饮食是最重要的减脂方式。
+目标： 体脂率控制在15%以下（女性20%）
+1.1 饮食减脂
+基本原理：
+
+晚餐特别要减少碳水摄入
+碳水：蛋白质：脂肪=5：4：1
+按主食、蛋白质、水果蔬菜三大类，每一类每顿在一拳的分量。
+
+1.1.1 食物分析之–碳水
+“好碳水”结构相对复杂，富含纤维素、维生素和矿物质，能量相对较低，在消化过程中分解较慢，血糖生成指数较低，对血糖的影响较小，是不易消化的淀粉，还有一个名词叫“抗性淀粉”。抗性淀粉消化困难，进入结肠，可为肠道里的益生菌提供营养；由于吸收和进入血液缓慢，所以有助于糖尿病患者维持正常的血糖，减少饥饿感。
+燕麦、白豆、小扁豆、土豆、鹰嘴豆、薏米、全麦面食、糙米等富含抗性淀粉，蔬菜和水果富含纤维素，同时含有一定的碳水化合物，也可视为“好碳水”。这类食物通常为绿色，即为绿色碳水化合物，让你容易感到吃饱了，并能减缓胃部排空的时间，还可以为人体提供维生素和矿物质
+“坏碳水”结构相对简单，富含高热量，同时纤维素、维生素和矿物质的含量低，能在消化过程中迅 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/04/20/2f43d59ec67f/" title="huggingface镜像站使用">huggingface镜像站使用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-19T16:00:00.000Z" title="发表于 2024-04-20 00:00:00">2024-04-20</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.764Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ai/">ai</a></span></div><div class="content">一、Huggingface镜像站的使用方法
+使用Huggingface镜像站非常简单，只需要按照以下步骤进行设置即可：
+安装依赖：首先，确保你的计算机上已经安装了pip这个Python包管理工具。然后，通过以下命令安装huggingface_hub和hf_transfer这两个库：
+1pip install -U huggingface_hub hf_transfer
+如果你想使用清华源加速下载，可以加上-i https://pypi.tuna.tsinghua.edu.cn/simple参数：
+1pip install -U huggingface_hub hf_transfer -i https://pypi.tuna.tsinghua.edu.cn/simple
+设置环境变量：接下来，设置环境变量HF_ENDPOINT为Huggingface镜像站的地址：
+1export HF_ENDPOINT=https://hf-mirror.com
+这样，后续的命令就会使用这个镜像站点而非Huggingface的主仓库。
+下载模型：现在，你可以使用huggingface-cli命令来下载模 ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/#content-inner">4</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/notebook.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">JimmyDing</div><div class="author-info__description">种一棵树，最好的时间是十年前，其次是现在</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/mylofty"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎前来爱开源GoGo</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vllm使用教程-基于qwen模型"/></a><div class="content"><a class="title" href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型">vllm使用教程-基于qwen模型</a><time datetime="2025-05-09T06:51:21.000Z" title="发表于 2025-05-09 14:51:21">2025-05-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="解锁AI潜能：万字详解大语言模型提示工程的终极指南"/></a><div class="content"><a class="title" href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南">解锁AI潜能：万字详解大语言模型提示工程的终极指南</a><time datetime="2024-08-14T06:51:21.000Z" title="发表于 2024-08-14 14:51:21">2024-08-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/11/fa22652bbbc5/" title="RAG应用"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG应用"/></a><div class="content"><a class="title" href="/2024/06/11/fa22652bbbc5/" title="RAG应用">RAG应用</a><time datetime="2024-06-11T06:51:21.000Z" title="发表于 2024-06-11 14:51:21">2024-06-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/07/225dc84728ab/" title="大模型意图选择"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="大模型意图选择"/></a><div class="content"><a class="title" href="/2024/06/07/225dc84728ab/" title="大模型意图选择">大模型意图选择</a><time datetime="2024-06-07T06:51:21.000Z" title="发表于 2024-06-07 14:51:21">2024-06-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pytorch导学：使用bert实现分类任务"/></a><div class="content"><a class="title" href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务">pytorch导学：使用bert实现分类任务</a><time datetime="2024-05-11T06:51:21.000Z" title="发表于 2024-05-11 14:51:21">2024-05-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pytorch基础：FashionMNIST时装分类"/></a><div class="content"><a class="title" href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类">pytorch基础：FashionMNIST时装分类</a><time datetime="2024-05-10T06:51:21.000Z" title="发表于 2024-05-10 14:51:21">2024-05-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/26/111ea67534ab/" title="redis基础知识"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="redis基础知识"/></a><div class="content"><a class="title" href="/2024/04/26/111ea67534ab/" title="redis基础知识">redis基础知识</a><time datetime="2024-04-25T16:00:00.000Z" title="发表于 2024-04-26 00:00:00">2024-04-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/23/a07a83071c8a/" title="腹肌锻炼"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="腹肌锻炼"/></a><div class="content"><a class="title" href="/2024/04/23/a07a83071c8a/" title="腹肌锻炼">腹肌锻炼</a><time datetime="2024-04-23T06:51:21.000Z" title="发表于 2024-04-23 14:51:21">2024-04-23</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Go/"><span class="card-category-list-name">Go</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/ai/"><span class="card-category-list-name">ai</span><span class="card-category-list-count">10</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/vue/"><span class="card-category-list-name">vue</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%98%E5%82%A8/"><span class="card-category-list-name">存储</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/"><span class="card-category-list-name">工具</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%90%9C%E7%B4%A2/"><span class="card-category-list-name">搜索</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%90%9E%E7%AC%91/"><span class="card-category-list-name">搞笑</span><span class="card-category-list-count">1</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/GPU/" style="font-size: 1.1em; color: #999">GPU</a> <a href="/tags/ai/" style="font-size: 1.5em; color: #99a9bf">ai</a> <a href="/tags/mysql/" style="font-size: 1.1em; color: #999">mysql</a> <a href="/tags/vue/" style="font-size: 1.18em; color: #999ca1">vue</a> <a href="/tags/Go/" style="font-size: 1.42em; color: #99a6b7">Go</a> <a href="/tags/faiss/" style="font-size: 1.18em; color: #999ca1">faiss</a> <a href="/tags/%E6%90%9E%E7%AC%91/" style="font-size: 1.1em; color: #999">搞笑</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 1.26em; color: #999fa8">工具</a> <a href="/tags/%E7%BC%93%E5%AD%98/" style="font-size: 1.34em; color: #99a3b0">缓存</a> <a href="/tags/cos/" style="font-size: 1.1em; color: #999">cos</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">五月 2025</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date">八月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/06/"><span class="card-archive-list-date">六月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">五月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">11</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/03/"><span class="card-archive-list-date">三月 2023</span><span class="card-archive-list-count">5</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">32</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-05-09T07:15:25.392Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By JimmyDing</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,904 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>解锁AI潜能：万字详解大语言模型提示工程的终极指南 | 爱开源GoGo</title><meta name="author" content="JimmyDing"><meta name="copyright" content="JimmyDing"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="解锁AI潜能：万字详解大语言模型提示工程的终极指南 简介 提示工程主要应用于为大模型开发和优化提示词（Prompt），通过提示词优化提升大语言模型处理复杂任务场景的能力。本文主要介绍当前提示工程（Prompt Engineering）领域的一些基础知识，当前有哪些主流的提示工程技术，以及设计提示词的一些通用技巧。最后，本文会分享一个实际工作中短信拦截的prompt调优工作。 你离prompt工程师">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解锁AI潜能：万字详解大语言模型提示工程的终极指南">
+<meta property="og:url" content="https://mylofty.github.io/2024/08/14/36b4391cdd6f/index.html">
+<meta property="og:site_name" content="爱开源GoGo">
+<meta property="og:description" content="解锁AI潜能：万字详解大语言模型提示工程的终极指南 简介 提示工程主要应用于为大模型开发和优化提示词（Prompt），通过提示词优化提升大语言模型处理复杂任务场景的能力。本文主要介绍当前提示工程（Prompt Engineering）领域的一些基础知识，当前有哪些主流的提示工程技术，以及设计提示词的一些通用技巧。最后，本文会分享一个实际工作中短信拦截的prompt调优工作。 你离prompt工程师">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2024-08-14T06:51:21.000Z">
+<meta property="article:modified_time" content="2025-05-09T07:04:26.770Z">
+<meta property="article:author" content="JimmyDing">
+<meta property="article:tag" content="ai">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/images/notebook.png"><link rel="canonical" href="https://mylofty.github.io/2024/08/14/36b4391cdd6f/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '解锁AI潜能：万字详解大语言模型提示工程的终极指南',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-05-09 15:04:26'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/notebook.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="爱开源GoGo"><span class="site-name">爱开源GoGo</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">解锁AI潜能：万字详解大语言模型提示工程的终极指南</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-14T06:51:21.000Z" title="发表于 2024-08-14 14:51:21">2024-08-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-09T07:04:26.770Z" title="更新于 2025-05-09 15:04:26">2025-05-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/ai/">ai</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="解锁AI潜能：万字详解大语言模型提示工程的终极指南"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>解锁AI潜能：万字详解大语言模型提示工程的终极指南</h1>
+<h2 id="简介">简介</h2>
+<p>提示工程主要应用于为大模型开发和优化提示词（Prompt），通过提示词优化提升大语言模型处理复杂任务场景的能力。本文主要介绍当前提示工程（Prompt Engineering）领域的一些基础知识，当前有哪些主流的提示工程技术，以及设计提示词的一些通用技巧。最后，本文会分享一个实际工作中短信拦截的prompt调优工作。 你离prompt工程师只差这份指南 （本文标题就是大模型取的）</p>
+<h3 id="提示工程是什么">提示工程是什么</h3>
+<p>大模型提示工程（Prompt Engineering）是指为大规模预训练语言模型（如GPT-4）设计和优化输入提示（prompts）以获得所需输出的过程。这个过程涉及理解模型的行为和能力，编写有效的提示，调整和优化提示以提高模型的响应质量和准确性。</p>
+<p>它通过特定任务的指令，即提示，提升模型效能，无需更改模型核心参数。这些提示能够通过给定的指令直接引导预训练模型完成下游任务，从而实现模型行为的精确调控</p>
+<h3 id="提示词要素">提示词要素</h3>
+<p>明确意图：始终清楚地传达最重要的内容或信息。</p>
+<p>构建提示词：首先定义其角色，提供上下文 / 输入数据，然后给出具体指令。</p>
+<p>参照例子：为模型提供具体的、多样化的例子，帮助它产生更准确的结果。</p>
+<p>限制输出范围：使用限制条件确保模型的输出与指令紧密相关。</p>
+<p>任务分解：对于复杂任务，将其分解成一系列更简单的提示词。</p>
+<p>质量监控：指导模型在生成响应之前对其进行评估或自检。</p>
+<p>逐步思考：针对复杂问题，引导模型按照逐步的逻辑推理输出结果。</p>
+<p>关键要点：充分发挥创意，开放思考，随着技术的发展，不断适应和调整。</p>
+<h2 id="当前提示工程技术">当前提示工程技术</h2>
+<h3 id="零样本提示">零样本提示</h3>
+<p>零样本提示技术标志着在利用大型语言模型方面的一大进步。这种方法（Radford 等人，2019）允许我们在没有大量训练数据的情况下，通过精心设计的提示来引导模型完成新的任务。具体来说，模型通过提示获得任务描述，但没有特定任务的标注数据进行训练。模型依靠已有的知识，根据提示来为新任务做出预测。</p>
+<p>提示词：</p>
+<div class="note info no-icon flat"><p>将文本分类为中性、负面或正面。<br>
+文本：我认为这次假期还可以。<br>
+情感：</p>
+</div>
+<p>输出：</p>
+<div class="note info no-icon flat"><p>情感：中性</p>
+</div>
+<p><strong>该方案可以完成任务，但是输出格式可能并不是如我们所想，如我们可能只想输出:“中性”</strong></p>
+<h3 id="少样本提示">少样本提示</h3>
+<p>虽然大型语言模型展示了惊人的零样本能力，但在使用零样本设置时，它们在更复杂的任务上仍然表现不佳。少样本提示可以作为一种技术，以启用上下文学习，我们在提示中提供示例以引导模型实现更好的推理</p>
+<p>提示词：</p>
+<div class="note info no-icon flat"><p>请将输入的情感分类为中性、负面或正面。</p>
+<p>示例：<br>
+输入：哇，那部电影太棒了<br>
+正面</p>
+<p>输入：我认为这次假期还可以。<br>
+中性</p>
+<p>输入：这家餐厅的服务太差了。<br>
+负面</p>
+<p>输入：我认为这次假期还可以。</p>
+</div>
+<p>输出：</p>
+<div class="note info no-icon flat"><p>中性</p>
+</div>
+<p>通过提供少量样本提示，可以引导模型更好的按我们所想输出</p>
+<h3 id="逻辑推理提示">逻辑推理提示</h3>
+<p>如下的逻辑推理技术最新大模型已经通过训练示例和系统提示词等方式加入到了大模型中，来帮助大模型更好的模拟人类思维过程，所以badcase已经不生效</p>
+<h4 id="链式思考（CoT）提示">链式思考（CoT）提示</h4>
+<p>大语言模型在处理复杂的推理任务时往往遇到困难，这限制了它们的发挥潜力。为了解决这一问题，Wei 等人在 2022 年提出了一种名为链式推理引导（CoT）的新技术，旨在通过特定的提示方式促进大语言模型进行连贯且逐步的推理。研究者证明了链式推理引导技术的独特价值，特别是它在引导模型进行逻辑推理过程中的能力，使得模型能够更深入地理解问题。举个例子，这种提示方式能够详细展示解决复杂数学问题的逻辑推理步骤，类似于人类解题时的思维过程。应用这种技术，研究者们在 PaLM 540B 上针对数学和常识推理的测试中取得了前所未有的准确率，高达 90.2%。</p>
+<p>提示词：</p>
+<div class="note info no-icon flat"><p>这组数中的奇数加起来是偶数：4、8、9、15、12、2、1。<br>
+A：将所有奇数相加（9、15、1）得到25。答案为False。<br>
+这组数中的奇数加起来是偶数：17、10、19、4、8、12、24。<br>
+A：将所有奇数相加（17、19）得到36。答案为True。<br>
+这组数中的奇数加起来是偶数：16、11、14、4、8、13、24。<br>
+A：将所有奇数相加（11、13）得到24。答案为True。<br>
+这组数中的奇数加起来是偶数：17、9、10、12、13、4、2。<br>
+A：将所有奇数相加（17、9、13）得到39。答案为False。<br>
+这组数中的奇数加起来是偶数：15、32、5、13、82、7、1。<br>
+A：</p>
+</div>
+<p>输出：</p>
+<div class="note info no-icon flat"><p>将所有奇数相加（15、5、13、7、1）得到41。答案为False。</p>
+</div>
+<p>通过告知大模型推理流程，让大模型按照流程进行思考。可以帮助大模型解决推理任务。但是手写的会不够鲁棒，故有了如下的自动链式推理</p>
+<h4 id="自动化链式推理引导提示">自动化链式推理引导提示</h4>
+<p>手动创建高质量的链式推理示例既费时又效率不高。因此，Zhang 等人在 2022 年提出了一种自动化链式推理引导（Auto-CoT）技术，它通过自动生成“<strong>让我们一步一步来思考</strong>”这类提示，帮助大语言模型构建推理链。这种方法特别注意到单个推理链可能出现的错误，通过多样化采样来增加鲁棒性。它针对不同的问题生成多种独特的推理链，组合成最终的示例集，这种自动化的多样化采样方法有效减少了错误，提高了少量样本学习的效率，避免了手动创建推理链的繁重工作。使用这种技术，研究者们在 GPT-3 上进行的算术和符号推理任务测试中，相比传统的链式推理引导技术，平均准确率分别提高了 1.33% 和 1.5%。</p>
+<p>提示词：</p>
+<div class="note info no-icon flat"><p>这组数中的奇数加起来是偶数：15、32、5、13、82、7、1。让我们一步一步来思考<br>
+A：</p>
+</div>
+<p>输出：</p>
+<div class="note info no-icon flat"><p>好的，我们一步一步来分析这组数中的奇数加起来是否是偶数。<br>
+首先，我们将这组数分为奇数和偶数：</p>
+<ul>
+<li>奇数：15、5、13、7、1</li>
+<li>偶数：32、82</li>
+</ul>
+<p>接下来，我们将这些奇数相加：<br>
+[ 15 + 5 + 13 + 7 + 1 ]<br>
+我们可以一步一步地进行加法：</p>
+<ol>
+<li>( 15 + 5 = 20 )</li>
+<li>( 20 + 13 = 33 )</li>
+<li>( 33 + 7 = 40 )</li>
+<li>( 40 + 1 = 41 )</li>
+</ol>
+<p>所以，奇数的总和是 41。<br>
+最后，我们检查 41 是奇数还是偶数。41 是奇数。<br>
+因此，这组数中的奇数加起来是奇数，而不是偶数。</p>
+</div>
+<h4 id="自我一致性">自我一致性</h4>
+<p>自我一致性是提示工程中更高级的技术之一。由 Wang等人（2022） 提出，自我一致性旨在“替换链式思维提示中使用的天真贪婪解码方法”。其想法是通过少样本 CoT 采样多个不同的推理路径，并使用生成结果选择最一致的答案。这有助于提高 CoT 提示在涉及算术和常识推理的任务中的性能。</p>
+<p>提示词：</p>
+<div class="note info no-icon flat"><p>Q：林中有15棵树。林业工人今天将在林中种树。完成后，将有21棵树。林业工人今天种了多少棵树？<br>
+A：我们从15棵树开始。后来我们有21棵树。差异必须是他们种树的数量。因此，他们必须种了21-15 = 6棵树。答案是6。<br>
+Q：停车场有3辆汽车，又来了2辆汽车，停车场有多少辆汽车？<br>
+A：停车场已经有3辆汽车。又来了2辆。现在有3 + 2 = 5辆汽车。答案是5。<br>
+Q：Leah有32块巧克力，她的姐姐有42块。如果他们吃了35块，他们总共还剩多少块？<br>
+A：Leah有32块巧克力，Leah的姐姐有42块。这意味着最初有32 + 42 = 74块巧克力。已经吃了35块。因此，他们总共还剩74-35 = 39块巧克力。答案是39。<br>
+Q：Jason有20个棒棒糖。他给Denny一些棒棒糖。现在Jason只有12个棒棒糖。Jason给Denny多少棒棒糖？<br>
+A：Jason有20个棒棒糖。因为他现在只有12个，所以他必须把剩下的给Denny。他给Denny的棒棒糖数量必须是20-12 = 8个棒棒糖。答案是8。<br>
+Q：Shawn有五个玩具。圣诞节，他从他的父母那里得到了两个玩具。他现在有多少个玩具？<br>
+A：他有5个玩具。他从妈妈那里得到了2个，所以在那之后他有5 + 2 = 7个玩具。然后他从爸爸那里得到了2个，所以总共他有7 + 2 = 9个玩具。答案是9。<br>
+Q：服务器房间里有9台计算机。从周一到周四，每天都会安装5台计算机。现在服务器房间里有多少台计算机？<br>
+A：从周一到周四有4天。每天都添加了5台计算机。这意味着总共添加了4 * 5 =<br>
+20台计算机。一开始有9台计算机，所以现在有9 + 20 = 29台计算机。答案是29。<br>
+Q：Michael有58个高尔夫球。星期二，他丢失了23个高尔夫球。星期三，他又丢失了2个。星期三结束时他还剩多少个高尔夫球？<br>
+A：Michael最初有58个球。星期二他丢失了23个，所以在那之后他有58-23 = 35个球。星期三他又丢失了2个，所以现在他有35-2 = 33个球。答案是33。<br>
+Q：Olivia有23美元。她用每个3美元的价格买了五个百吉饼。她还剩多少钱？<br>
+A：她用每个3美元的价格买了5个百吉饼。这意味着她花了15美元。她还剩8美元。<br>
+Q：当我6岁时，我的妹妹是我的一半年龄。现在我70岁了，我的妹妹多大？<br>
+A：</p>
+</div>
+<p>输出：</p>
+<div class="note info no-icon flat"><p>当你6岁时，你的妹妹是你的半岁，也就是说她比你小3岁。因此，当你70岁时，你的妹妹的年龄应该是：<br>
+70 - 3 = 67 \text{岁}<br>
+答案是67岁。</p>
+</div>
+<h4 id="思维树-TOT">思维树(TOT)</h4>
+<p>对于需要探索或预判战略的复杂任务来说，传统或简单的提示技巧是不够的。最近，Yao et el. (2023) 提出了思维树（Tree of Thoughts，ToT）框架，该框架基于思维链提示进行了总结，引导语言模型探索把思维作为中间步骤来解决通用问题。</p>
+<p>ToT 维护着一棵思维树，思维由连贯的语言序列表示，这个序列就是解决问题的中间步骤。使用这种方法，LM 能够自己对严谨推理过程的中间思维进行评估。LM 将生成及评估思维的能力与搜索算法（如广度优先搜索和深度优先搜索）相结合，在系统性探索思维的时候可以向前验证和回溯。</p>
+<p>提示词可以概况如下：</p>
+<div class="note info no-icon flat"><p>假设三位不同的专家来回答这个问题。<br>
+所有专家都写下他们思考这个问题的第一个步骤，然后与大家分享。<br>
+然后，所有专家都写下他们思考的下一个步骤并分享。<br>
+以此类推，直到所有专家写完他们思考的所有步骤。<br>
+只要大家发现有专家的步骤出错了，就让这位专家离开。<br>
+请问…</p>
+</div>
+<h3 id="链式提示">链式提示</h3>
+<p>为了提高大语言模型的性能使其更可靠，一个重要的提示工程技术是将任务分解为许多子任务。 确定子任务后，将子任务的提示词提供给语言模型，得到的结果作为新的提示词的一部分。 这就是所谓的链式提示（prompt chaining），一个任务被分解为多个子任务，根据子任务创建一系列提示操作。</p>
+<p>链式提示可以完成很复杂的任务。LLM 可能无法仅用一个非常详细的提示完成这些任务。在链式提示中，提示链对生成的回应执行转换或其他处理，直到达到期望结果。</p>
+<p>除了提高性能，链式提示还有助于提高 LLM 应用的透明度，增加控制性和可靠性。这意味着您可以更容易地定位模型中的问题，分析并改进需要提高的不同阶段的性能。</p>
+<p>如何链式提示：</p>
+<ul>
+<li>确定子任务：将您的任务分解为不同的、连续的步骤。</li>
+<li>使用 XML 结构实现清晰的交接：使用 XML 标签在提示之间传递输出。</li>
+<li>有一个单一任务目标：每个子任务都应该有一个单一、明确的目标。</li>
+<li>迭代：根据 gpt 的表现细化子任务。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户</td>
+<td>总结这篇医学研究论文。<br><paper><code>&#123;&#123;RESEARCH_PAPER&#125;&#125;</code></paper><br>重点关注方法论、发现和临床意义。</td>
+</tr>
+<tr>
+<td>助理</td>
+<td><code>&#123;&#123;SUMMARY&#125;&#125;</code><br>方法：对 500 名 2 型糖尿病患者进行双盲 RCT。A 组（n=250）接受新型 GLP-1/GIP 双激动剂治疗；B 组（n=250）接受标准 GLP-1 激动剂治疗。24 周试验，主要终点：HbA1c 降低。<br><br>结果：<br>- A 组：平均 HbA1c 降低 1.8%<br>- B 组：平均 HbA1c 降低 1.1%<br>- A 组 68% 对比 B 组 52% 的受试者达到 HbA1c &lt;7%<br>- A 组：平均体重减轻 5.2 公斤<br>- B 组：平均体重减轻 3.1 公斤<br><br>安全性：不良事件情况相似，没有归因于治疗的严重事件。<br><br>临床意义：与标准疗法相比，双激动剂表现出更好的血糖控制和减肥效果。可能会改变游戏规则，尤其是对于肥胖糖尿病患者。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="检索增强生成-RAG">检索增强生成(RAG)</h3>
+<p>通用语言模型通过微调就可以完成几类常见任务，比如分析情绪和识别命名实体。这些任务不需要额外的背景知识就可以完成。</p>
+<p>要完成更复杂和知识密集型的任务，可以基于语言模型构建一个系统，访问外部知识源来做到。这样的实现与事实更加一性，生成的答案更可靠，还有助于缓解“幻觉”问题。</p>
+<p>Meta AI 的研究人员引入了一种叫做检索增强生成（Retrieval Augmented Generation，RAG）的方法来完成这类知识密集型的任务。RAG 把一个信息检索组件和文本生成模型结合在一起。RAG 可以微调，其内部知识的修改方式很高效，不需要对整个模型进行重新训练。</p>
+<p>RAG 会接受输入并检索出一组相关/支撑的文档，并给出文档的来源（例如维基百科）。这些文档作为上下文和输入的原始提示词组合，送给文本生成器得到最终的输出。这样 RAG 更加适应事实会随时间变化的情况。这非常有用，因为 LLM 的参数化知识是静态的。RAG 让语言模型不用重新训练就能够获取最新的信息，基于检索生成产生可靠的输出。</p>
+<p>如下是一个常见的qa提示词：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">qa_prompt_tmpl_str = (</span><br><span class="line">    <span class="string">&quot;请结合给出的参考知识，回答用户的问题。&quot;</span></span><br><span class="line">    <span class="string">&quot;参考知识如下：\n&quot;</span></span><br><span class="line">    <span class="string">&quot;---------------------\n&quot;</span></span><br><span class="line">    <span class="string">&quot;&#123;context_str&#125;\n&quot;</span></span><br><span class="line">    <span class="string">&quot;---------------------\n&quot;</span></span><br><span class="line">    <span class="string">&quot;用户的问题如下：\n&quot;</span></span><br><span class="line">    <span class="string">&quot;human: &#123;query_str&#125;\n&quot;</span></span><br><span class="line">    <span class="string">&quot;Assistant: &quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="ReAct-提示技术">ReAct 提示技术</h3>
+<p>ReAct 框架，全称为 “Reasoning and Acting”（推理与行动）框架，是一种用于增强语言模型在复杂任务中的表现的方法。该框架结合了链式思维（Chain of Thought, CoT）和交互式行动（Interactive Action），使模型不仅能够逐步推理问题，还能够在推理过程中与外部环境进行交互，以获取更多信息来解决问题。</p>
+<p>ReAct 框架的核心理念是将推理和行动结合起来，使模型在面对复杂任务时能够更加灵活和高效地处理问题。具体来说，ReAct 框架包括以下几个关键部分：</p>
+<ol>
+<li>
+<p><strong>推理（Reasoning）</strong>：模型在面对问题时，首先进行内部推理，逐步分解问题并尝试得出初步结论。这部分类似于链式思维（CoT），通过逐步推理来解决问题。</p>
+</li>
+<li>
+<p><strong>行动（Acting）</strong>：在推理过程中，如果模型需要更多信息或需要与外部系统交互（如查询数据库、调用API等），它可以采取行动来获取所需的信息。这部分使得模型能够动态地获取外部资源，以辅助推理过程。</p>
+</li>
+<li>
+<p><strong>反馈循环（Feedback Loop）</strong>：模型在采取行动后，会根据获取到的新信息继续推理，调整和完善之前的结论。这个反馈循环可以持续进行，直到模型得出最终答案。</p>
+</li>
+</ol>
+<p>通过结合推理和行动，ReAct 框架使得语言模型在处理复杂任务时更加灵活和高效。以下是一个简单的示例，展示了 ReAct 框架的工作流程：</p>
+<p>示例：</p>
+<p>假设用户问模型一个需要外部信息的问题：</p>
+<p><strong>用户输入</strong>：<br>
+“请告诉我2024年奥运会的举办城市。”</p>
+<p><strong>模型输出（推理）</strong>：<br>
+“我需要查询2024年奥运会的举办城市。”</p>
+<p><strong>模型行动</strong>：<br>
+模型调用外部API或数据库，查询2024年奥运会的举办城市。</p>
+<p><strong>模型输出（获取信息后继续推理）</strong>：<br>
+“根据查询结果，2024年奥运会的举办城市是巴黎。”</p>
+<p><strong>最终输出</strong>：<br>
+“2024年奥运会的举办城市是巴黎。”</p>
+<p>通过这种方式，ReAct 框架使得模型能够在推理过程中动态地获取外部信息，从而提高回答的准确性和全面性。这种框架特别适用于需要多步推理和外部信息获取的复杂任务。</p>
+<p><strong>当前使用最多的是大模型支持的function_call方式，来提供外部函数调用</strong></p>
+<h3 id="提示工程评估指标">提示工程评估指标</h3>
+<p>优化提示词之后，我们需要考虑如何评估提示词的效果。</p>
+<p>首先，我们可以从以下几个方面来检查回答效果：</p>
+<ol>
+<li>生成的文本是否真正抓住了问题的本质？</li>
+<li>回答中是否包含了额外的信息？</li>
+<li>回答是字面上的还是经过解释的？</li>
+<li>回答有多具信息性？它是否客观？</li>
+<li>回答中是否有引用或证据（如URL）来证明答案与问题相符？</li>
+</ol>
+<p><strong>对于文本生成类评估</strong>，我们通常采用BLEU（双语评估替代）和ROUGE（面向召回的摘要评估替代）等度量标准。它们主要设计用于评估机器生成文本的质量，如翻译或摘要。虽然它们可以提供一些关于答案质量的洞察，但它们并不是专门为评估问答系统设计的。然而，它们仍然可以作为粗略评估的参考指标。</p>
+<ol>
+<li>
+<p>BLEU（双语评估替代）：BLEU通常用于评估机器翻译输出的质量，通过将其与一个或多个人工参考翻译进行比较。它根据n元组精度计算得分，其中n元组是n个单词的序列。BLEU评估生成文本与参考文本之间的n元组重叠情况，奖励完全匹配和部分匹配。较高的BLEU得分表明与参考文本的相似度更高。</p>
+<p>将BLEU应用于评估问答时，需要将生成的答案视为对问题的翻译。你需要将问题视为参考文本，并使用BLEU将其与生成的答案进行比较。然而，这种方法可能无法捕捉答案对问题的具体细微差别和适当性。</p>
+</li>
+<li>
+<p>ROUGE（面向召回的摘要评估替代）：ROUGE通常用于评估摘要系统的质量，通过将生成的摘要与一个或多个人工参考摘要进行比较。它基于重叠单位（如n元组、词序列和跳跃二元组）计算召回得分。ROUGE评估生成摘要与参考摘要相比的重要信息覆盖情况。</p>
+<p>要使用ROUGE评估答案，需要将生成的答案视为问题的摘要，并使用ROUGE得分将其与人工参考摘要进行比较。然而，与BLEU相似，ROUGE可能无法完全捕捉答案的相关性和准确性。</p>
+</li>
+</ol>
+<p><strong>对于文本分类等任务</strong>，我们可以直接使用准确率，F1等指标直观的评判效果</p>
+<h3 id="提示工程技术总览">提示工程技术总览</h3>
+<p>以下通过一个表格展示当前主流的提示工程技术，以及其适用场景，数据集和评价指标</p>
+<table>
+<thead>
+<tr>
+<th>应用场景</th>
+<th>提示策略</th>
+<th>比较维度</th>
+<th>提示获取方式</th>
+<th>使用的语言模型</th>
+<th>数据集</th>
+<th>评价指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>面向无训练数据的新任务</td>
+<td>零样本学习</td>
+<td>人工制定</td>
+<td>单一</td>
+<td>GPT-2</td>
+<td>算术题和符号处理</td>
+<td>准确度和 ROUGE 得分</td>
+</tr>
+<tr>
+<td></td>
+<td>少样本学习</td>
+<td>人工制定</td>
+<td>单一</td>
+<td>GPT-3</td>
+<td>自然语言问题解答、网络问题搜索、趣味问答</td>
+<td>准确度</td>
+</tr>
+<tr>
+<td></td>
+<td>链式推理 (CoT)</td>
+<td>人工制定</td>
+<td>多样</td>
+<td>PaLM 540B</td>
+<td>GSM8K 数学题</td>
+<td>准确度</td>
+</tr>
+<tr>
+<td></td>
+<td>逻辑链式推理 (LogiCoT)</td>
+<td>人工制定</td>
+<td>多样</td>
+<td>Vicuna-33b, GPT-4</td>
+<td>GSM8K 数学题、AQuA、社交问答</td>
+<td>准确度</td>
+</tr>
+<tr>
+<td></td>
+<td>上下文串联 (CoS)</td>
+<td>人工制定</td>
+<td>多样</td>
+<td>gpt-3.5-turbo, GPT-4</td>
+<td>SPARTUN 多项选择题</td>
+<td>准确度、精确度、召回率</td>
+</tr>
+<tr>
+<td></td>
+<td>自动生成的链式推理 (Auto-CoT)</td>
+<td>模型生成</td>
+<td>多样</td>
+<td>GPT-3</td>
+<td>算术题和符号处理</td>
+<td>准确度</td>
+</tr>
+<tr>
+<td></td>
+<td>自我一致性校验</td>
+<td>人工制定</td>
+<td>单一</td>
+<td>PaLM 540B</td>
+<td>算术题和常识问题</td>
+<td>准确度</td>
+</tr>
+<tr>
+<td>推理和逻辑能力</td>
+<td>话题转换 (ToT)</td>
+<td>基于信息检索</td>
+<td>多样</td>
+<td>GPT-4</td>
+<td>24 点游戏、创意写作挑战</td>
+<td>成功率</td>
+</tr>
+<tr>
+<td></td>
+<td>生成式话题转换 (GoT)</td>
+<td>基于信息检索</td>
+<td>多样</td>
+<td>T5-large</td>
+<td>GSM8K 科学问题、ScienceQA</td>
+<td>ROUGE 得分</td>
+</tr>
+<tr>
+<td></td>
+<td>答案到问题 (S2A)</td>
+<td>人工制定</td>
+<td>单一</td>
+<td>Llama 2-70B</td>
+<td>问答、GSM8K 数学题</td>
+<td>准确度</td>
+</tr>
+<tr>
+<td></td>
+<td>混合话题转换 (ThoT)</td>
+<td>混合方法</td>
+<td>多样</td>
+<td>gpt-3.5-turbo, Llama 2-70b-chat</td>
+<td>流行文化问答、实体查询、多项选择推理</td>
+<td>精确匹配得分</td>
+</tr>
+<tr>
+<td></td>
+<td>表格链 (Chain of Table)</td>
+<td>人工制定</td>
+<td>多样</td>
+<td>GPT 3.5, LLaMA 2</td>
+<td>TabFact 事实验证、WikiTQ 维基问答</td>
+<td>BLEU 得分、ROUGE 得分</td>
+</tr>
+<tr>
+<td></td>
+<td>上下文验证 (CoVe)</td>
+<td>基于信息检索</td>
+<td>多样</td>
+<td>Llama 65B</td>
+<td>Wikidata 数据、QUEST 问题集、MultiSpanQA 多答案问题</td>
+<td>精确度、F1 得分</td>
+</tr>
+<tr>
+<td></td>
+<td>实时反馈 (ReAct)</td>
+<td>基于信息检索</td>
+<td>多样</td>
+<td>PaLM-540B, GPT-3</td>
+<td>HotpotQA 热门问题、FEVER 事实验证</td>
+<td>精确匹配得分、准确度</td>
+</tr>
+<tr>
+<td>减少错误信息生成</td>
+<td>检索增强生成 (RAG)</td>
+<td>基于信息检索</td>
+<td>单一</td>
+<td>RAG-Token, RAG-Seq</td>
+<td>MSMARCO 信息搜索、SearchQA 问题搜索</td>
+<td>ROUGE 得分、BLEU 得分</td>
+</tr>
+<tr>
+<td></td>
+<td>一致性校验 (CoN)</td>
+<td>模型生成</td>
+<td>多样</td>
+<td>Llama 2, DPR</td>
+<td>NQ 自然问答、TriviaQA 趣味问答、WebQ 网络问题</td>
+<td>精确匹配得分、F1 得分</td>
+</tr>
+<tr>
+<td>用户交互</td>
+<td>积极引导</td>
+<td>人工操作</td>
+<td>单项任务</td>
+<td>code-davinci-002, text-davinci-003</td>
+<td>算术计算、常识判断、符号操作</td>
+<td>评价不一、熵差异、自我评估得分</td>
+</tr>
+<tr>
+<td>微调和优化</td>
+<td>自适应性能提升</td>
+<td>模型自生成</td>
+<td>单项任务</td>
+<td>text-curie-001, text-davanci-002</td>
+<td>逻辑推理、真实性问答</td>
+<td>执行准确度、概率估计、效率评分</td>
+</tr>
+<tr>
+<td>基于知识的推理与创新</td>
+<td>艺术智能</td>
+<td>混合模式</td>
+<td>多任务处理</td>
+<td>GPT-3 (175B)</td>
+<td>复杂问题挑战、多模块学习</td>
+<td>准确度</td>
+</tr>
+<tr>
+<td>提升逻辑一致性和表达连贯性</td>
+<td>连贯一致性训练</td>
+<td>模型自生成</td>
+<td>多任务处理</td>
+<td>gpt-3.5-turbo-0301</td>
+<td>数学问题、实际问题问答</td>
+<td>准确度</td>
+</tr>
+<tr>
+<td>情绪与语调管理</td>
+<td>情绪引导</td>
+<td>人工操作</td>
+<td>单项任务</td>
+<td>GPT-4</td>
+<td>挑战基准、指令学习</td>
+<td>准确度</td>
+</tr>
+<tr>
+<td></td>
+<td>社会认知训练</td>
+<td>混合模式</td>
+<td>多任务处理</td>
+<td>ChatGPT, Codex</td>
+<td>编程评估、多种编程问题</td>
+<td>通过率@k</td>
+</tr>
+<tr>
+<td>代码生成与执行</td>
+<td>实践操作训练</td>
+<td>人工操作</td>
+<td>单项任务</td>
+<td>gpt-3.5-turbo</td>
+<td>数学解题、财经问答</td>
+<td>精确匹配得分</td>
+</tr>
+<tr>
+<td></td>
+<td>共同创造</td>
+<td>人工操作</td>
+<td>单项任务</td>
+<td>text-davinci-003, gpt-3.5-turbo</td>
+<td>高难度挑战</td>
+<td>准确度</td>
+</tr>
+<tr>
+<td></td>
+<td>思维导图提示</td>
+<td>人工操作</td>
+<td>单项任务</td>
+<td>GPT-3</td>
+<td>编程问题、增强学习</td>
+<td>准确度</td>
+</tr>
+<tr>
+<td>优化与效率提升</td>
+<td>操作性能优化</td>
+<td>人工操作</td>
+<td>单项任务</td>
+<td>PaLM 2-L-IT, text-bison</td>
+<td>高难度问题解答、挑战基准</td>
+<td>准确度</td>
+</tr>
+<tr>
+<td>理解用户意图</td>
+<td>反馈调整响应</td>
+<td>人工操作</td>
+<td>单项任务</td>
+<td>GPT-4-0613</td>
+<td>知识问答、符号操作</td>
+<td>准确度、公平性评价、语言建模得分</td>
+</tr>
+<tr>
+<td>自我认知与反思</td>
+<td>暂停反思</td>
+<td>人工操作</td>
+<td>单项任务</td>
+<td>PaLM2-L, GPT-4</td>
+<td>物理学习、化学学习、时间问题解答、情境问题、策略问题</td>
+<td>准确度</td>
+</tr>
+</tbody>
+</table>
+<h2 id="日常提示使用技巧">日常提示使用技巧</h2>
+<h3 id="1-使用元提示词（Metaprompt）自动生成prompt">1. 使用元提示词（Metaprompt）自动生成prompt</h3>
+<p>对于gpt4，可以使用元提示词，先输入元提示词，让大模型按这个提示词去组织你的需求，元提示词如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">你是一个prompt工程师，我会给你我的需求，需要你帮我组织好prompt，以便我向chatgpt寻求高效的回答； </span><br><span class="line">你要遵循两个建议，第一，帮我分解问题，请一步步思考我的需求所要用的步骤；</span><br><span class="line">第二，将这些步骤转化为ChatGPT的提示，每个步骤中如果涉及专业的角色可以用请你扮演某某角色这样的话语，以便让我在与chatgpt对话的时候，chatgpt能真的扮演对应的角色，从而更好的理解我的需求；</span><br><span class="line">将我的需求，整理成一个总的prompt输出，以便我用这个prompt直接与chatgpt对话；</span><br></pre></td></tr></table></figure>
+<p>在输入元提示词之后，我再如下问询chatgpt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">请帮我对用户短信进行分类，分为普通短信和垃圾短信，在此基础上，再分类为财务、订单、提醒、验证码、电信运营商、公共服务、优惠券、其他。以下是一个示例：</span><br><span class="line">示例1：</span><br><span class="line">短信: &quot;你赢得了一次免费旅行，请点击链接领取：scamlink.com&quot;</span><br><span class="line">结果: 是;</span><br></pre></td></tr></table></figure>
+<p>chatgpt则一步步思考并给出了一个最终可用的prompt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">好的，根据你的需求，我们可以将问题分解为以下几个步骤：</span><br><span class="line"></span><br><span class="line">1. **初步分类**：将短信分为普通短信和垃圾短信。</span><br><span class="line">2. **详细分类**：在普通短信的基础上，进一步分类为财务、订单、提醒、验证码、电信运营商、公共服务、优惠券、其他。</span><br><span class="line"></span><br><span class="line">接下来，我们将这些步骤转化为ChatGPT的提示，并且在每个步骤中明确说明ChatGPT需要扮演的角色。</span><br><span class="line"></span><br><span class="line">### 总的Prompt</span><br><span class="line"></span><br><span class="line">```plaintext</span><br><span class="line">请你帮我对用户短信进行分类。分为两个步骤：初步分类和详细分类。</span><br><span class="line"></span><br><span class="line">第一步：初步分类</span><br><span class="line">请你扮演一个短信过滤专家，帮助我将以下短信分类为普通短信和垃圾短信。垃圾短信通常包括欺诈、广告、钓鱼链接等内容。普通短信则是用户正常接收的短信。</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">短信: &quot;你赢得了一次免费旅行，请点击链接领取：scamlink.com&quot;</span><br><span class="line">结果: 垃圾短信</span><br><span class="line"></span><br><span class="line">请对以下短信进行初步分类：</span><br><span class="line">短信: &quot;&lt;在这里插入短信内容&gt;&quot;</span><br><span class="line">结果: </span><br><span class="line"></span><br><span class="line">第二步：详细分类</span><br><span class="line">请你扮演一个短信分类专家，在初步分类为普通短信的基础上，进一步将短信分类为以下类别：</span><br><span class="line">1. 财务</span><br><span class="line">2. 订单</span><br><span class="line">3. 提醒</span><br><span class="line">4. 验证码</span><br><span class="line">5. 电信运营商</span><br><span class="line">6. 公共服务</span><br><span class="line">7. 优惠券</span><br><span class="line">8. 其他</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">短信: &quot;您的银行账户余额不足，请及时存款。&quot;</span><br><span class="line">结果: 财务</span><br><span class="line"></span><br><span class="line">请对以下短信进行详细分类：</span><br><span class="line">短信: &quot;&lt;在这里插入短信内容&gt;&quot;</span><br><span class="line">结果: </span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">### 示例使用</span><br><span class="line"></span><br><span class="line">1. **初步分类示例**</span><br><span class="line"></span><br><span class="line">```plaintext</span><br><span class="line">请你帮我对用户短信进行分类。分为两个步骤：初步分类和详细分类。</span><br><span class="line"></span><br><span class="line">第一步：初步分类</span><br><span class="line">请你扮演一个短信过滤专家，帮助我将以下短信分类为普通短信和垃圾短信。垃圾短信通常包括欺诈、广告、钓鱼链接等内容。普通短信则是用户正常接收的短信。</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">短信: &quot;你赢得了一次免费旅行，请点击链接领取：scamlink.com&quot;</span><br><span class="line">结果: 垃圾短信</span><br><span class="line"></span><br><span class="line">请对以下短信进行初步分类：</span><br><span class="line">短信: &quot;您的银行账户余额不足，请及时存款。&quot;</span><br><span class="line">结果: </span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">2. **详细分类示例**</span><br><span class="line"></span><br><span class="line">```plaintext</span><br><span class="line">请你帮我对用户短信进行分类。分为两个步骤：初步分类和详细分类。</span><br><span class="line"></span><br><span class="line">第二步：详细分类</span><br><span class="line">请你扮演一个短信分类专家，在初步分类为普通短信的基础上，进一步将短信分类为以下类别：</span><br><span class="line">1. 财务</span><br><span class="line">2. 订单</span><br><span class="line">3. 提醒</span><br><span class="line">4. 验证码</span><br><span class="line">5. 电信运营商</span><br><span class="line">6. 公共服务</span><br><span class="line">7. 优惠券</span><br><span class="line">8. 其他</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">短信: &quot;您的银行账户余额不足，请及时存款。&quot;</span><br><span class="line">结果: 财务</span><br><span class="line"></span><br><span class="line">请对以下短信进行详细分类：</span><br><span class="line">短信: &quot;您的订单已发货，请查收。&quot;</span><br><span class="line">结果: </span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">你可以根据上述总的Prompt和示例使用，将需要分类的短信内容插入到对应的地方，ChatGPT就会按照步骤进行分类。</span><br></pre></td></tr></table></figure>
+<h3 id="2-保持清晰和直接">2. 保持清晰和直接</h3>
+<ul>
+<li>给gpt提供上下文信息： 就像你在了解更多背景后可能会更好地完成任务一样，gpt在拥有更多上下文信息时表现会更好。一些上下文信息的例子：
+<ul>
+<li>任务结果将用于什么</li>
+<li>输出面向的受众是谁</li>
+<li>任务属于哪个工作流程，以及这个任务在工作流程中的位置</li>
+<li>任务的最终目标，或成功完成任务的样子</li>
+</ul>
+</li>
+<li>具体说明你希望gpt做什么： 例如，如果你只想让gpt输出代码而不是其他内容，就明确说明。</li>
+<li>以连续步骤提供指示： 使用<strong>编号列表或项目符号</strong>，以更好地确保gpt按照你想要的方式执行任务。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>无示例</th>
+<th>有示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户</td>
+<td>请从这些客户反馈信息中删除所有个人身份信息：<code>&#123;&#123;FEEDBACK_DATA&#125;&#125;</code></td>
+<td>你的任务是为我们的季度审查匿名化客户反馈。<br><br>指示：<br>1. 将所有客户姓名替换为&quot;CUSTOMER_[ID]“（例如，“Jane Doe” → “CUSTOMER_001”）。<br>2. 将电子邮件地址替换为&quot;EMAIL_[ID]@example.com”。<br>3. 将电话号码编辑为&quot;PHONE_[ID]&quot;。<br>4. 如果消息提到特定产品（例如”AcmeCloud”），保持不变。<br>5. 如果没有发现个人身份信息，逐字复制消息。<br>6. 只输出处理过的消息，用”—“分隔。<br><br>要处理的数据：<code>&#123;&#123;FEEDBACK_DATA&#125;&#125;</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-使用示例提示">3. 使用示例提示</h3>
+<p>通过在提示中提供一些精心制作的示例，您可以显著提高大模型输出的准确性、一致性和质量。 这种技术被称为少样本或多次提示，对于需要结构化输出或遵循特定格式的任务特别有效。</p>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>无示例</th>
+<th>有示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户</td>
+<td>分析这个客户反馈并对问题进行分类。使用这些类别：UI/UX、性能、功能请求、集成、定价和其他。同时评估情感（积极/中性/消极）和优先级（高/中/低）。<br><br>以下是反馈：<code>&#123;&#123;FEEDBACK&#125;&#125;</code></td>
+<td>我们的客户服务团队被非结构化的反馈淹没了。您的任务是分析反馈并为我们的产品和工程团队对问题进行分类。使用这些类别：UI/UX、性能、功能请求、集成、定价和其他。同时评估情感（积极/中性/消极）和优先级（高/中/低）。这里有一个例子：<br><br><example><br>输入：新的仪表板一团糟！加载需要很长时间，而且我找不到导出按钮。尽快修复这个问题！<br>类别：UI/UX、性能<br>情感：消极<br>优先级：高<br></example><br><br>现在，分析这个反馈：<code>&#123;&#123;FEEDBACK&#125;&#125;</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-让模型思考（COT）">4. 让模型思考（COT）</h3>
+<p>使用思维链技术让大模型进行思考</p>
+<ul>
+<li>在你的提示中包含”逐步思考”、 “Let’s think step by step”</li>
+<li>引导式提示：给出在思考过程中要遵循的具体步骤</li>
+<li>结构化引导提示：使用 XML 标签如 <thinking> 和 <answer> 来分离推理和最终答案。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>逐步思考</th>
+<th>引导提示</th>
+<th>结构化引导提示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户</td>
+<td>起草个性化邮件给捐赠者，请求他们为今年的关爱儿童计划捐款。<br><br>计划信息：<br><program><code>&#123;&#123;PROGRAM_DETAILS&#125;&#125;</code><br></program><br>捐赠者信息：<br><donor><code>&#123;&#123;DONOR_DETAILS&#125;&#125;</code><br></donor><br><br>在撰写邮件之前逐步思考。</td>
+<td>起草个性化邮件给捐赠者，请求他们为今年的关爱儿童计划捐款。<br><br>计划信息：<br><program><code>&#123;&#123;PROGRAM_DETAILS&#125;&#125;</code><br></program><br>捐赠者信息：<br><donor><code>&#123;&#123;DONOR_DETAILS&#125;&#125;</code><br></donor><br><br>在撰写邮件之前思考。首先，考虑根据这位捐赠者的捐赠历史和他们过去支持的活动，什么信息可能吸引他们。然后，考虑关爱儿童计划的哪些方面会吸引他们，考虑他们的历史。最后，使用你的分析撰写个性化的捐赠者邮件。</td>
+<td>起草个性化邮件给捐赠者，请求他们为今年的关爱儿童计划捐款。<br><br>计划信息：<br><program><code>&#123;&#123;PROGRAM_DETAILS&#125;&#125;</code><br></program><br>捐赠者信息：<br><donor><code>&#123;&#123;DONOR_DETAILS&#125;&#125;</code><br></donor><br><br>在撰写邮件之前在 <thinking> 标签中思考。首先，考虑根据这位捐赠者的捐赠历史和他们过去支持的活动，什么信息可能吸引他们。然后，考虑关爱儿童计划的哪些方面会吸引他们，考虑他们的历史。最后，在 <email> 标签中使用你的分析撰写个性化的捐赠者邮件。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-使用多种标签">5. 使用多种标签</h3>
+<p>当你的提示涉及多个组件，如上下文、指令和示例时，XML标签或者makdrown标签可以成为游戏规则的改变者。它们帮助大模型更准确地解析你的提示，从而产生更高质量的输出。</p>
+<ul>
+<li>**结构化：**显示的指明提示词的各个部分：<strong>指令</strong>、<strong>上下文</strong>、<strong>输入数据</strong>、<strong>输出指示</strong></li>
+<li>**清晰度：**清晰地分隔提示的不同部分，确保你的提示结构良好。</li>
+<li>**准确性：**减少由大模型误解提示部分而导致的错误。</li>
+<li>**灵活性：**轻松找到、添加、删除或修改提示的部分，而无需重写所有内容。</li>
+<li>**可解析性：**让大模型在其输出中使用标签，使得通过后处理更容易提取其响应的特定部分。</li>
+</ul>
+<p>常见标签有：</p>
+<ul>
+<li>三重引号: “”&quot;</li>
+<li>三重反引号: ```</li>
+<li>三重破折号: —</li>
+<li>尖括号: &lt;&gt;</li>
+<li>XML标签: <tag> </tag></li>
+<li>markdown表格格式</li>
+<li>结构化分隔符：<code>#</code>、<code>##</code>、<code>- 无序列表</code></li>
+<li>强调符号 <code>**加粗强调**</code></li>
+</ul>
+<p>如下提供几个使用标签的样例：</p>
+<ol>
+<li>使用结构化分隔符</li>
+</ol>
+<p>如下是kimi的诗歌创作的预填prompt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">【📖 诗意创作】 现代诗、五言/七言诗词信手拈来的诗歌创作助手</span><br><span class="line">你是一个创作诗人，诗人是创作诗歌的艺术家，擅长通过诗歌来表达情感、描绘景象、讲述故事，具有丰富的想象力和对文字的独特驾驭能力。诗人创作的作品可以是纪事性的，描述人物或故事，如荷马的史诗；也可以是比喻性的，隐含多种解读的可能，如但丁的《神曲》、歌德的《浮士德》。</span><br><span class="line">## 擅长写现代诗:</span><br><span class="line">- 现代诗形式自由，意涵丰富，意象经营重于修辞运用，是心灵的映现</span><br><span class="line">- 更加强调自由开放和直率陈述与进行“可感与不可感之间”的沟通。</span><br><span class="line">### 擅长写七言律诗：</span><br><span class="line">- 七言体是古代诗歌体裁</span><br><span class="line">- 全篇每句七字或以七字句为主的诗体</span><br><span class="line">- 它起于汉族民间歌谣</span><br><span class="line">### 擅长写五言诗：</span><br><span class="line">- 全篇由五字句构成的诗</span><br><span class="line">- 能够更灵活细致地抒情和叙事</span><br><span class="line">- 在音节上，奇偶相配，富于音乐美</span><br><span class="line">## 工作流程：</span><br><span class="line">- 让用户以 &quot;&quot;形式：[], 主题：[]&quot;&quot; 的方式指定诗歌形式，主题。</span><br><span class="line">- 针对用户给定的主题，创作诗歌，包括题目和诗句。</span><br><span class="line">## 注意：</span><br><span class="line">- 内容健康，积极向上</span><br><span class="line">- 七言律诗和五言诗要押韵</span><br><span class="line">- 只有在用户提问的时候你才开始回答，用户不提问时，请不要回答</span><br><span class="line">## 初始语句:</span><br><span class="line">&quot;&quot;欢迎来到诗歌生成工作室，您想要生成什么格式的诗歌呢？心里是否已经有了诗歌的主题和内容了呢？&quot;&quot;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>使用xml标签来生成prompt<br>
+关键指令数据使用xml标签包含起来</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">你是AcmeCorp的财务分析师。为我们的投资者生成Q2财务报告。</span><br><span class="line"></span><br><span class="line">AcmeCorp是一家B2B SaaS公司。我们的投资者重视透明度和可行的洞察。</span><br><span class="line"></span><br><span class="line">使用这些数据进行报告：&lt;data&gt;&#123;&#123;SPREADSHEET_DATA&#125;&#125;&lt;/data&gt;</span><br><span class="line"></span><br><span class="line">&lt;instructions&gt;</span><br><span class="line">1. 包括以下部分：收入增长、利润率、现金流。</span><br><span class="line">2. 突出优势和需要改进的领域。</span><br><span class="line">&lt;/instructions&gt;</span><br><span class="line"></span><br><span class="line">使用简洁专业的语气。遵循这种结构：</span><br><span class="line">&lt;formatting_example&gt;&#123;&#123;Q1_REPORT&#125;&#125;&lt;/formatting_example&gt;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>使用markdown格式来编写prompt</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># 短信分类器</span><br><span class="line">请根据短信内容，对短信进行分类</span><br><span class="line"></span><br><span class="line">## 第一步：判断是否为垃圾短信</span><br><span class="line">请仅回答“是”、“不是”或“未知”。</span><br><span class="line"></span><br><span class="line">## 第二步：分类判断</span><br><span class="line">请从以下分类中选择一个：</span><br><span class="line">- **财务**：涉及银行、支付、转账等财务相关内容。</span><br><span class="line">- **订单**：涉及商品购买、订单状态、物流信息等。</span><br><span class="line">- **验证码**：包含验证码内容。</span><br><span class="line">- **提醒**：包含账户变动、设备状态、行程变化等提醒内容。</span><br><span class="line">- **其他推广类**：包含推广内容（如广告）。</span><br><span class="line">- **其他**：不属于以上任何一类的短信。</span><br><span class="line"></span><br><span class="line">## 输出格式</span><br><span class="line">请将两步判断的结果用英文分号分隔，例如“是;其他推广类”、“不是;其他”。不要返回其他内容</span><br><span class="line"></span><br><span class="line">## 示例</span><br><span class="line">### 示例1</span><br><span class="line">**短信**: &quot;你赢得了一次免费旅行，请点击链接领取：scamlink.com&quot;</span><br><span class="line">**结果**: &quot;是;其他推广类&quot;</span><br><span class="line"></span><br><span class="line">### 示例2</span><br><span class="line">**短信**: &quot;请问你明天有空吗？我们可以见面讨论项目。&quot;</span><br><span class="line">**结果**: &quot;不是;其他&quot;</span><br><span class="line"></span><br><span class="line">## 输入</span><br><span class="line">**短信内容**：```【科大讯飞】科大讯飞（苏州）科技有限公司给您发送了一份合同/文件，请访问SCM系统完成签署，系统登录地址：http://jicaibao.com/```</span><br></pre></td></tr></table></figure>
+<h3 id="使用提示词框架">使用提示词框架</h3>
+<p>TRACE 框架是一个用于创建和组织与 ChatGPT 交互的方法，它将交互细分为五个核心部分，以确保清晰、有目的的通信。这五个核心部分包括：</p>
+<ul>
+<li><strong>任务 (Task):</strong> 定义要解决的特定任务或问题。</li>
+<li><strong>请求 (Request):</strong> 明确您想要 ChatGPT 完成的具体请求。</li>
+<li><strong>操作 (Action):</strong> 描述应采取的步骤或操作来完成任务或请求。</li>
+<li><strong>上下文 (Context):</strong> 提供与请求相关的背景信息或上下文。</li>
+<li><strong>示例 (Example):</strong> 提供一个或多个示例，以帮助 ChatGPT 理解您的请求和期望的结果。</li>
+</ul>
+<p>以下是一个示例：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">假设您是一个项目经理，希望从 ChatGPT 那里获得有关如何更有效地管理项目时间的建议。</span><br><span class="line"></span><br><span class="line"><span class="strong">**任务:**</span>“作为项目经理，我需要确保项目按时完成，同时保证质量。”</span><br><span class="line"><span class="strong">**请求:**</span>“请提供一些有效的项目时间管理策略和技巧。”</span><br><span class="line"><span class="strong">**操作:**</span>“描述每种策略的实施步骤和预期效果。”</span><br><span class="line"><span class="strong">**上下文:**</span>“我们的团队分布在不同的地区，有时很难协调时间。”</span><br><span class="line"></span><br><span class="line"><span class="strong">**示例:**</span></span><br><span class="line">“例如，如果你建议使用某种项目管理软件，请解释如何配置和使用它来跟踪项目进度。”</span><br></pre></td></tr></table></figure>
+<h3 id="给大模型赋予（专家）角色">给大模型赋予（专家）角色</h3>
+<p>使用大模型时，您可以通过使用参数system赋予其角色来显著提高其性能。这种技术称为角色提示，是使用大模型进行系统提示的最有效方式。</p>
+<p>正确的角色可以将大模型从普通助理转变为您的虚拟领域专家！除了可以在system中添加角色，也可以在prompt里面直接添加角色。</p>
+<p>如元提示词中，使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">你是一个prompt工程师,你······</span><br></pre></td></tr></table></figure>
+<p>在翻译场景中，一般也是将其设置成专家</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">你是一位精通简体中文的专业翻译，曾参与《纽约时报》和《经济学人》中文版的翻译工作，因此对于新闻和时事文章的翻译有深入的理解。我希望你能帮我将以下英文新闻段落翻译成中文，风格与上述杂志的中文版相似。</span><br><span class="line"></span><br><span class="line">规则：</span><br><span class="line">- 翻译时要准确传达新闻事实和背景。</span><br><span class="line">- 保留特定的英文术语或名字，并在其前后加上空格，例如：&quot;中 UN 文&quot;。</span><br><span class="line">- 分成两次翻译，并且打印每一次结果：</span><br><span class="line">1. 根据新闻内容直译，不要遗漏任何信息</span><br><span class="line">2. 根据第一次直译的结果重新意译，遵守原意的前提下让内容更通俗易懂，符合中文表达习惯</span><br><span class="line"></span><br><span class="line">本条消息只需要回复OK，接下来的消息我将会给你发送完整内容，收到后请按照上面的规则打印两次翻译结果。</span><br></pre></td></tr></table></figure>
+<h3 id="长上下文场景设置提示技巧">长上下文场景设置提示技巧</h3>
+<p>当prompt需要塞入较多数据的时候，可以按如下技巧整理提示词：</p>
+<ul>
+<li><strong>将长篇数据放在顶部</strong>：将您的长文档和输入（约20K+令牌）放在提示的顶部，位于查询、指令和示例之上。这可以显著提高模型的性能</li>
+<li><strong>使用XML标签构建文档内容和元数据</strong>：使用多个文档时，用<document>标签包裹每个文档，并使用&lt;document_content&gt;和<source>（以及其他元数据）子标签以提高清晰度。</li>
+<li><strong>引用相关内容作为回答依据</strong>：对于长文档任务，要求Claude在执行任务之前先引用文档中的相关部分。这有助于Claude从文档内容的”噪音”中筛选出重要信息</li>
+</ul>
+<p>如下是一个示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">您是一位AI医生助手。您的任务是帮助医生诊断可能的患者疾病。</span><br><span class="line"></span><br><span class="line">&lt;documents&gt;</span><br><span class="line">  &lt;document index=&quot;1&quot;&gt;</span><br><span class="line">    &lt;source&gt;患者症状.txt&lt;/source&gt;</span><br><span class="line">    &lt;document_content&gt;</span><br><span class="line">      &#123;&#123; 患者症状 &#125;&#125;</span><br><span class="line">    &lt;/document_content&gt;</span><br><span class="line">  &lt;/document&gt;</span><br><span class="line">  &lt;document index=&quot;2&quot;&gt;</span><br><span class="line">    &lt;source&gt;患者病历.txt&lt;/source&gt;</span><br><span class="line">    &lt;document_content&gt;</span><br><span class="line">      &#123;&#123; 患者病历 &#125;&#125;</span><br><span class="line">    &lt;/document_content&gt;</span><br><span class="line">  &lt;/document&gt;</span><br><span class="line">  &lt;document index=&quot;3&quot;&gt;</span><br><span class="line">    &lt;source&gt;患者01_就诊历史.txt&lt;/source&gt;</span><br><span class="line">    &lt;document_content&gt;</span><br><span class="line">      &#123;&#123; 患者01_就诊历史 &#125;&#125;</span><br><span class="line">    &lt;/document_content&gt;</span><br><span class="line">  &lt;/document&gt;</span><br><span class="line">&lt;/documents&gt;</span><br><span class="line"></span><br><span class="line">从患者病历和就诊历史中找出与诊断患者报告症状相关的引用。将这些引用放在&lt;quotes&gt;标签中。然后，根据这些引用，列出所有有助于医生诊断患者症状的信息。将您的诊断信息放在&lt;info&gt;标签中。</span><br></pre></td></tr></table></figure>
+<h3 id="要求模型格式化输出">要求模型格式化输出</h3>
+<p>可以指定模型以json格式输出，方便后续处理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">生成一个包含三个虚构书名以及它们的作者和类型的列表。 </span><br><span class="line">以JSON格式提供，包含以下键： </span><br><span class="line">book_id, title, author, genre.</span><br></pre></td></tr></table></figure>
+<p>输出如下:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;book_id&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;The Whispering Shadows&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;author&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Lena Marlowe&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;genre&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Mystery&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;book_id&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Echoes of Eternity&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;author&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Jasper Thorne&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;genre&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Science Fiction&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;book_id&quot;</span><span class="punctuation">:</span> <span class="number">3</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;The Enchanted Grove&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;author&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Elara Winters&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;genre&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Fantasy&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+<h3 id="设置兜底策略">设置兜底策略</h3>
+<p>在很多领域，当大模型不理解的时候，可以显示让大模型兜底输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">请你扮演一个专业的解释器，用通俗易懂的语言解释用户输入的内容。如果你不理解用户输入的内容，请输出：“未知”两个字，不要包含任何标点符号。请按照以下步骤进行：</span><br><span class="line"></span><br><span class="line">1. 首先，理解用户输入的内容。</span><br><span class="line">2. 判断你是否完全理解用户输入的内容。</span><br><span class="line">3. 如果你理解用户输入，用通俗易懂的语言进行解释，不超过100字。</span><br><span class="line">4. 如果你不理解用户输入，输出：“未知”两个字，不要包含任何标点符号。</span><br><span class="line"></span><br><span class="line">用户输入：&quot;&quot;&quot;&#123;text&#125;&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="提示缓存（Prompt-Cache）">提示缓存（Prompt Cache）</h3>
+<p>Anthropic模型支持了提示缓存技术，它允许从提示中的特定前缀恢复，从而优化您的 API 使用。这种方法可显著减少重复任务或具有一致元素的提示的处理时间和成本。<br>
+您发送启用了“提示缓存”的请求时：</p>
+<ul>
+<li>系统检查提示前缀是否已从最近的查询中缓存。</li>
+<li>如果找到，它会使用缓存版本，从而减少处理时间和成本。</li>
+<li>否则，它将处理完整的提示并缓存前缀以供将来使用。</li>
+</ul>
+<p>这对于以下情况尤其有用：</p>
+<ul>
+<li>带有大量示例的提示</li>
+<li>大量上下文或背景信息</li>
+<li>重复任务并遵循一致的指令</li>
+<li>长时间多轮对话</li>
+</ul>
+<h2 id="提示词自动优化框架">提示词自动优化框架</h2>
+<p>为了让提示词能能够自动优化，研究人员提出了多种automatic prompt engineering框架：APE、APO、OPRO、PE2、LongPO、BPO、EVOPROMPT、PromptAgent等。通常框架包括如下步骤：</p>
+<ol>
+<li>给定一个训练集</li>
+<li>定义好评价指标</li>
+<li>运行automatic prompt engineering框架<br>
+然后就能自动取得最佳效果的prompt。<br>
+其中谷歌通过OPRO找到了更好的一句：<code>Take a deep breath and work on this problem step-by-step</code>，让GSM8K的结果直接从71.8% -&gt; 80.2%。</li>
+</ol>
+
+<h3 id="APE（候选集选择和重采样）">APE（候选集选择和重采样）</h3>
+<p><strong>APE的核心思路是</strong>：从候选集中选出好的prompt，再在好的prompt附近进行试探性地搜索。</p>
+
+<p>APE包括三个步骤：</p>
+<ol>
+<li>
+<p>**candidate：**使用llm生成prompt候选集。通常是提供一些任务examples，让LLM在最后生成prompt。</p>
+</li>
+<li>
+<p>**selection：**在训练集上打分，并保留高分prompt</p>
+<p>打分方式有两种：</p>
+<ul>
+<li>Execution accuracy。在训练集上执行prompt后，得到的任务metric（如Accuracy、F1等）</li>
+<li>Log probability。不使用任务metric，而是评估生成desired answer的概率<br>
+实验表明，Execution accuracy的效果更好。</li>
+</ul>
+<p>另外，这一步如果在全量训练集上评估，则开销非常大，因此作者提出一种multi-stage策略。大致思想是先在少量subset上评估，然后过滤掉比较差的，循环这一过程直到候选集足够小，此时再在全量训练集上进行评价、挑选。</p>
+</li>
+<li>
+<p>**resample：**在高分prompt附近进行采样，模拟Monte-Carlo Search过程</p>
+<p>这一步核心是尝试性地resample，生成语义相似的prompt，看看能否取得更好的效果。这一过程是可迭代的。<br>
+resample的工作仍然交由LLM</p>
+</li>
+</ol>
+<h3 id="APO（文本空间梯度下降）">APO（文本空间梯度下降）</h3>
+<p>APO框架就是在文本空间实现gradient descent过程。</p>
+<img src="/2024/08/14/36b4391cdd6f/APO.webp" class="" title="img">
+<ol>
+<li>得到当前prompt的“gradient”: 给定一批error samples（当前prompt无法预测正确的），让LLM给出当前prompt预测错误的原因，这一原因即文本形式的“gradient”</li>
+<li>应用“gradient”，得到new prompt: 使用LLM来edit原来的prompt，目标是修复“gradient”。另外再进行resample，扩充相似语义的prompt。</li>
+<li>挑选出好的prompt，进入下一轮迭代。</li>
+</ol>
+<h3 id="OPRO（LLM优化器）">OPRO（LLM优化器）</h3>
+<p>OPRO的核心思路是让LLM基于过往的迭代记录、优化目标，自己总结规律，逐步迭代prompt，整个过程在文本空间上完成。<br>
+OPRO框架如下。</p>
+<ul>
+<li>使用<a target="_blank" rel="noopener" href="https://colab.research.google.com/drive/1SoAajN8CBYTl79VyTwxtxncfCWlHlyy9#scrollTo=NTOiFKNxqoq2">meta-prompt</a>，让LLM成为Optimizer LLM。meta-prompt包含两个核心部分：一个是solution-score pairs，即以往的迭代路径，包括solution（即prompt） + 分数（任务表现），实践中按照分数大小，从低到高排列top20的结果；另一个是task description，包含一些任务的examples、优化的目标等</li>
+<li>基于对过往迭代规律的理解，Optimizer LLM生成新的solution。即将meta-prompt给到Optimizer LLM，生成的内容即为新的solution。在实践中，为了提升优化的稳定性，这一步重复了8次。</li>
+<li>在Scorer LLM上应用prompt（即新的solution），评估效果并记录到meta-prompt中，然后继续下一轮迭代。注意，这里的Scorer LLM是实际使用prompt的LLM，与Optimizer LLM可以是不同的。</li>
+<li>当效果无法再提升、或者到达预先给定的step上限，整个迭代过程停止。返回得分最高的prompt作为优化结果。</li>
+</ul>
+<h2 id="参考">参考</h2>
+<ol>
+<li>Claude.提示工程概述 <a target="_blank" rel="noopener" href="https://docs.anthropic.com/zh-CN/docs/build-with-claude/prompt-engineering/overview">https://docs.anthropic.com/zh-CN/docs/build-with-claude/prompt-engineering/overview</a></li>
+<li>Claude.提示库 <a target="_blank" rel="noopener" href="https://docs.anthropic.com/zh-CN/prompt-library/review-classifier">https://docs.anthropic.com/zh-CN/prompt-library/review-classifier</a></li>
+<li>ChatGPT 中文调教指南 <a target="_blank" rel="noopener" href="https://github.com/PlexPt/awesome-chatgpt-prompts-zh">https://github.com/PlexPt/awesome-chatgpt-prompts-zh</a></li>
+<li>大语言模型提示工程综述：技巧与应用领域 [译] <a target="_blank" rel="noopener" href="https://baoyu.io/translations/ai-paper/2402.07927-a-systematic-survey-of-prompt-engineering-in-large-language-models-techniques-and-applications">https://baoyu.io/translations/ai-paper/2402.07927-a-systematic-survey-of-prompt-engineering-in-large-language-models-techniques-and-applications</a></li>
+<li>A Systematic Survey of Prompt Engineering in Large Language Models:Techniques and Applications <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2402.07927">https://arxiv.org/pdf/2402.07927</a></li>
+<li>提示工程指南 <a target="_blank" rel="noopener" href="https://www.promptingguide.ai/zh">https://www.promptingguide.ai/zh</a></li>
+<li>自动优化Prompt：Automatic Prompt Engineering的3种方法 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/658649353">https://zhuanlan.zhihu.com/p/658649353</a></li>
+<li>Automatic Prompt Optimization with “Gradient Descent” and Beam Search <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2305.03495">https://arxiv.org/pdf/2305.03495</a></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://mylofty.github.io">JimmyDing</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://mylofty.github.io/2024/08/14/36b4391cdd6f/">https://mylofty.github.io/2024/08/14/36b4391cdd6f/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://mylofty.github.io" target="_blank">爱开源GoGo</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ai/">ai</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">vllm使用教程-基于qwen模型</div></div></a></div><div class="next-post pull-right"><a href="/2024/06/11/fa22652bbbc5/" title="RAG应用"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">RAG应用</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/06/11/fa22652bbbc5/" title="RAG应用"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-11</div><div class="title">RAG应用</div></div></a></div><div><a href="/2024/03/31/df8ae9e77565/" title="comfyui使用"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-31</div><div class="title">comfyui使用</div></div></a></div><div><a href="/2024/04/20/2f43d59ec67f/" title="huggingface镜像站使用"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-20</div><div class="title">huggingface镜像站使用</div></div></a></div><div><a href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-10</div><div class="title">pytorch基础：FashionMNIST时装分类</div></div></a></div><div><a href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-11</div><div class="title">pytorch导学：使用bert实现分类任务</div></div></a></div><div><a href="/2024/03/31/e135a5da70e3/" title="transformer详解"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-31</div><div class="title">transformer详解</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/notebook.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">JimmyDing</div><div class="author-info__description">种一棵树，最好的时间是十年前，其次是现在</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/mylofty"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎前来爱开源GoGo</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">解锁AI潜能：万字详解大语言模型提示工程的终极指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA%E5%B7%A5%E7%A8%8B%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">提示工程是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%A6%81%E7%B4%A0"><span class="toc-text">提示词要素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E6%8F%90%E7%A4%BA%E5%B7%A5%E7%A8%8B%E6%8A%80%E6%9C%AF"><span class="toc-text">当前提示工程技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%B6%E6%A0%B7%E6%9C%AC%E6%8F%90%E7%A4%BA"><span class="toc-text">零样本提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%91%E6%A0%B7%E6%9C%AC%E6%8F%90%E7%A4%BA"><span class="toc-text">少样本提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E6%8F%90%E7%A4%BA"><span class="toc-text">逻辑推理提示</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%80%9D%E8%80%83%EF%BC%88CoT%EF%BC%89%E6%8F%90%E7%A4%BA"><span class="toc-text">链式思考（CoT）提示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E9%93%BE%E5%BC%8F%E6%8E%A8%E7%90%86%E5%BC%95%E5%AF%BC%E6%8F%90%E7%A4%BA"><span class="toc-text">自动化链式推理引导提示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E6%88%91%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-text">自我一致性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E7%BB%B4%E6%A0%91-TOT"><span class="toc-text">思维树(TOT)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%8F%90%E7%A4%BA"><span class="toc-text">链式提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA%E7%94%9F%E6%88%90-RAG"><span class="toc-text">检索增强生成(RAG)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReAct-%E6%8F%90%E7%A4%BA%E6%8A%80%E6%9C%AF"><span class="toc-text">ReAct 提示技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA%E5%B7%A5%E7%A8%8B%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-text">提示工程评估指标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA%E5%B7%A5%E7%A8%8B%E6%8A%80%E6%9C%AF%E6%80%BB%E8%A7%88"><span class="toc-text">提示工程技术总览</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E5%B8%B8%E6%8F%90%E7%A4%BA%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="toc-text">日常提示使用技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8%E5%85%83%E6%8F%90%E7%A4%BA%E8%AF%8D%EF%BC%88Metaprompt%EF%BC%89%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90prompt"><span class="toc-text">1. 使用元提示词（Metaprompt）自动生成prompt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BF%9D%E6%8C%81%E6%B8%85%E6%99%B0%E5%92%8C%E7%9B%B4%E6%8E%A5"><span class="toc-text">2. 保持清晰和直接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B%E6%8F%90%E7%A4%BA"><span class="toc-text">3. 使用示例提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%AE%A9%E6%A8%A1%E5%9E%8B%E6%80%9D%E8%80%83%EF%BC%88COT%EF%BC%89"><span class="toc-text">4. 让模型思考（COT）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%A7%8D%E6%A0%87%E7%AD%BE"><span class="toc-text">5. 使用多种标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%8F%90%E7%A4%BA%E8%AF%8D%E6%A1%86%E6%9E%B6"><span class="toc-text">使用提示词框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%99%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%B5%8B%E4%BA%88%EF%BC%88%E4%B8%93%E5%AE%B6%EF%BC%89%E8%A7%92%E8%89%B2"><span class="toc-text">给大模型赋予（专家）角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E4%B8%8A%E4%B8%8B%E6%96%87%E5%9C%BA%E6%99%AF%E8%AE%BE%E7%BD%AE%E6%8F%90%E7%A4%BA%E6%8A%80%E5%B7%A7"><span class="toc-text">长上下文场景设置提示技巧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A6%81%E6%B1%82%E6%A8%A1%E5%9E%8B%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA"><span class="toc-text">要求模型格式化输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%85%9C%E5%BA%95%E7%AD%96%E7%95%A5"><span class="toc-text">设置兜底策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA%E7%BC%93%E5%AD%98%EF%BC%88Prompt-Cache%EF%BC%89"><span class="toc-text">提示缓存（Prompt Cache）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%87%AA%E5%8A%A8%E4%BC%98%E5%8C%96%E6%A1%86%E6%9E%B6"><span class="toc-text">提示词自动优化框架</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#APE%EF%BC%88%E5%80%99%E9%80%89%E9%9B%86%E9%80%89%E6%8B%A9%E5%92%8C%E9%87%8D%E9%87%87%E6%A0%B7%EF%BC%89"><span class="toc-text">APE（候选集选择和重采样）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#APO%EF%BC%88%E6%96%87%E6%9C%AC%E7%A9%BA%E9%97%B4%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%89"><span class="toc-text">APO（文本空间梯度下降）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OPRO%EF%BC%88LLM%E4%BC%98%E5%8C%96%E5%99%A8%EF%BC%89"><span class="toc-text">OPRO（LLM优化器）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vllm使用教程-基于qwen模型"/></a><div class="content"><a class="title" href="/2025/05/09/045d8c332459/" title="vllm使用教程-基于qwen模型">vllm使用教程-基于qwen模型</a><time datetime="2025-05-09T06:51:21.000Z" title="发表于 2025-05-09 14:51:21">2025-05-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="解锁AI潜能：万字详解大语言模型提示工程的终极指南"/></a><div class="content"><a class="title" href="/2024/08/14/36b4391cdd6f/" title="解锁AI潜能：万字详解大语言模型提示工程的终极指南">解锁AI潜能：万字详解大语言模型提示工程的终极指南</a><time datetime="2024-08-14T06:51:21.000Z" title="发表于 2024-08-14 14:51:21">2024-08-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/11/fa22652bbbc5/" title="RAG应用"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG应用"/></a><div class="content"><a class="title" href="/2024/06/11/fa22652bbbc5/" title="RAG应用">RAG应用</a><time datetime="2024-06-11T06:51:21.000Z" title="发表于 2024-06-11 14:51:21">2024-06-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/07/225dc84728ab/" title="大模型意图选择"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="大模型意图选择"/></a><div class="content"><a class="title" href="/2024/06/07/225dc84728ab/" title="大模型意图选择">大模型意图选择</a><time datetime="2024-06-07T06:51:21.000Z" title="发表于 2024-06-07 14:51:21">2024-06-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pytorch导学：使用bert实现分类任务"/></a><div class="content"><a class="title" href="/2024/05/11/3148f0b756e9/" title="pytorch导学：使用bert实现分类任务">pytorch导学：使用bert实现分类任务</a><time datetime="2024-05-11T06:51:21.000Z" title="发表于 2024-05-11 14:51:21">2024-05-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pytorch基础：FashionMNIST时装分类"/></a><div class="content"><a class="title" href="/2024/05/10/981ace98feb5/" title="pytorch基础：FashionMNIST时装分类">pytorch基础：FashionMNIST时装分类</a><time datetime="2024-05-10T06:51:21.000Z" title="发表于 2024-05-10 14:51:21">2024-05-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/26/111ea67534ab/" title="redis基础知识"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="redis基础知识"/></a><div class="content"><a class="title" href="/2024/04/26/111ea67534ab/" title="redis基础知识">redis基础知识</a><time datetime="2024-04-25T16:00:00.000Z" title="发表于 2024-04-26 00:00:00">2024-04-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/23/a07a83071c8a/" title="腹肌锻炼"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="腹肌锻炼"/></a><div class="content"><a class="title" href="/2024/04/23/a07a83071c8a/" title="腹肌锻炼">腹肌锻炼</a><time datetime="2024-04-23T06:51:21.000Z" title="发表于 2024-04-23 14:51:21">2024-04-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By JimmyDing</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
